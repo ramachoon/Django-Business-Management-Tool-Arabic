@@ -1,0 +1,77 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: web
+    restart: "always"
+    expose:
+      - 8000
+    depends_on:
+      - db
+      - redis_db
+    volumes:
+      - type: "bind"
+        source: ./src
+        target: /src
+    networks:
+      - web_network
+      - nginx_network
+    env_file:
+      - "./.env"
+
+  db:
+    image: postgres:alpine
+    restart: "always"
+    ports:
+      - "5432:5432"
+    container_name: "db"
+    networks:
+      - web_network
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=config_db
+      - POSTGRES_USER=config_user
+      - POSTGRES_PASSWORD=123@456
+
+  redis_db:
+    image: redis:latest
+    container_name: "redis_db"
+    ports:
+      - "6379:6379"
+
+  nginx:
+    build:
+      context: "./nginx/."
+      dockerfile: Dockerfile
+    restart: "always"
+    container_name: "nginx"
+    ports:
+      - "80:80"
+    networks:
+      - nginx_network
+    volumes:
+      - type: "bind"
+        source: "./src/static/"
+        target: "/src/static"
+
+      - type: "bind"
+        source: "./src/media/"
+        target: "/src/media"
+    depends_on:
+      - web
+
+
+volumes:
+  db_data:
+    external: True
+
+networks:
+  nginx_network:
+    external: True
+
+  web_network:
+    external: True
