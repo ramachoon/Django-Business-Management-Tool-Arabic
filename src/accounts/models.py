@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .validators import validate_avatar
+from src.extensions.upload_file_path import upload_path
 
 
 # Create your models here.
@@ -11,7 +12,7 @@ class User(AbstractUser):
 
     bio = models.TextField(default='بیوگرافی خودرا ویرایش کنید', verbose_name='بیوگرافی')
     avatar = models.ImageField(
-        upload_to='accounts/avatars/', default='default.jpg', validators=[validate_avatar], verbose_name='avatar'
+        upload_to=upload_path('accounts/avatars'), default='default.jpg', validators=[validate_avatar], verbose_name='avatar'
     )
     is_employee = models.BooleanField(default=False, verbose_name='کارمند')
     is_customer = models.BooleanField(default=False, verbose_name='کارفرما')
