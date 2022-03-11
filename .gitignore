@@ -142,3 +142,4 @@ cython_debug/
 .env
 .env.db
 static/
+media/
