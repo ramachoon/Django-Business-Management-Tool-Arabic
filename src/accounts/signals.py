@@ -8,6 +8,5 @@ from .models import User
 def delete_user_avatar(sender, instance, *args, **kwargs):
     path = getcwd()
     final_path = path + instance.avatar.url
-    print(final_path.split('/')[-1])
     if final_path.split('/')[-1] != 'default.jpg':
         remove(final_path)

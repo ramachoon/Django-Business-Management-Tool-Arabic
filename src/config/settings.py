@@ -144,3 +144,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SMS_PANEL_USERNAME = config('SMS_PANEL_USERNAME')
+SMS_PANEL_PASSWORD = config('SMS_PANEL_PASSWORD')
+SMS_PANEL_PHONE_NUMBER = config('SMS_PANEL_PHONE_NUMBER')
