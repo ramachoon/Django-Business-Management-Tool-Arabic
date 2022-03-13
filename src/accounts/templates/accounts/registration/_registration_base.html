@@ -1,0 +1,174 @@
+{% load static %}
+<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+<!--begin::Head-->
+<head>
+    <meta charset="utf-8"/>
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="description" content="Login page example"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <!--begin::Fonts-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+    <!--end::Fonts-->
+
+
+    <!--begin::Page Custom Styles(used by this page)-->
+    <link rel="stylesheet" href="{% static 'registration/css/login-1.rtl.css' %}">
+    <!--end::Page Custom Styles-->
+
+    <!--begin::Global تم Styles(used by all pages)-->
+    <link href="{% static 'plugins/global/plugins.bundle.rtl.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'plugins/custom/prismjs/prismjs.bundle.rtl.css' %}" rel="stylesheet" type="text/css"/>
+    <link href="{% static 'css/style.bundle.rtl.css' %}" rel="stylesheet" type="text/css"/>
+    <!--end::Global تم Styles-->
+
+    <!--begin::Layout تمs(used by all pages)-->
+    <!--end::Layout تمs-->
+
+</head>
+<!--end::Head-->
+
+<!--begin::Body-->
+<body id="kt_body" class="header-fixed header-mobile-fixed subheader-enabled page-loading">
+
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Login-->
+    <div class="login login-1 login-signin-on d-flex flex-column flex-lg-row flex-row-fluid bg-white" id="kt_login">
+        <!--begin::Aside-->
+        <div class="login-aside d-flex flex-row-auto bgi-size-cover bgi-no-repeat p-10 p-lg-10"
+             style="background-image: url({% static 'media_files/bg/bg-4.jpg' %});">
+            <!--begin: Aside Container-->
+            <div class="d-flex flex-row-fluid flex-column justify-content-between">
+
+                <!--begin: Aside content-->
+                <div class="flex-column-fluid d-flex flex-column justify-content-center">
+                    <h3 class="font-size-h1 mb-5 text-white">گروه فلزکاری عبدی!</h3>
+                    <p class="font-weight-lighter text-white opacity-80">
+                        مشاهده آنلاین صورتحساب ها، پروژه ها، همکاری آنلاین و...
+                    </p>
+                </div>
+                <!--end: Aside content-->
+
+                <!--begin: Aside footer for desktop-->
+                <div class="d-none flex-column-auto d-lg-flex justify-content-between mt-10">
+                    <div class="opacity-70 font-weight-bold	text-white">
+                        گروه فلزکاری برادران عبدی &copy; 2022
+                    </div>
+                    <div class="d-flex">
+                        <a href="#" class="text-white ml-10">تماس با ما</a>
+                    </div>
+                </div>
+                <!--end: Aside footer for desktop-->
+            </div>
+            <!--end: Aside Container-->
+        </div>
+        <!--begin::Aside-->
+
+        <!--begin::Content-->
+        <div class="flex-row-fluid d-flex flex-column position-relative p-7 overflow-hidden">
+
+            <!--begin::Content body-->
+            <div class="d-flex flex-column-fluid flex-center mt-30 mt-lg-0">
+                <!--begin::Signin-->
+                <div class="login-form login-signin">
+                    {% block content %}
+
+                    {% endblock %}
+                </div>
+                <!--end::Signin-->
+            </div>
+            <!--end::Content body-->
+
+            <!--begin::Content footer for mobile-->
+            <div class="d-flex d-lg-none flex-column-auto flex-column flex-sm-row justify-content-between align-items-center mt-5 p-5">
+                <div class="text-dark-50 font-weight-bold order-2 order-sm-1 my-2">
+                    &copy; 2020 مترونیک
+                </div>
+                <div class="d-flex order-1 order-sm-2 my-2">
+                    <a href="#" class="text-dark-75 text-hover-primary">حریم خصوصی</a>
+                    <a href="#" class="text-dark-75 text-hover-primary ml-4">مقررات</a>
+                    <a href="#" class="text-dark-75 text-hover-primary ml-4">تماس با ما</a>
+                </div>
+            </div>
+            <!--end::Content footer for mobile-->
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Login-->
+</div>
+<!--end::Main-->
+
+<!--begin::Global Config(global config for global JS scripts)-->
+<script>
+    var KTAppSettings = {
+        "breakpoints": {
+            "sm": 576,
+            "md": 768,
+            "lg": 992,
+            "xl": 1200,
+            "xxl": 1200
+        },
+        "colors": {
+            "theme": {
+                "base": {
+                    "white": "#ffffff",
+                    "primary": "#0BB783",
+                    "secondary": "#E5EAEE",
+                    "success": "#1BC5BD",
+                    "info": "#8950FC",
+                    "warning": "#FFA800",
+                    "danger": "#F64E60",
+                    "light": "#F3F6F9",
+                    "dark": "#212121"
+                },
+                "light": {
+                    "white": "#ffffff",
+                    "primary": "#D7F9EF",
+                    "secondary": "#ECF0F3",
+                    "success": "#C9F7F5",
+                    "info": "#EEE5FF",
+                    "warning": "#FFF4DE",
+                    "danger": "#FFE2E5",
+                    "light": "#F3F6F9",
+                    "dark": "#D6D6E0"
+                },
+                "inverse": {
+                    "white": "#ffffff",
+                    "primary": "#ffffff",
+                    "secondary": "#212121",
+                    "success": "#ffffff",
+                    "info": "#ffffff",
+                    "warning": "#ffffff",
+                    "danger": "#ffffff",
+                    "light": "#464E5F",
+                    "dark": "#ffffff"
+                }
+            },
+            "gray": {
+                "gray-100": "#F3F6F9",
+                "gray-200": "#ECF0F3",
+                "gray-300": "#E5EAEE",
+                "gray-400": "#D6D6E0",
+                "gray-500": "#B5B5C3",
+                "gray-600": "#80808F",
+                "gray-700": "#464E5F",
+                "gray-800": "#1B283F",
+                "gray-900": "#212121"
+            }
+        },
+        "font-family": "Poppins"
+    };
+</script>
+<!--end::Global Config-->
+
+<!--begin::Global تم Bundle(used by all pages)-->
+<script src="{% static 'plugins/global/plugins.bundle.js' %}"></script>
+<script src="{% static 'plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
+<script src="{% static 'js/scripts.bundle.js' %}"></script>
+<!--end::Global تم Bundle-->
+
+</body>
+<!--end::Body-->
+</html>

@@ -11,7 +11,6 @@ services:
       - 8000
     depends_on:
       - db
-      - redis_db
     volumes:
       - type: "bind"
         source: ./src
@@ -36,12 +35,6 @@ services:
       - POSTGRES_DB=config_db
       - POSTGRES_USER=config_user
       - POSTGRES_PASSWORD=123@456
-
-  redis_db:
-    image: redis:latest
-    container_name: "redis_db"
-    ports:
-      - "6379:6379"
 
   nginx:
     build:
