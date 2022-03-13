@@ -5,10 +5,10 @@ from django import forms
 class LoginForm(forms.Form):
     phone_number = forms.CharField(
         widget=forms.TextInput(attrs={
-            'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'شماره تلفن'
+            'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'شماره موبایل'
         }),
         help_text='شماره موبایل با 09 شروع شود',
-        label='شماره تلفن'
+        label='شماره موبایل'
     )
 
     def clean_phone_number(self):

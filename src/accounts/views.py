@@ -6,7 +6,7 @@ from .forms import LoginForm
 # Create your views here.
 
 
-def login_view(request):
+def otp_login(request):
     login_form = LoginForm(request.POST or None)
 
     if login_form.is_valid():

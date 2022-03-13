@@ -1,9 +1,9 @@
 from django.urls import path
 from .views import (
-    login_view
+    otp_login
 )
 
 app_name = 'account'
 urlpatterns = [
-    path('login/', login_view, name='login')
+    path('login/', otp_login, name='login')
 ]

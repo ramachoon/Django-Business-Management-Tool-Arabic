@@ -5,7 +5,7 @@ from .models import User
 
 
 @receiver(post_delete, sender=User)
-def delete_user_avatar(sender, instance, *args, **kwargs):
+def delete_user_avatar_after_delete(sender, instance, *args, **kwargs):
     path = getcwd()
     final_path = path + instance.avatar.url
     if final_path.split('/')[-1] != 'default.jpg':

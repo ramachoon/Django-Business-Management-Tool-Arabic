@@ -11,7 +11,7 @@
     </div>
 
     <!--begin::Form-->
-    <form class="form" novalidate="novalidate" method="post" autocomplete="off">
+    <form class="form" method="post" autocomplete="off">
     {% csrf_token %}
         <div class="form-group">
             {{ form.phone_number.label_tag }}
