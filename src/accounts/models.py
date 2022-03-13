@@ -10,8 +10,8 @@ from src.extensions.upload_file_path import get_filename_ext
 # Create your models here.
 def upload_avatar_path(instance, filename):
     name, ext = get_filename_ext(filename)
-    random_number = random.randint(2000, 9999)
-    final_name = f"{random_number}-{instance.get_full_name()}{ext}"
+    random_number = random.randint(1111111, 9999999)
+    final_name = f"{random_number}-user-avatar-abdimt{ext}"
     return f"accounts/avatars/{final_name}"
 
 
