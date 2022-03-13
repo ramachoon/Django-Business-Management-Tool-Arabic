@@ -1,0 +1,63 @@
+{% extends 'accounts/registration/_registration_base.html' %}
+
+{% block title %}
+    تکمیل اطلاعات | گروه فلزکاری برادران عبدی
+{% endblock %}
+
+{% block content %}
+    <div class="text-center mb-10 mb-lg-20">
+        <h3 class="font-size-h1">ثبت نام</h3>
+        <p class="text-muted font-weight-bold">لطفا اطلاعات خودرا وارد کنید</p>
+    </div>
+
+    <!--begin::Form-->
+    <form class="form" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>شماره موبایل:</label>
+            <input type="text" placeholder="{{ phone_number }}" disabled
+                   class="form-control form-control-solid h-auto py-5 px-6 disabled">
+        </div>
+        <div class="form-group">
+            {{ form.first_name.label_tag }}
+            {{ form.first_name }}
+            <ul class="mt-2">
+                {% if form.first_name.errors %}
+                    {% for error in form.first_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="form-group">
+            {{ form.last_name.label_tag }}
+            {{ form.last_name }}
+            <ul class="mt-2">
+                {% if form.last_name.errors %}
+                    {% for error in form.last_name.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <div class="form-group">
+            {{ form.email.label_tag }}
+            {{ form.email }}
+            <ul class="mt-2">
+                {% if form.email.errors %}
+                    {% for error in form.email.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <!--begin::اکشن-->
+        <div class="form-group">
+            <button type="submit"
+                    class="btn btn-primary font-weight-bold px-9 py-4 my-3">ثبت نام
+            </button>
+        </div>
+        <!--end::اکشن-->
+    </form>
+    <!--end::Form-->
+{% endblock %}

@@ -2,13 +2,13 @@ import random
 from hashlib import sha256
 
 from django.contrib.auth import login
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.utils import timezone
 from django.contrib import messages
 
-from .forms import LoginForm, VerifyOtpForm
+from .forms import LoginForm, VerifyOtpForm, RegisterForm
 from accounts.models import PhoneOtp, User
 
 
@@ -44,7 +44,10 @@ def otp_login(request):
 
 def verify_phone_otp(request):
     # raise http404, if http referer is not equal to login.
-    if not request.META.get('HTTP_REFERER') == f"{request.scheme}://{request.get_host()}{reverse('account:login')}":
+    http_referer = request.META.get('HTTP_REFERER')
+    login_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:login')}"
+    verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
+    if not http_referer == login_full_url and not http_referer == verify_otp_full_url:
         raise Http404
 
     verify_otp_form = VerifyOtpForm(request.POST or None)
@@ -57,13 +60,14 @@ def verify_phone_otp(request):
         # check phone_otp is exist and check the past moments.
         if phone_otp.exists() and \
                 timezone.now().minute - phone_otp.first().updated.minute <= 5:
+            print('Trueeeeeeeeee')
             # get user and authenticate
             try:
                 user = User.objects.get(username=phone_number)
                 login(request, user=user)
                 del request.session['phone_number']
             except User.DoesNotExist:
-                raise Http404
+                return redirect(reverse('account:register'))
         else:
             messages.error(request, 'کد تائید اشتباه وارد شده است.')
 
@@ -72,3 +76,36 @@ def verify_phone_otp(request):
         'phone_number': phone_number
     }
     return render(request, 'accounts/registration/verify_otp.html', context)
+
+
+def register(request):
+    http_referer = request.META.get('HTTP_REFERER')
+    verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
+    register_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:register')}"
+    if not http_referer == verify_otp_full_url and not http_referer == register_full_url:
+        raise Http404
+
+    register_form = RegisterForm(request.POST or None)
+    phone_number = request.session['phone_number']
+
+    if register_form.is_valid():
+        cd = register_form.cleaned_data
+
+        try:
+            user = User.objects.get(username=phone_number)
+            # TODO: redirect user to panel
+            return HttpResponse('حساب از قبل وجود دارد')
+        except User.DoesNotExist:
+            user = User(
+                username=phone_number, first_name=cd.get('first_name'), last_name=cd.get('last_name'),
+                email=cd.get('email')
+            )
+            user.save()
+            # TODO: redirect user to panel
+            return HttpResponse('حساب با موفقیت ساخته شد')
+
+    context = {
+        'form': register_form,
+        'phone_number': phone_number
+    }
+    return render(request, 'accounts/registration/register.html', context)
