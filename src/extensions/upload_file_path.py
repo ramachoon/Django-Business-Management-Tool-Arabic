@@ -2,11 +2,7 @@ import random
 import os
 
 
-def upload_path(path):
-    def wrapper(instance, filename):
-        extension = "." + filename.split('.')[-1]
-        filename = str(random.randint(10, 99)) + str(random.randint(10, 99)) + str(random.randint(10, 99)) + str(
-            random.randint(10, 99)) + extension
-        return os.path.join(path, filename)
-
-    return wrapper
+def get_filename_ext(filepath):
+    base_name = os.path.basename(filepath)
+    name, ext = os.path.splitext(base_name)
+    return name, ext
