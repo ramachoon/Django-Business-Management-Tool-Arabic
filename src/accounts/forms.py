@@ -8,7 +8,7 @@ class LoginForm(forms.Form):
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'شماره موبایل'
         }),
         help_text='شماره موبایل با 09 شروع شود',
-        label='شماره موبایل'
+        label='شماره موبایل',
     )
 
     def clean_phone_number(self):
@@ -19,3 +19,14 @@ class LoginForm(forms.Form):
         if len(phone_number) != 11 and not result:
             raise forms.ValidationError('شماره موبایل صحیح نمیباشد.')
         return phone_number
+
+
+class VerifyOtpForm(forms.Form):
+    code = forms.CharField(
+        widget=forms.NumberInput(attrs={
+            'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'کد تائید'
+        }),
+        label='کد تائید',
+        min_length=6,
+        max_length=6
+    )
