@@ -8,6 +8,7 @@ from django.urls import reverse
 from django.utils import timezone
 from django.contrib import messages
 
+from src.extensions.sms_services import send_otp_sms
 from .forms import LoginForm, VerifyOtpForm, RegisterForm
 from accounts.models import PhoneOtp, User
 
@@ -21,7 +22,7 @@ def otp_login(request):
     if login_form.is_valid():
         phone_number = login_form.cleaned_data.get('phone_number')
         _code = random.randint(111111, 999999)
-        print(_code)
+        send_otp_sms(phone_number, _code)
         hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
 
         request.session['phone_number'] = phone_number
@@ -60,7 +61,6 @@ def verify_phone_otp(request):
         # check phone_otp is exist and check the past moments.
         if phone_otp.exists() and \
                 timezone.now().minute - phone_otp.first().updated.minute <= 5:
-            print('Trueeeeeeeeee')
             # get user and authenticate
             try:
                 user = User.objects.get(username=phone_number)
@@ -101,6 +101,7 @@ def register(request):
                 email=cd.get('email')
             )
             user.save()
+            del request.session['phone_number']
             # TODO: redirect user to panel
             return HttpResponse('حساب با موفقیت ساخته شد')
 
