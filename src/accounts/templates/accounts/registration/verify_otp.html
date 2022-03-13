@@ -1,0 +1,44 @@
+{% extends 'accounts/registration/_registration_base.html' %}
+
+{% block title %}
+    ورود به حساب | گروه فلزکاری برادران عبدی
+{% endblock %}
+
+{% block content %}
+    <div class="text-center mb-10 mb-lg-20">
+        <h3 class="font-size-h1">ورود به حساب</h3>
+        <p class="text-muted font-weight-bold">کد تائید خودرا وارد کنید</p>
+    </div>
+
+    <!--begin::Form-->
+    <form class="form" method="post" autocomplete="off">
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.code.label_tag }}
+            {{ form.code }}
+            <ul class="mt-2">
+                <li class="text-dark-50 mb-1">مدت زمان اعتباز کد 5 دقیقه میباشد.</li>
+                <li class="text-dark-50">شماره موبایل وارد شده: {{ phone_number }}</li>
+                {% if form.code.errors %}
+                    {% for error in form.code.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+                {% if messages %}
+                    {% for message in messages %}
+                        <li class="text-danger">{{ message|safe }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
+        <!--begin::اکشن-->
+        <div class="form-group">
+            <button type="submit"
+                    class="btn btn-primary font-weight-bold px-9 py-4 my-3">ارسال
+            </button>
+            <a href="{% url 'account:login' %}" class="btn btn-outline-danger px-9 py-4 my-3">لغو</a>
+        </div>
+        <!--end::اکشن-->
+    </form>
+    <!--end::Form-->
+{% endblock %}
