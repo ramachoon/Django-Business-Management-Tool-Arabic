@@ -11,11 +11,12 @@ from django.contrib import messages
 from src.extensions.sms_services import send_otp_sms
 from .forms import LoginForm, VerifyOtpForm, RegisterForm
 from accounts.models import PhoneOtp, User
+from core.decorators import authenticated_user
 
 
 # Create your views here.
 
-
+@authenticated_user()
 def otp_login(request):
     login_form = LoginForm(request.POST or None)
 
@@ -43,6 +44,7 @@ def otp_login(request):
     return render(request, 'accounts/registration/login.html', context)
 
 
+@authenticated_user()
 def verify_phone_otp(request):
     # raise http404, if http referer is not equal to login.
     http_referer = request.META.get('HTTP_REFERER')
@@ -79,6 +81,7 @@ def verify_phone_otp(request):
     return render(request, 'accounts/registration/verify_otp.html', context)
 
 
+@authenticated_user()
 def register(request):
     http_referer = request.META.get('HTTP_REFERER')
     verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
