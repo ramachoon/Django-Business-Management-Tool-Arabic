@@ -13,6 +13,7 @@
     <!--begin::Form-->
     <form class="form" method="post" autocomplete="off">
         {% csrf_token %}
+        {{ form.captcha }}
         <div class="form-group">
             {{ form.code.label_tag }}
             {{ form.code }}

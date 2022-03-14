@@ -1,8 +1,9 @@
 import re
 from django import forms
+from src.extensions.shared_forms import BaseCaptchaForm
 
 
-class LoginForm(forms.Form):
+class LoginForm(BaseCaptchaForm):
     phone_number = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'شماره موبایل'
@@ -21,7 +22,7 @@ class LoginForm(forms.Form):
         return phone_number
 
 
-class VerifyOtpForm(forms.Form):
+class VerifyOtpForm(BaseCaptchaForm):
     code = forms.CharField(
         widget=forms.NumberInput(attrs={
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'کد تائید'
@@ -32,7 +33,7 @@ class VerifyOtpForm(forms.Form):
     )
 
 
-class RegisterForm(forms.Form):
+class RegisterForm(BaseCaptchaForm):
     first_name = forms.CharField(
         widget=forms.TextInput(attrs={
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'نام'
