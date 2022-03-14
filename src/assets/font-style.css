@@ -1,0 +1,14 @@
+@font-face {
+    font-family: "Iran-Sanse";
+    src: url("/static/fonts/IRANSansWeb.eot");
+    src: url("/static/fonts/IRANSansWeb.eot?#iefix") format("embedded-opentype"),
+    url("/static/fonts/IRANSansWeb.woff2") format("woff2"),
+    url("/static/fonts/IRANSansWeb.woff") format("woff"),
+    url("/static/fonts/IRANSansWeb.ttf") format("truetype");
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body {
+    font-family: "Iran-Sanse" !important;
+}

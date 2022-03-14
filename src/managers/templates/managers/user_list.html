@@ -1,0 +1,347 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block title %}
+    لیست کاربران
+{% endblock %}
+
+{% block content %}
+    <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+        <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::جزئیات-->
+            <div class="d-flex align-items-center flex-wrap mr-2">
+
+                <!--begin::Title-->
+                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    کاربران </h5>
+                <!--end::Title-->
+
+                <!--begin::Separator-->
+                <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                <!--end::Separator-->
+
+                <!--begin::جستجو Form-->
+                <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                            تعداد : {{ users.count }}                                   </span>
+                    <div class="btn-group ml-2">
+                        <button type="button" class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base">
+
+                            فیلتر کاربران
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-primary font-weight-bold btn-sm px-3 font-size-base dropdown-toggle dropdown-toggle-split"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        </button>
+
+                        <div class="dropdown-menu dropdown-menu-sm p-0 m-0 dropdown-menu-right" style="">
+                            <ul class="navi py-5">
+                                <li class="navi-item">
+                                    <a href="?filter=customer" class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon-users"></i></span>
+                                        <span class="navi-text">کارفرمایان</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="?filter=employee" class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon2-medical-records"></i></span>
+                                        <span class="navi-text">کارمندان</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="?filter=manager" class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon-settings"></i></span>
+                                        <span class="navi-text">مدیران</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="?filter=supporter" class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon2-phone"></i></span>
+                                        <span class="navi-text">پشتیبان</span>
+                                    </a>
+                                </li>
+                                <li class="navi-item">
+                                    <a href="?filter=admin" class="navi-link">
+                                        <span class="navi-icon"><i class="flaticon2-add"></i></span>
+                                        <span class="navi-text">ادمین ها</span>
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--end::جستجو Form-->
+
+                <!--begin::گروه اقدامات-->
+                <div class="d-flex- align-items-center flex-wrap mr-2 d-none" id="kt_subheader_group_actions">
+                    <div class="text-dark-50 font-weight-bold">
+                        <span id="kt_subheader_group_selected_rows">23</span> انتخاب شده :
+                    </div>
+                    <div class="d-flex ml-6">
+                        <div class="dropdown mr-2" id="kt_subheader_group_actions_status_change">
+                            <button type="button"
+                                    class="btn btn-light-primary font-weight-bolder btn-sm dropdown-toggle"
+                                    data-toggle="dropdown">
+                                وضعیت آپدیت
+                            </button>
+                            <div class="dropdown-menu p-0 m-0 dropdown-menu-sm">
+                                <ul class="navi navi-hover pt-3 pb-4">
+                                    <li class="navi-header font-weight-bolder text-uppercase text-primary font-size-lg pb-0">
+                                        تغییر وضعیت:
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link" data-toggle="status-change" data-status="1">
+                                            <span class="navi-text"><span
+                                                    class="label label-light-success label-inline font-weight-bold">تایید شده</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link" data-toggle="status-change" data-status="2">
+                                            <span class="navi-text"><span
+                                                    class="label label-light-danger label-inline font-weight-bold">رد شد</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link" data-toggle="status-change" data-status="3">
+                                            <span class="navi-text"><span
+                                                    class="label label-light-warning label-inline font-weight-bold">در انتظار</span></span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="#" class="navi-link" data-toggle="status-change" data-status="4">
+                                            <span class="navi-text"><span
+                                                    class="label label-light-info label-inline font-weight-bold">انتظار</span></span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <button class="btn btn-light-success font-weight-bolder btn-sm mr-2"
+                                id="kt_subheader_group_actions_fetch" data-toggle="modal"
+                                data-target="#kt_datatable_records_fetch_modal">
+                            Fetch انتخاب شده
+                        </button>
+                        <button class="btn btn-light-danger font-weight-bolder btn-sm mr-2"
+                                id="kt_subheader_group_actions_delete_all">
+                            حذف همه
+                        </button>
+                    </div>
+                </div>
+                <!--end::گروه اقدامات-->
+            </div>
+            <!--end::جزئیات-->
+
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center">
+
+                <!--begin::دکمه-->
+                <a href="custom/apps/user/add-user.html" class="btn btn-light-primary font-weight-bold ml-2">
+
+                    افزودن کاربر </a>
+                <!--end::دکمه-->
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <!--begin::Row-->
+            <div class="row">
+
+                {% for user in users %}
+                    <!--begin::Col-->
+                    <div class="col-xl-3 col-lg-6 col-md-6 col-sm-6">
+                        <!--begin::Card-->
+                        <div class="card card-custom gutter-b card-stretch">
+                            <!--begin::Body-->
+                            <div class="card-body pt-4">
+                                <!--begin::Toolbar-->
+                                <div class="d-flex justify-content-end">
+                                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title=""
+                                         data-placement="left" data-original-title="اقدامات سریع">
+                                        <a href="#" class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="ki ki-bold-more-hor"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                                            <!--begin::Navigation-->
+                                            <ul class="navi navi-hover">
+                                                <li class="navi-header font-weight-bold py-4">
+                                                    <span class="font-size-lg">انتخاب کنید:</span>
+                                                    <i class="flaticon2-information icon-md text-muted"
+                                                       data-toggle="tooltip" data-placement="right" title=""
+                                                       data-original-title="برای اطلاعات بیشتر کلیک کنید..."></i>
+                                                </li>
+                                                <li class="navi-separator mb-3 opacity-70"></li>
+                                                <li class="navi-item">
+                                                    <a href=""
+                                                       class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-warning">ویرایش</span>
+            </span>
+                                                    </a>
+                                                </li>
+                                                <li class="navi-item">
+                                                    <a href="javascript:void(0)"
+                                                       data-user-id="{{ user.pk }}" class="navi-link delete_user">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-danger" id="delete_user_text">
+                    {% if user.is_active %}
+                        حذف
+                    {% else %}
+                        بازگردانی
+                    {% endif %}
+                </span>
+            </span>
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                            <!--end::Navigation-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Toolbar-->
+                                <!--begin::User-->
+                                <div class="d-flex align-items-center mb-7">
+                                    <!--begin::Pic-->
+                                    <div class="flex-shrink-0 mr-4 mt-lg-0 mt-3">
+
+                                        {% if user.is_superuser %}
+                                            <div class="symbol symbol-lg-75 symbol-circle symbol-danger">
+                                                <div class="symbol symbol-circle symbol-lg-75">
+                                                    <img src="{{ user.avatar.url }}" alt="تصویر پروفایل">
+                                                </div>
+                                            </div>
+                                        {% elif user.is_staff %}
+                                            <div class="symbol symbol-lg-75 symbol-circle symbol-warning">
+                                                <div class="symbol symbol-circle symbol-lg-75">
+                                                    <img src="{{ user.avatar.url }}" alt="تصویر پروفایل">
+                                                </div>
+                                            </div>
+                                        {% elif user.customer %}
+                                            <div class="symbol symbol-lg-75 symbol-circle symbol-success">
+                                                <div class="symbol symbol-circle symbol-lg-75">
+                                                    <img src="{{ user.avatar.url }}" alt="تصویر پروفایل">
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <div class="symbol symbol-lg-75 symbol-circle symbol-info">
+                                                <div class="symbol symbol-circle symbol-lg-75">
+                                                    <img src="{{ user.avatar.url }}" alt="تصویر پروفایل">
+                                                </div>
+                                            </div>
+                                        {% endif %}
+
+                                    </div>
+                                    <!--end::Pic-->
+                                    <!--begin::Title-->
+                                    <div class="d-flex flex-column">
+                                        <a href=""
+                                           class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ user.get_full_name }}</a>
+                                    </div>
+                                    <!--end::Title-->
+                                </div>
+                                <!--end::User-->
+                                <!--begin::Desc -->
+                                <p class="mb-7">
+                                    {{ user.bio }}
+                                </p>
+                                <!--end::Desc -->
+                                <!--begin:: اطلاعات-->
+                                <div class="mb-7">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">ایمیل :</span>
+                                        <a href="mailto:{{ user.email }}"
+                                           class="text-muted text-hover-primary">{{ user.email }}</a>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-cente my-2">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">شماره تلفن:</span>
+                                        <a href="tel:{{ user.username }}" class="text-muted text-hover-primary">
+                                            {{ user.username }}
+                                        </a>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center my-2">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">آخرین ورود :</span>
+                                        <span class="text-muted">
+                                            {% if user.last_login %}
+                                                {{ user.last_login|naturaltime }}
+                                            {% else %}
+                                                ثبت نشده
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">سطح:</span>
+                                        {% if user.is_superuser %}
+                                            <span class="text-danger font-weight-bold">مدیر</span>
+                                        {% elif user.is_staff %}
+                                            <span class="text-warning font-weight-bold">ارشد</span>
+                                        {% elif user.is_customer %}
+                                            <span class="text-success font-weight-bold">کارفرما</span>
+                                        {% elif user.is_employee %}
+                                            <span class="text-info font-weight-bold">کارمند</span>
+                                        {% elif user.is_admin %}
+                                            <span class="text-primary font-weight-bold">ادمین</span>
+                                        {% elif user.is_supporter %}
+                                            <span class="text-info font-weight-bold">پشتیبان</span>
+                                        {% endif %}
+                                    </div>
+                                </div>
+                                <!--end::اطلاعات -->
+                                <a href=""
+                                   class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">
+                                    ویرایش</a>
+                            </div>
+                            <!--end::Body-->
+                        </div>
+                        <!--end::Card-->
+                    </div>
+                {% empty %}
+                    <div class="col-12">
+                        <div class="alert  alert-custom alert-secondary" role="alert">
+                            <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
+                            <div class="alert-text">
+                                کاربری یافت نشد.
+                                <a href="">ایجاد کاربر جدید</a>
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+
+            </div>
+            <!--begin::صفحه بندی-->
+            {% if is_paginated %}
+                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                    <div class="d-flex flex-wrap mr-3">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}"
+                               class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
+                                    class="ki ki-bold-double-arrow-next icon-xs"></i></a>
+                        {% endif %}
+
+                        {% for page in paginator.page_range %}
+                            <a
+                                    href="?page={{ page }}"
+                                    class="btn btn-icon btn-sm border-0 btn-hover-primary mr-2 my-1 {% if page == page_obj.number %}
+                                active
+                                {% endif %}"
+                            >{{ page }}</a>
+                        {% endfor %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}"
+                               class="btn btn-icon btn-sm btn-light-primary mr-2 my-1"><i
+                                    class="ki ki-bold-double-arrow-back icon-xs"></i></a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!--end::صفحه بندی-->
+        </div>
+        <!--end::Container-->
+    </div>
+{% endblock %}
