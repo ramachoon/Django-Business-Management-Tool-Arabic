@@ -22,7 +22,7 @@ def otp_login(request):
     if login_form.is_valid():
         phone_number = login_form.cleaned_data.get('phone_number')
         _code = random.randint(111111, 999999)
-        print(send_otp_sms(phone_number, _code))
+        send_otp_sms(phone_number, _code)
         hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
 
         request.session['phone_number'] = phone_number
@@ -66,7 +66,7 @@ def verify_phone_otp(request):
                 user = User.objects.get(username=phone_number)
                 login(request, user=user)
                 del request.session['phone_number']
-                # TODO: redirect user to panel
+                return redirect(reverse('core:main_view'))
             except User.DoesNotExist:
                 return redirect(reverse('account:register'))
         else:
@@ -94,8 +94,7 @@ def register(request):
 
         try:
             user = User.objects.get(username=phone_number)
-            # TODO: redirect user to panel
-            return HttpResponse('حساب از قبل وجود دارد')
+            return redirect(reverse('core:main_view'))
         except User.DoesNotExist:
             user = User(
                 username=phone_number, first_name=cd.get('first_name'), last_name=cd.get('last_name'),
@@ -104,8 +103,7 @@ def register(request):
             user.save()
             login(request, user=user)
             del request.session['phone_number']
-            # TODO: redirect user to panel
-            return HttpResponse('حساب با موفقیت ساخته شد')
+            return redirect(reverse('core:main_view'))
 
     context = {
         'form': register_form,
