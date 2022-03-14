@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'captcha',
 
     # manual apps
     'accounts',
@@ -139,3 +140,6 @@ SMS_PANEL_USERNAME = config('SMS_PANEL_USERNAME')
 SMS_PANEL_PASSWORD = config('SMS_PANEL_PASSWORD')
 SMS_PANEL_PHONE_NUMBER = config('SMS_PANEL_PHONE_NUMBER')
 SMS_PANEL_SAMPLE_API = config('SMS_PANEL_SAMPLE_API')
+
+RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
+RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')

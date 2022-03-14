@@ -12,7 +12,8 @@
 
     <!--begin::Form-->
     <form class="form" method="post" autocomplete="off">
-    {% csrf_token %}
+        {% csrf_token %}
+        {{ form.captcha }}
         <div class="form-group">
             {{ form.phone_number.label_tag }}
             {{ form.phone_number }}

@@ -66,6 +66,7 @@ def verify_phone_otp(request):
                 user = User.objects.get(username=phone_number)
                 login(request, user=user)
                 del request.session['phone_number']
+                # TODO: redirect user to panel
             except User.DoesNotExist:
                 return redirect(reverse('account:register'))
         else:
@@ -98,9 +99,10 @@ def register(request):
         except User.DoesNotExist:
             user = User(
                 username=phone_number, first_name=cd.get('first_name'), last_name=cd.get('last_name'),
-                email=cd.get('email')
+                email=cd.get('email'), is_customer=True
             )
             user.save()
+            login(request, user=user)
             del request.session['phone_number']
             # TODO: redirect user to panel
             return HttpResponse('حساب با موفقیت ساخته شد')
