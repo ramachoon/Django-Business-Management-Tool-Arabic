@@ -1,0 +1,327 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+
+{% block title %}
+    ایجاد کاربر
+{% endblock %}
+
+{% block content %}
+    {% with request.resolver_match.url_name as url_name %}
+        <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+            <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::جزئیات-->
+                <div class="d-flex align-items-center flex-wrap mr-2">
+
+                    <!--begin::Title-->
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        کاربران </h5>
+                    <!--end::Title-->
+
+                    <!--begin::Separator-->
+                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                    <!--end::Separator-->
+
+                    <!--begin::جستجو Form-->
+                    <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                            جزئیات کاربر را وارد  کنید                                    </span>
+                    </div>
+                    <!--end::جستجو Form-->
+
+                </div>
+                <!--end::جزئیات-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <!--begin::دکمه-->
+                    <a href="{% url 'managers:user_list' %}" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+
+                        بازگشت </a>
+                    <!--end::دکمه-->
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+
+        <div class="d-flex flex-column-fluid">
+            <!--begin::Container-->
+            <div class=" container ">
+                <!--begin::Card-->
+                <div class="card card-custom card-transparent">
+                    <div class="card-body p-0">
+                        <!--begin::ویزارد-->
+                        <div class="wizard wizard-4" id="kt_wizard" data-wizard-state="first"
+                             data-wizard-clickable="true">
+                            <!--begin::ویزارد Nav-->
+                            <div class="wizard-nav">
+                                <div class="wizard-steps">
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="current">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">
+                                                1
+                                            </div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title">
+                                                    اکانت
+                                                </div>
+                                                <div class="wizard-desc">
+                                                    اطلاعات حساب
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">
+                                                2
+                                            </div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title">
+                                                    پروفایل
+                                                </div>
+                                                <div class="wizard-desc">
+                                                    اطلاعات پروفایل
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">
+                                                3
+                                            </div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title">
+                                                    اطلاعات کاری
+                                                </div>
+                                                <div class="wizard-desc">
+                                                    موقعیت و شماره تلفن
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="wizard-step" data-wizard-type="step" data-wizard-state="pending">
+                                        <div class="wizard-wrapper">
+                                            <div class="wizard-number">
+                                                4
+                                            </div>
+                                            <div class="wizard-label">
+                                                <div class="wizard-title">
+                                                    ایجاد
+                                                </div>
+                                                <div class="wizard-desc">
+                                                    بررسی و ایجاد کنید
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--end::ویزارد Nav-->
+
+                            <!--begin::Card-->
+                            <div class="card card-custom card-shadowless rounded-top-0">
+                                <!--begin::Body-->
+                                <div class="card-body p-0">
+                                    <div class="row justify-content-center py-8 px-8 py-lg-15 px-lg-10">
+                                        <div class="col-xl-12 col-xxl-10">
+                                            <!--begin::ویزارد Form-->
+                                            <form class="form fv-plugins-bootstrap fv-plugins-framework" id="kt_form"
+                                                  method="post" autocomplete="off">
+                                                {% csrf_token %}
+                                                <div class="row justify-content-center">
+                                                    <div class="col-xl-9">
+                                                        <!--begin::ویزارد گام 1-->
+                                                        <div class="my-5 step" data-wizard-type="step-content"
+                                                             data-wizard-state="current">
+                                                            <h5 class="text-dark font-weight-bold mb-10"></h5>
+
+                                                            <!--begin::گروه-->
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">شماره
+                                                                    موبایل</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.username }}
+                                                                </div>
+                                                                {% if form.username.errors %}
+                                                                    <span class="form-text text-danger">
+                                                                {{ form.username.errors }}
+                                                                </span>
+                                                                {% endif %}
+                                                            </div>
+
+                                                            <!--begin::گروه-->
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">ایمیل</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.email }}
+                                                                </div>
+                                                                {% if form.email.errors %}
+                                                                    <span class="form-text text-danger">
+                                                                {{ form.email.errors }}
+                                                                </span>
+                                                                {% endif %}
+                                                            </div>
+
+                                                        </div>
+                                                        <!--end::ویزارد گام 1-->
+
+                                                        <!--begin::ویزارد گام 2-->
+                                                        <div class="my-5 step" data-wizard-type="step-content">
+                                                            <h5 class="text-dark font-weight-bold mb-10 mt-5">اطلاعات
+                                                                پروفایل</h5>
+                                                            <!--begin::گروه-->
+
+                                                            <!--begin::گروه-->
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">نام</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.first_name }}
+                                                                </div>
+                                                            </div>
+
+                                                            <!--begin::گروه-->
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">نام
+                                                                    خانوادگی</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.last_name }}
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--end::ویزارد گام 2-->
+
+                                                        <!--begin::ویزارد گام 3-->
+                                                        <div class="my-5 step" data-wizard-type="step-content">
+                                                            <h5 class="mb-10 font-weight-bold text-dark">سطوح
+                                                                دسترسی</h5>
+
+                                                            <!--begin::گروه-->
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <div class="col-xl-9 col-lg-9">
+                                                                    <div class="checkbox-inline flex-column">
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_superuser }}
+                                                                            <span></span>
+                                                                            مدیر
+                                                                        </label>
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_staff }}
+                                                                            <span></span>
+                                                                            ارشد
+                                                                        </label>
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_employee }}
+                                                                            <span></span>
+                                                                            کارمند
+                                                                        </label>
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_customer }}
+                                                                            <span></span>
+                                                                            کارفرما (مشتری)
+                                                                        </label>
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_admin }}
+                                                                            <span></span>
+                                                                            ادمین
+                                                                        </label>
+                                                                        <label class="checkbox checkbox-outline checkbox-info mb-2">
+                                                                            {{ form.is_supporter }}
+                                                                            <span></span>
+                                                                            پشتیبان
+                                                                        </label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                        <!--end::ویزارد گام 3-->
+
+                                                        <!--begin::ویزارد گام 4-->
+                                                        <div class="my-5 step" data-wizard-type="step-content">
+                                                            <h5 class="mb-10 font-weight-bold text-dark">بررسی کنید و
+                                                                ارسال
+                                                                کنید</h5>
+
+                                                            <!--begin::Item-->
+                                                            <div class="border-bottom mb-5 pb-5">
+                                                                <div class="font-weight-bolder  mb-3">
+                                                                    جزئیات اکانت شما:
+                                                                </div>
+                                                                <div class="line-height-xl">
+                                                                    {% if url_name == 'user_create' %}
+                                                                        اطلاعات کاربر برای شما پیامک خواهد شد
+                                                                    {% elif url_name == 'user_update' %}
+                                                                        کاربر ویرایش خواهد شد
+                                                                    {% endif %}
+                                                                </div>
+                                                            </div>
+                                                            <!--end::Item-->
+
+                                                        </div>
+                                                        <!--end::ویزارد گام 4-->
+
+                                                        <!--begin::ویزارد اقدامات-->
+                                                        <div class="d-flex justify-content-between pt-10 mt-15">
+                                                            <div class="mr-2">
+                                                                <button type="button" id="prev-step"
+                                                                        class="btn btn-light-primary font-weight-bolder px-9 py-4"
+                                                                        data-wizard-type="action-prev">
+                                                                    قبلی
+                                                                </button>
+                                                            </div>
+                                                            <div>
+                                                                {% if url_name == 'user_create' %}
+                                                                    <button type="submit"
+                                                                            class="btn btn-success font-weight-bolder px-9 py-4"
+                                                                            data-wizard-type="action-submit">
+                                                                        ایجاد
+                                                                    </button>
+                                                                {% elif url_name == 'user_update' %}
+                                                                    <button type="submit"
+                                                                            class="btn btn-warning font-weight-bolder px-9 py-4"
+                                                                            data-wizard-type="action-submit">
+                                                                        ویرایش
+                                                                    </button>
+                                                                {% endif %}
+
+                                                                <button type="button" id="next-step"
+                                                                        class="btn btn-primary font-weight-bolder px-9 py-4"
+                                                                        data-wizard-type="action-next">
+                                                                    بعد
+                                                                </button>
+                                                            </div>
+                                                        </div>
+                                                        <!--end::ویزارد اقدامات-->
+                                                    </div>
+                                                </div>
+                                                <div></div>
+                                                <div></div>
+                                                <div></div>
+                                            </form>
+                                            <!--end::ویزارد Form-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--end::Body-->
+                            </div>
+                            <!--end::Card-->
+                        </div>
+                        <!--end::ویزارد-->
+                    </div>
+                </div>
+                <!--end::Card-->
+            </div>
+            <!--end::Container-->
+        </div>
+    {% endwith %}
+{% endblock %}
+
+{% block new_css_code %}
+    <link href="{% static 'managers/css/wizard/wizard-4.rtl.css' %}" rel="stylesheet" type="text/css">
+{% endblock %}
+
+{% block new_js_code %}
+    <script src="{% static 'managers/js/users/add-user.js' %}"></script>
+{% endblock %}
