@@ -1,9 +1,11 @@
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from accounts.models import User
 
-from .forms import UsersForm
+from accounts.forms import UsersForm
+from core.decorators import superuser_access_decorator
 from core.mixins import (
     SuperuserAccessMixin
 )
@@ -33,7 +35,7 @@ class UsersList(SuperuserAccessMixin, ListView):
     paginate_by = 9
 
 
-class UserCreate(SuperuserAccessMixin, CreateView):
+class UserCreate(CreateView):
     model = User
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
@@ -57,3 +59,21 @@ class UserDelete(SuperuserAccessMixin, DeleteView):
 
     template_name = 'managers/user_delete.html'
     success_url = reverse_lazy('managers:user_list')
+
+
+@superuser_access_decorator()
+def user_activate_deactivate(request, *args, **kwargs):
+    user_id = request.POST['user_id']
+
+    try:
+        message = 'deactivate'
+        user = User.objects.get(id=user_id)
+        if user.is_active:
+            user.is_active = False
+        elif not user.is_active:
+            user.is_active = True
+            message = 'activate'
+        user.save()
+        return HttpResponse(message, status=200)
+    except User.DoesNotExist:
+        return HttpResponse(status=502)
