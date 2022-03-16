@@ -4,12 +4,15 @@ from django.views.generic import ListView, CreateView, UpdateView
 from accounts.models import User
 
 from .forms import UsersForm
+from core.mixins import (
+    SuperuserAccessMixin
+)
 
 
 # Create your views here.
 
 
-class UsersList(ListView):
+class UsersList(SuperuserAccessMixin, ListView):
     def get_queryset(self):
         users = User.objects.all().order_by('-id')
         filter_params = self.request.GET.get('filter')
@@ -30,14 +33,14 @@ class UsersList(ListView):
     paginate_by = 9
 
 
-class UserCreate(CreateView):
+class UserCreate(SuperuserAccessMixin, CreateView):
     model = User
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
     form_class = UsersForm
 
 
-class UserUpdate(UpdateView):
+class UserUpdate(SuperuserAccessMixin, UpdateView):
     def get_object(self, queryset=None):
         user = get_object_or_404(User, id=self.kwargs.get('pk'))
         return user
