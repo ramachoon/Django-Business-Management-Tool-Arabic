@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
     'captcha',
+    'crispy_forms',
 
     # manual apps
     'accounts',
@@ -146,3 +147,5 @@ SMS_PANEL_SAMPLE_API = config('SMS_PANEL_SAMPLE_API')
 
 RECAPTCHA_PUBLIC_KEY = config('RECAPTCHA_PUBLIC_KEY')
 RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'

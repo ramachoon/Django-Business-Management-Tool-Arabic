@@ -137,7 +137,7 @@
             <div class="d-flex align-items-center">
 
                 <!--begin::دکمه-->
-                <a href="custom/apps/user/add-user.html" class="btn btn-light-primary font-weight-bold ml-2">
+                <a href="{% url 'managers:user_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
 
                     افزودن کاربر </a>
                 <!--end::دکمه-->
@@ -259,7 +259,7 @@
                                            class="text-muted text-hover-primary">{{ user.email }}</a>
                                     </div>
                                     <div class="d-flex justify-content-between align-items-cente my-2">
-                                        <span class="text-dark-75 font-weight-bolder mr-2">شماره تلفن:</span>
+                                        <span class="text-dark-75 font-weight-bolder mr-2">شماره موبایل:</span>
                                         <a href="tel:{{ user.username }}" class="text-muted text-hover-primary">
                                             {{ user.username }}
                                         </a>
@@ -295,6 +295,9 @@
                                 <a href=""
                                    class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">
                                     ویرایش</a>
+                            <a href=""
+                                   class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4">
+                                    ویرایش</a>
                             </div>
                             <!--end::Body-->
                         </div>
@@ -306,7 +309,7 @@
                             <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
                             <div class="alert-text">
                                 کاربری یافت نشد.
-                                <a href="">ایجاد کاربر جدید</a>
+                                <a href="{% url 'managers:user_create' %}">ایجاد کاربر جدید</a>
                             </div>
                         </div>
                     </div>
