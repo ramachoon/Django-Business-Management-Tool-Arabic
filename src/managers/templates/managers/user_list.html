@@ -186,15 +186,11 @@
                                                     </a>
                                                 </li>
                                                 <li class="navi-item">
-                                                    <a href="javascript:void(0)"
+                                                    <a href="{% url 'managers:user_delete' user.pk %}"
                                                        data-user-id="{{ user.pk }}" class="navi-link delete_user">
             <span class="navi-text">
                 <span class="label label-xl label-inline label-light-danger" id="delete_user_text">
-                    {% if user.is_active %}
-                        حذف
-                    {% else %}
-                        بازگردانی
-                    {% endif %}
+                    حذف
                 </span>
             </span>
                                                     </a>
@@ -295,7 +291,7 @@
                                 <a href="{% url 'managers:user_update' user.pk %}"
                                    class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">
                                     ویرایش</a>
-                            <a href=""
+                                <a href=""
                                    class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4">
                                     غیرفعال</a>
                             </div>
