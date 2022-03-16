@@ -1,5 +1,6 @@
+from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, UpdateView
 from accounts.models import User
 
 from .forms import UsersForm
@@ -31,6 +32,16 @@ class UsersList(ListView):
 
 class UserCreate(CreateView):
     model = User
+    template_name = 'managers/user_create_update.html'
+    success_url = reverse_lazy('managers:user_list')
+    form_class = UsersForm
+
+
+class UserUpdate(UpdateView):
+    def get_object(self, queryset=None):
+        user = get_object_or_404(User, id=self.kwargs.get('pk'))
+        return user
+
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
     form_class = UsersForm
