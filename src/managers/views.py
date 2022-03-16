@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from accounts.models import User
 
 from .forms import UsersForm
@@ -48,3 +48,12 @@ class UserUpdate(SuperuserAccessMixin, UpdateView):
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
     form_class = UsersForm
+
+
+class UserDelete(SuperuserAccessMixin, DeleteView):
+    def get_object(self, queryset=None):
+        user = get_object_or_404(User, id=self.kwargs.get('pk'))
+        return user
+
+    template_name = 'managers/user_delete.html'
+    success_url = reverse_lazy('managers:user_list')
