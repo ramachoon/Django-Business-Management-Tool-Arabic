@@ -291,9 +291,15 @@
                                 <a href="{% url 'managers:user_update' user.pk %}"
                                    class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">
                                     ویرایش</a>
-                                <a href=""
-                                   class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4">
-                                    غیرفعال</a>
+                                {% if user.is_active %}
+                                    <a href="javascript:void(0)" data-id="{{ user.pk }}"
+                                       class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4 user_is_active">
+                                        غیرفعال کردن</a>
+                                {% else %}
+                                    <a href="javascript:void(0)" data-id="{{ user.pk }}"
+                                       class="btn btn-block btn-sm btn-light-warning font-weight-bolder text-uppercase py-4 user_is_active">
+                                        فعال کردن</a>
+                                {% endif %}
                             </div>
                             <!--end::Body-->
                         </div>
@@ -343,4 +349,53 @@
         </div>
         <!--end::Container-->
     </div>
+{% endblock %}
+
+{% block new_js_code %}
+    <script src="{% static 'js/miscellaneous/toastr.js' %}"></script>
+    <script>
+        $(document).ready(function () {
+            toastr.options = {
+                "closeButton": false,
+                "newestOnTop": false,
+                "progressBar": false,
+                "positionClass": "toast-bottom-center",
+                "preventDuplicates": false,
+                "onclick": null,
+                "showDuration": "300",
+                "hideDuration": "1000",
+                "timeOut": "5000",
+                "extendedTimeOut": "1000",
+                "showEasing": "swing",
+                "hideEasing": "linear",
+                "showMethod": "fadeIn",
+                "hideMethod": "fadeOut"
+            }
+            $('.user_is_active').click(function () {
+                var userId = $(this).attr('data-id')
+                console.log(userId)
+                $.ajax({
+                    url: '{% url "managers:user_is_active" %}',
+                    method: 'POST',
+                    data: {
+                        'csrfmiddlewaretoken': '{{ csrf_token }}',
+                        'user_id': userId
+                    }
+                }).done(function (data) {
+                    var clicked = $(`[data-id=${userId}]`)
+                    if (data === 'deactivate') {
+                        toastr.info('---------کاربر غیر فعال شد')
+                        clicked.removeClass('btn-light-danger')
+                        clicked.addClass('btn-light-warning')
+                        clicked.text('فعال کردن')
+                    } else if (data === 'activate') {
+                        toastr.info('---------کاربر فعال شد')
+                        clicked.addClass('btn-light-danger')
+                        clicked.removeClass('btn-light-warning')
+                        clicked.text('غیرفعال کردن')
+                    }
+                })
+            })
+        })
+    </script>
 {% endblock %}
