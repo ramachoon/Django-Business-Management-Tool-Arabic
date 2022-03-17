@@ -39,14 +39,19 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.humanize',
+
+    # third-party packages
     'captcha',
     'crispy_forms',
+    'django_jalali',
+    'jalali_date',
 
     # manual apps
     'accounts',
     'core',
     'managers',
     'departments',
+    'projects',
 ]
 
 MIDDLEWARE = [
