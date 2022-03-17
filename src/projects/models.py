@@ -46,6 +46,7 @@ class Project(models.Model):
     class Meta:
         verbose_name = 'پروژه'
         verbose_name_plural = 'پروژه ها'
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.name} -> {self.department.name}"
@@ -98,6 +99,7 @@ class WorkDay(models.Model):
     class Meta:
         verbose_name = 'روز کاری'
         verbose_name_plural = 'روزهای کاری'
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.date.year}/{self.date.month}/{self.date.day} | {self.get_day_display()}"
