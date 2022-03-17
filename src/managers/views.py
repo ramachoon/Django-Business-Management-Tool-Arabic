@@ -11,6 +11,7 @@ from core.mixins import (
 )
 from departments.forms import DepartmentForm
 from departments.models import Department
+from projects.forms import ProjectsForm
 from projects.models import Project
 
 
@@ -146,3 +147,14 @@ class ProjectsList(SuperuserAccessMixin, ListView):
 class ProjectDetail(SuperuserAccessMixin, DetailView):
     model = Project
     template_name = 'managers/project_detail.html'
+
+
+class ProjectCreate(SuperuserAccessMixin, CreateView):
+    model = Project
+    template_name = 'managers/project_create_update.html'
+    form_class = ProjectsForm
+
+class ProjectUpdate(SuperuserAccessMixin, UpdateView):
+    model = Project
+    template_name = 'managers/project_create_update.html'
+    form_class = ProjectsForm
