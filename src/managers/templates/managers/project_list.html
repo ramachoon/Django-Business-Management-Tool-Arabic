@@ -35,7 +35,7 @@
             <div class="d-flex align-items-center">
 
                 <!--begin::دکمه-->
-                <a href="{% url 'managers:user_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
+                <a href="{% url 'managers:project_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
 
                     ایجاد پروژه </a>
                 <!--end::دکمه-->
@@ -266,7 +266,7 @@
                             <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
                             <div class="alert-text">
                                 پروژه ای یافت نشد.
-                                <a href="">ایجاد پروژه جدید</a>
+                                <a href="{% url 'managers:project_create' %}">ایجاد پروژه جدید</a>
                             </div>
                         </div>
                     </div>
