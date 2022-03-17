@@ -15,6 +15,16 @@ ACCESSIBILITY_CHOICES = (
     ('only_customer', 'فقط کارفرما')
 )
 
+DAYS_CHOICES = (
+    ('saturday', 'شنبه'),
+    ('sunday', 'یک شنبه'),
+    ('monday', 'دو شنبه'),
+    ('tuesday', 'سه شنبه'),
+    ('wednesday', 'چهار شنبه'),
+    ('thursday', 'پنجشنبه'),
+    ('friday', 'جمعه'),
+)
+
 
 class Project(models.Model):
     name = models.CharField(max_length=150, verbose_name='نام پروژه')
@@ -68,3 +78,38 @@ class Project(models.Model):
             'final_date': final_date.days,
             'progress': int(progress)
         }
+
+
+class WorkDay(models.Model):
+    project = models.ForeignKey(
+        Project, on_delete=models.CASCADE, verbose_name='پروژه', related_name='workdays'
+    )
+    day = models.CharField(max_length=20, choices=DAYS_CHOICES, verbose_name='روز')
+    date = jmodels.jDateField(verbose_name='تاریخ')
+    start_time = models.TimeField(default=timezone.now, verbose_name='ساعت شروع کار')
+    end_time = models.TimeField(default=timezone.now, verbose_name='ساعت پایان کار')
+    accessibility = models.CharField(
+        max_length=13, choices=ACCESSIBILITY_CHOICES, null=True, blank=True, verbose_name='دسترسی'
+    )
+    employees = models.ManyToManyField(User, related_name='workdays', verbose_name='کارمندان')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'روز کاری'
+        verbose_name_plural = 'روزهای کاری'
+
+    def __str__(self):
+        return f"{self.date.year}/{self.date.month}/{self.date.day} | {self.get_day_display()}"
+
+    def get_name_replace(self):
+        return f"{self.date.year}-{self.date.month}-{self.date.day}-{self.day}"
+
+    def get_created_jalali(self):
+        return jalali_converter(self.created)
+
+    def get_updated_jalali(self):
+        return jalali_converter(self.updated)
+
+    # def get_absolute_url(self):
+    #     return reverse('projects:detail', kwargs={'pk': self.project.pk, 'name': self.project.get_name_replace()})
