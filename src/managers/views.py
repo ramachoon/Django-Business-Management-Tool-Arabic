@@ -139,5 +139,10 @@ class ProjectsList(SuperuserAccessMixin, ListView):
     model = Project
     template_name = 'managers/project_list.html'
     context_object_name = 'projects'
-    paginate_by = 9
+    paginate_by = 6
     ordering = '-id'
+
+
+class ProjectDetail(SuperuserAccessMixin, DetailView):
+    model = Project
+    template_name = 'managers/project_detail.html'

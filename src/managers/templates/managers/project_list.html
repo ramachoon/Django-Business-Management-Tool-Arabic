@@ -66,7 +66,7 @@
                                     <!--begin::اطلاعات-->
                                     <div class="d-flex flex-column mr-auto">
                                         <!--begin: Title-->
-                                        <a href=""
+                                        <a href="{% url 'managers:project_detail' project.pk %}"
                                            class="card-title text-hover-primary font-weight-bolder font-size-h5 text-dark mb-1">
                                             {{ project.name }}
                                         </a>
@@ -251,9 +251,9 @@
                                         </div>
                                     {% endif %}
                                 </div>
-                                <a href=""
+                                <a href="{% url 'managers:project_detail' project.pk %}"
                                    class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto mr-sm-0 ml-sm-auto">
-                                    جزییات
+                                    جزئیات
                                 </a>
                             </div>
                             <!--end::Footer-->
