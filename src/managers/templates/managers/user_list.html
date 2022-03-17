@@ -373,7 +373,6 @@
             }
             $('.user_is_active').click(function () {
                 var userId = $(this).attr('data-id')
-                console.log(userId)
                 $.ajax({
                     url: '{% url "managers:user_is_active" %}',
                     method: 'POST',
