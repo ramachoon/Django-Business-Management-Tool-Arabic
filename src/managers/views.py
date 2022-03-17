@@ -10,8 +10,8 @@ from core.mixins import (
     SuperuserAccessMixin
 )
 from departments.forms import DepartmentForm
-
 from departments.models import Department
+from projects.models import Project
 
 
 # Create your views here.
@@ -133,3 +133,11 @@ class DepartmentDelete(SuperuserAccessMixin, DeleteView):
 
     template_name = 'managers/department_delete.html'
     success_url = reverse_lazy('managers:department_list')
+
+
+class ProjectsList(SuperuserAccessMixin, ListView):
+    model = Project
+    template_name = 'managers/project_list.html'
+    context_object_name = 'projects'
+    paginate_by = 9
+    ordering = '-id'
