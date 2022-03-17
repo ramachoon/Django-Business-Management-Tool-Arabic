@@ -20,6 +20,7 @@ class Department(models.Model):
     class Meta:
         verbose_name = 'دپارتمان'
         verbose_name_plural = 'دپارتمان ها'
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.name} | {self.description}"

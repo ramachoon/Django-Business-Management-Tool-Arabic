@@ -36,7 +36,7 @@ class UsersList(SuperuserAccessMixin, ListView):
 
     template_name = 'managers/user_list.html'
     context_object_name = 'users'
-    paginate_by = 9
+    paginate_by = 12
 
 
 class UserCreate(CreateView):
