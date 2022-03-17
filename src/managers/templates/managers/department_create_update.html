@@ -1,0 +1,113 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    ایجاد دپارتمان
+{% endblock %}
+
+{% block content %}
+    {% with request.resolver_match.url_name as url_name %}
+        <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+            <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::جزئیات-->
+                <div class="d-flex align-items-center flex-wrap mr-2">
+
+                    <!--begin::Title-->
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        دپارتمان </h5>
+                    <!--end::Title-->
+
+                    <!--begin::Separator-->
+                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                    <!--end::Separator-->
+
+                    <!--begin::جستجو Form-->
+                    <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                            جزئیات دپارتمان را وارد  کنید                                    </span>
+                    </div>
+                    <!--end::جستجو Form-->
+
+                </div>
+                <!--end::جزئیات-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <!--begin::دکمه-->
+                    <a href="{% url 'managers:department_list' %}"
+                       class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+
+                        بازگشت </a>
+                    <!--end::دکمه-->
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+
+        <div class="d-flex flex-column-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-custom example example-compact">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    {% if url_name == 'department_create' %}
+                                        ایجاد دپارتمان
+                                    {% else %}
+                                        ویرایش دپارتمان
+                                    {% endif %}
+                                </h3>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form" method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.name|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label>وضعیت دسترسی*</label>
+                                                <div class="checkbox-inline">
+                                                    <label class="checkbox checkbox-outline checkbox-primary mb-2">
+                                                        {{ form.is_active }}
+                                                        <span></span>
+                                                        فعال
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="form-group">
+                                                {{ form.description|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.staff_users|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {% if url_name == 'department_create' %}
+                                        <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ایجاد
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ویرایش
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </form>
+                            <!-- end::Form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}

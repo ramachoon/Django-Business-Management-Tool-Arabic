@@ -9,6 +9,7 @@ from core.decorators import superuser_access_decorator
 from core.mixins import (
     SuperuserAccessMixin
 )
+from departments.forms import DepartmentForm
 
 from departments.models import Department
 
@@ -96,3 +97,30 @@ class DepartmentDetail(SuperuserAccessMixin, DetailView):
 
     template_name = 'managers/department_detail.html'
     context_object_name = 'department'
+
+
+class DepartmentCreate(SuperuserAccessMixin, CreateView):
+    def form_valid(self, form):
+        department_form = form.save(commit=False)
+        department_form.maker = self.request.user
+        department_form.save()
+        return super(DepartmentCreate, self).form_valid(form)
+
+    model = Department
+    template_name = 'managers/department_create_update.html'
+    form_class = DepartmentForm
+
+
+class DepartmentUpdate(SuperuserAccessMixin, UpdateView):
+    def get_object(self, queryset=None):
+        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
+        return department
+
+    def form_valid(self, form):
+        department_form = form.save(commit=False)
+        department_form.maker = self.request.user
+        department_form.save()
+        return super(DepartmentUpdate, self).form_valid(form)
+
+    template_name = 'managers/department_create_update.html'
+    form_class = DepartmentForm
