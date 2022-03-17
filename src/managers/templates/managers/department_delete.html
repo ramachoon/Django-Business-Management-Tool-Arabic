@@ -1,0 +1,74 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+
+{% block title %}
+    حذف دپارتمان
+{% endblock %}
+
+{% block content %}
+    {% with request.resolver_match.url_name as url_name %}
+        <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+            <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::جزئیات-->
+                <div class="d-flex align-items-center flex-wrap mr-2">
+
+                    <!--begin::Title-->
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        دپارتمان </h5>
+                    <!--end::Title-->
+
+                    <!--begin::Separator-->
+                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                    <!--end::Separator-->
+
+                    <!--begin::جستجو Form-->
+                    <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                            حذف  {{ object.name }}                                    </span>
+                    </div>
+                    <!--end::جستجو Form-->
+
+                </div>
+                <!--end::جزئیات-->
+            </div>
+        </div>
+
+
+        <div class="d-flex flex-column-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-custom example example-compact">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    حذف
+                                </h3>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form" method="post">
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <h4>از حذف  "{{ object.name }}" اطمینان دارید؟ پس از حذف
+                                                ،دپارتمان
+                                                قابل بازگردانی نخواهد بود و همه داده های مربوط به آن از بین خواهند رفت.</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="submit" class="btn btn-light-danger font-weight-bold mr-2">تائید و حذف
+                                    </button>
+                                    <a href="{% url 'managers:user_list' %}"
+                                       class="btn btn-light-warning font-weight-bold mr-2">بازگشت
+                                    </a>
+                                </div>
+                            </form>
+                            <!--end::Form-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}

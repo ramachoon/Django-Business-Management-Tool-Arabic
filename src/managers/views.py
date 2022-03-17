@@ -124,3 +124,12 @@ class DepartmentUpdate(SuperuserAccessMixin, UpdateView):
 
     template_name = 'managers/department_create_update.html'
     form_class = DepartmentForm
+
+
+class DepartmentDelete(SuperuserAccessMixin, DeleteView):
+    def get_object(self, queryset=None):
+        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
+        return department
+
+    template_name = 'managers/department_delete.html'
+    success_url = reverse_lazy('managers:department_list')
