@@ -25,5 +25,7 @@ urlpatterns = [
     path('projects/delete/<int:pk>', managers_views.ProjectDelete.as_view(), name='project_delete'),
 
     # work days
-    path('workdays/detail/<int:pk>', managers_views.WorkDayDetail.as_view(), name='wprkday_detail'),
+    path('workdays/create/', managers_views.WorkDayCreate.as_view(), name='workday_create'),
+    path('workdays/detail/<int:pk>', managers_views.WorkDayDetail.as_view(), name='workday_detail'),
+    path('workdays/update/<int:pk>', managers_views.WorkDayUpdate.as_view(), name='workday_update'),
 ]

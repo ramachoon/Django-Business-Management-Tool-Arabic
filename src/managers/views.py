@@ -11,7 +11,7 @@ from core.mixins import (
 )
 from departments.forms import DepartmentForm
 from departments.models import Department
-from projects.forms import ProjectsForm
+from projects.forms import ProjectsForm, WorkDaysForm
 from projects.models import Project, WorkDay
 
 
@@ -166,6 +166,18 @@ class ProjectDelete(SuperuserAccessMixin, DeleteView):
     template_name = 'managers/project_delete.html'
     success_url = reverse_lazy('managers:project_list')
 
+
 class WorkDayDetail(SuperuserAccessMixin, DetailView):
     model = WorkDay
     template_name = 'managers/workday_detail.html'
+
+
+class WorkDayCreate(SuperuserAccessMixin, CreateView):
+    model = WorkDay
+    template_name = 'managers/workday_create_update.html'
+    form_class = WorkDaysForm
+
+class WorkDayUpdate(SuperuserAccessMixin, UpdateView):
+    model = WorkDay
+    template_name = 'managers/workday_create_update.html'
+    form_class = WorkDaysForm
