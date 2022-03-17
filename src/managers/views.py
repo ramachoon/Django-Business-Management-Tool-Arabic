@@ -154,7 +154,14 @@ class ProjectCreate(SuperuserAccessMixin, CreateView):
     template_name = 'managers/project_create_update.html'
     form_class = ProjectsForm
 
+
 class ProjectUpdate(SuperuserAccessMixin, UpdateView):
     model = Project
     template_name = 'managers/project_create_update.html'
     form_class = ProjectsForm
+
+
+class ProjectDelete(SuperuserAccessMixin, DeleteView):
+    model = Project
+    template_name = 'managers/project_delete.html'
+    success_url = reverse_lazy('managers:project_list')
