@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from accounts.models import User
 
 from accounts.forms import UsersForm
@@ -87,3 +87,12 @@ class DepartmentsList(SuperuserAccessMixin, ListView):
     ordering = '-id'
     context_object_name = 'departments'
     paginate_by = 9
+
+
+class DepartmentDetail(SuperuserAccessMixin, DetailView):
+    def get_object(self, queryset=None):
+        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
+        return department
+
+    template_name = 'managers/department_detail.html'
+    context_object_name = 'department'
