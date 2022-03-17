@@ -1,0 +1,114 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+
+{% block title %}
+   جزئیات روز کاری
+{% endblock %}
+
+{% block content %}
+    <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+        <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <!--begin::جزئیات-->
+            <div class="d-flex align-items-center flex-wrap mr-2">
+
+                <!--begin::Title-->
+                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    روز کاری </h5>
+                <!--end::Title-->
+
+                <!--begin::Separator-->
+                <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                <!--end::Separator-->
+
+                <!--begin::جستجو Form-->
+                <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                                                {{ object }}                </span>
+                </div>
+                <!--end::جستجو Form-->
+
+            </div>
+            <!--end::جزئیات-->
+
+            <!--begin::Toolbar-->
+            <div class="d-flex align-items-center">
+                <!--begin::دکمه-->
+                <a href=""
+                   class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+
+                    بازگشت </a>
+                <!--end::دکمه-->
+            </div>
+            <!--end::Toolbar-->
+        </div>
+    </div>
+
+    <div class="d-flex flex-column-fluid">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card card-custom">
+                        <!--begin::Header-->
+                        <div class="card-header h-auto py-4">
+                            <div class="card-title">
+                                <h3 class="card-label">
+                                    یک روز کاری
+                                    <a href="{% url 'managers:project_detail' object.project.pk %}"
+                                       class="d-block text-muted pt-2 font-size-sm">{{ object.project.name }}</a>
+                                </h3>
+                            </div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Body-->
+                        <div class="card-body py-4">
+                            <div class="form-group row my-2">
+                                <label class="col-4 col-form-label">روز:</label>
+                                <div class="col-8">
+                                    <span class="form-control-plaintext font-weight-bolder">{{ object.get_day_display }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row my-2">
+                                <label class="col-4 col-form-label">ساعت شروع کار:</label>
+                                <div class="col-8">
+                                    <span class="form-control-plaintext font-weight-bolder">{{ object.start_time }}</span>
+                                </div>
+                            </div>
+                            <div class="form-group row my-2">
+                                <label class="col-4 col-form-label">ساعت پایان کار:</label>
+                                <div class="col-8">
+                                    <span class="form-control-plaintext font-weight-bolder">{{ object.end_time }}</span>
+                                </div>
+                            </div>
+                                <div class="form-group row my-2">
+                                    <label class="col-4 col-form-label">دسترسی:</label>
+                                    <div class="col-8">
+                                        <span class="form-control-plaintext font-weight-bolder">{{ object.get_accessibility_display }}</span>
+                                    </div>
+                                </div>
+                            <div class="form-group row my-2">
+                                <label class="col-4 col-form-label">کارمندان مشغول کار:</label>
+                                <div class="col-8">
+                                    <span class="form-control-plaintext font-weight-bolder">
+                                        {% for employee in object.employees.all %}
+                                            <span>{{ employee.get_full_name }}</span>
+                                            ،
+                                        {% endfor %}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <!--end::Body-->
+                        <!--begin::Footer-->
+                            <div class="card-footer">
+                                <a href=""
+                                   class="btn btn-light-warning font-weight-bold mr-2">ویرایش</a>
+                                <a href=""
+                                   class="btn btn-light-danger font-weight-bold">حذف</a>
+                            </div>
+                        <!--end::Footer-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
