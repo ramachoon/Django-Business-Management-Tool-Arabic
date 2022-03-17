@@ -19,8 +19,12 @@ ACCESSIBILITY_CHOICES = (
 class Project(models.Model):
     name = models.CharField(max_length=150, verbose_name='نام پروژه')
     description = models.TextField(verbose_name='توضیحات پروژه')
-    department = models.ForeignKey(Department, on_delete=models.CASCADE, verbose_name='دپارتمان مربوطه')
-    customers = models.ManyToManyField(User, related_name='projects', verbose_name='کارفرمایان')
+    department = models.ForeignKey(
+        Department, on_delete=models.CASCADE, verbose_name='دپارتمان مربوطه', related_name='projects'
+    )
+    customers = models.ManyToManyField(
+        User, related_name='projects', verbose_name='کارفرمایان'
+    )
     accessibility = models.CharField(
         max_length=13, choices=ACCESSIBILITY_CHOICES, null=True, blank=True, verbose_name='دسترسی'
     )
