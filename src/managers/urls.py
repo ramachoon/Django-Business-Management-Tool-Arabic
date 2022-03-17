@@ -19,4 +19,5 @@ urlpatterns = [
 
     # projects
     path('projects/', managers_views.ProjectsList.as_view(), name='project_list'),
+    path('projects/detail/<int:pk>', managers_views.ProjectDetail.as_view(), name='project_detail'),
 ]

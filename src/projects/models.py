@@ -49,8 +49,8 @@ class Project(models.Model):
     def get_name_replace(self):
         return f"{self.name.replace(' ', '-')}"
 
-    # def get_absolute_url(self):
-    #     return reverse('projects:detail', kwargs={'pk': self.pk, 'name': self.get_name_replace()})
+    def get_absolute_url(self):
+        return reverse('managers:project_detail', kwargs={'pk': self.pk})
 
     def get_progress(self):
         start_date = self.start_date
