@@ -10,6 +10,8 @@ from core.mixins import (
     SuperuserAccessMixin
 )
 
+from departments.models import Department
+
 
 # Create your views here.
 
@@ -77,3 +79,11 @@ def user_activate_deactivate(request, *args, **kwargs):
         return HttpResponse(message, status=200)
     except User.DoesNotExist:
         return HttpResponse(status=502)
+
+
+class DepartmentsList(SuperuserAccessMixin, ListView):
+    model = Department
+    template_name = 'managers/department_list.html'
+    ordering = '-id'
+    context_object_name = 'departments'
+    paginate_by = 9
