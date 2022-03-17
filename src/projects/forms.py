@@ -2,8 +2,8 @@ from django import forms
 from django.core.exceptions import ValidationError
 
 from accounts.models import User
-from .models import Project
 from jalali_date.widgets import AdminJalaliDateWidget
+from .models import Project, WorkDay
 
 
 class ProjectsForm(forms.ModelForm):
@@ -62,3 +62,24 @@ class ProjectsForm(forms.ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['department'].required = False
         self.fields['customers'].queryset = User.objects.filter(is_customer=True)
+
+
+class WorkDaysForm(forms.ModelForm):
+    class Meta:
+        model = WorkDay
+        fields = '__all__'
+        widgets = {
+            'date': AdminJalaliDateWidget(
+                attrs={'autocomplete': 'off', }
+            ),
+            'start_time': forms.TimeInput(
+                attrs={'class': 'form-control'}
+            ),
+            'end_time': forms.TimeInput(
+                attrs={'class': 'form-control'}
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['employees'].queryset = User.objects.filter(is_employee=True)

@@ -1,0 +1,133 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    ایجاد/ویرایش روز کاری
+{% endblock %}
+
+{% block content %}
+    {% with request.resolver_match.url_name as url_name %}
+        <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+            <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+                <!--begin::جزئیات-->
+                <div class="d-flex align-items-center flex-wrap mr-2">
+
+                    <!--begin::Title-->
+                    <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                        روز کاری </h5>
+                    <!--end::Title-->
+
+                    <!--begin::Separator-->
+                    <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                    <!--end::Separator-->
+
+                    <!--begin::جستجو Form-->
+                    <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                            جزئیات روزکاری را وارد  کنید                                    </span>
+                    </div>
+                    <!--end::جستجو Form-->
+
+                </div>
+                <!--end::جزئیات-->
+
+                <!--begin::Toolbar-->
+                <div class="d-flex align-items-center">
+                    <!--begin::دکمه-->
+                    <a href=""
+                       class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+
+                        بازگشت </a>
+                    <!--end::دکمه-->
+                </div>
+                <!--end::Toolbar-->
+            </div>
+        </div>
+
+        <div class="d-flex flex-column-fluid">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card card-custom example example-compact">
+                            <div class="card-header">
+                                <h3 class="card-title">
+                                    {% if url_name == 'workday_create' %}
+                                        ایجاد روزکاری
+                                    {% else %}
+                                        ویرایش روزکاری
+                                    {% endif %}
+                                </h3>
+                            </div>
+                            <!--begin::Form-->
+                            <form class="form" method="post" autocomplete="off">
+                                {% csrf_token %}
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.project|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.day|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="id_start_time" class=" requiredField">
+                                                    تاریخ<span class="asteriskField">*</span>
+                                                </label>
+                                                {{ form.date }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                {{ form.start_time|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                {{ form.end_time|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.accessibility|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.employees|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    {% if url_name == 'workday_create' %}
+                                        <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ایجاد
+                                        </button>
+                                    {% else %}
+                                        <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ویرایش
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </form>
+                            <!-- end::Form -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endwith %}
+{% endblock %}
+
+{% block new_js_code %}
+    <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
+    <script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
+    <script>
+        const jalaliDatePicker = document.getElementById('id_date')
+        jalaliDatePicker.classList += ' form-control'
+    </script>
+{% endblock %}
