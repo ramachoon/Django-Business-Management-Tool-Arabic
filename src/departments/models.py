@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 from accounts.models import User
 
 
@@ -25,3 +26,6 @@ class Department(models.Model):
 
     def get_name_replace(self):
         return f"{self.name.replace(' ', '-')}"
+
+    def get_absolute_url(self):
+        return reverse('managers:department_detail', kwargs={'pk': self.id})

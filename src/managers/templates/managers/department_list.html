@@ -91,7 +91,7 @@
             <div class="d-flex align-items-center">
 
                 <!--begin::دکمه-->
-                <a href="{% url 'managers:user_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
+                <a href="{% url 'managers:department_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
 
                     ایجاد دپارتمان </a>
                 <!--end::دکمه-->
@@ -133,7 +133,7 @@
                                                 </li>
                                                 <li class="navi-separator mb-3 opacity-70"></li>
                                                 <li class="navi-item">
-                                                    <a href=""
+                                                    <a href="{% url 'managers:department_detail' department.pk %}"
                                                        class="navi-link">
             <span class="navi-text">
                 <span class="label label-xl label-inline label-light-success">مشاهده</span>
@@ -157,7 +157,7 @@
                                     <!--end::Pic-->
                                     <!--begin::Title-->
                                     <div class="d-flex flex-column">
-                                        <a href=""
+                                        <a href="{% url 'managers:department_detail' department.pk %}"
                                            class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ department.name }}</a>
                                     </div>
                                     <!--end::Title-->
@@ -166,10 +166,30 @@
                                 <!--begin::Desc-->
                                 <p class="mb-7">
                                     {{ department.description }}
-                                    <br><br>
-                                    سازنده: {{ department.maker.get_full_name }}
                                 </p>
-                                <a href=""
+                                <div class="mb-7">
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">سازنده:</span>
+                                        <span class="text-muted text-hover-primary">
+                                            {% if department.maker == request.user %}
+                                                شما
+                                            {% else %}
+                                                {{ department.maker.get_full_name }}
+                                            {% endif %}
+                                        </span>
+                                    </div>
+                                    <div class="d-flex justify-content-between align-items-cente my-1">
+                                        <span class="text-dark-75 font-weight-bolder mr-2">وضعیت دسترسی:</span>
+                                        <span class="text-muted text-hover-primary">
+                                            {% if department.is_active %}
+                                                فعال
+                                            {% else %}
+                                                غیرفعال
+                                            {% endif %}
+                                            </span>
+                                    </div>
+                                </div>
+                                <a href="{% url 'managers:department_detail' department.pk %}"
                                    class="btn btn-block btn-sm {% cycle 'btn-light-success' 'btn-light-info' 'btn-light-danger' %} font-weight-bolder text-uppercase py-4">مشاهده</a>
                             </div>
                             <!--end::Body-->
@@ -182,7 +202,7 @@
                             <div class="alert-icon"><i class="flaticon-questions-circular-button"></i></div>
                             <div class="alert-text">
                                 دپارتمانی یافت نشد.
-                                <a href="">ایجاد دپارتمان جدید</a>
+                                <a href="{% url 'managers:department_create' %}">ایجاد دپارتمان جدید</a>
                             </div>
                         </div>
                     </div>
