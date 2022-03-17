@@ -15,4 +15,5 @@ urlpatterns = [
     path('departments/create/', managers_views.DepartmentCreate.as_view(), name='department_create'),
     path('departments/detail/<int:pk>', managers_views.DepartmentDetail.as_view(), name='department_detail'),
     path('departments/update/<int:pk>', managers_views.DepartmentUpdate.as_view(), name='department_update'),
+    path('departments/delete/<int:pk>', managers_views.DepartmentDelete.as_view(), name='department_delete'),
 ]
