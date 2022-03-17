@@ -30,6 +30,9 @@ class User(AbstractUser):
     is_admin = models.BooleanField(default=False, verbose_name='ادمین')
     is_supporter = models.BooleanField(default=False, verbose_name='پشتیبان')
 
+    def __str__(self):
+        return self.get_full_name()
+
 
 class PhoneOtp(models.Model):
     phone = models.CharField(max_length=13)
