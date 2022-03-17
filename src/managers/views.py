@@ -12,7 +12,7 @@ from core.mixins import (
 from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm
-from projects.models import Project
+from projects.models import Project, WorkDay
 
 
 # Create your views here.
@@ -165,3 +165,7 @@ class ProjectDelete(SuperuserAccessMixin, DeleteView):
     model = Project
     template_name = 'managers/project_delete.html'
     success_url = reverse_lazy('managers:project_list')
+
+class WorkDayDetail(SuperuserAccessMixin, DetailView):
+    model = WorkDay
+    template_name = 'managers/workday_detail.html'
