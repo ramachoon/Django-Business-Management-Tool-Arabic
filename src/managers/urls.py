@@ -12,4 +12,5 @@ urlpatterns = [
 
     # departments
     path('departments/', managers_views.DepartmentsList.as_view(), name='department_list'),
+    path('departments/detail/<int:pk>', managers_views.DepartmentDetail.as_view(), name='department_detail'),
 ]
