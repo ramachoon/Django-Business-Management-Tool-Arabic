@@ -29,4 +29,8 @@ urlpatterns = [
     path('workdays/detail/<int:pk>', managers_views.WorkDayDetail.as_view(), name='workday_detail'),
     path('workdays/update/<int:pk>', managers_views.WorkDayUpdate.as_view(), name='workday_update'),
     path('workdays/delete/<int:pk>', managers_views.WorkDayDelete.as_view(), name='workday_delete'),
+
+    # invoices
+    path('invoices/<str:pk>', managers_views.InvoiceDetail.as_view(), name='invoice_detail'),
+    path('invoices/print/<str:pk>', managers_views.InvoicePrintDetail.as_view(), name='invoice_print_detail'),
 ]

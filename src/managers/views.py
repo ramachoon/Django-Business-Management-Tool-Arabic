@@ -12,7 +12,7 @@ from core.mixins import (
 from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm, WorkDaysForm
-from projects.models import Project, WorkDay
+from projects.models import Project, WorkDay, Invoice
 
 
 # Create your views here.
@@ -188,3 +188,14 @@ class WorkDayDelete(SuperuserAccessMixin, DeleteView):
     model = WorkDay
     template_name = 'managers/workday_delete.html'
     success_url = reverse_lazy('managers:project_list')
+
+
+class InvoiceDetail(SuperuserAccessMixin, DetailView):
+    model = Invoice
+    template_name = 'managers/invoice_detail.html'
+
+class InvoicePrintDetail(SuperuserAccessMixin, DetailView):
+    model = Invoice
+    template_name = 'managers/invoice_print_detail.html'
+
+
