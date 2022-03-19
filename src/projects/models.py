@@ -1,3 +1,5 @@
+import uuid
+
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
@@ -80,6 +82,20 @@ class Project(models.Model):
             'progress': int(progress)
         }
 
+    def get_total_expenses(self):
+        total = 0
+        for factor in self.invoices.all():
+            total += factor.get_total_invoice_price()
+
+        return total
+
+    def get_total_expenses_paid(self):
+        total = 0
+        for factor in self.invoices.filter(is_paid=True).all():
+            total += factor.get_total_invoice_price()
+
+        return total
+
 
 class WorkDay(models.Model):
     project = models.ForeignKey(
@@ -115,3 +131,50 @@ class WorkDay(models.Model):
 
     def get_absolute_url(self):
         return reverse('managers:workday_detail', kwargs={'pk': self.pk})
+
+
+class Invoice(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    short_description = models.CharField(max_length=100, verbose_name='توضیح کوتاه')
+    date = jmodels.jDateField(verbose_name='تاریخ')
+    project = models.ForeignKey(
+        Project, related_name='invoices', on_delete=models.CASCADE, verbose_name='پروژه'
+    )
+    is_paid = models.BooleanField(default=False, verbose_name='پرداخت شده / نشده')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'صورتحساب'
+        verbose_name_plural = 'صورتحساب ها'
+
+    def get_total_invoice_price(self):
+        total = 0
+        for invoice_detail in self.invoice_details.all():
+            total += invoice_detail.get_total_price()
+
+        return total
+
+    def __str__(self):
+        return f"{self.short_description} | جمع فاکتور: {self.get_total_invoice_price()} تومان"
+
+
+class InvoiceDetail(models.Model):
+    invoice = models.ForeignKey(
+        Invoice, related_name='invoice_details', on_delete=models.CASCADE, verbose_name='صورتحساب'
+    )
+    name = models.CharField(max_length=75, verbose_name='نام')
+    quantity = models.BigIntegerField(default=1, verbose_name='مقدار')
+    amount = models.BigIntegerField(verbose_name='قیمت')
+    created = models.DateTimeField(auto_now_add=True)
+    updated = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = 'جزئیات صورتحساب'
+        verbose_name_plural = 'جزئیات صورتحساب ها'
+
+    def get_total_price(self):
+        return self.quantity * self.amount
+
+    def __str__(self):
+        return f"جمع: {self.get_total_price()} تومان"

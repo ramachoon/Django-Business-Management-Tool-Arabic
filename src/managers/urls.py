@@ -28,4 +28,5 @@ urlpatterns = [
     path('workdays/create/', managers_views.WorkDayCreate.as_view(), name='workday_create'),
     path('workdays/detail/<int:pk>', managers_views.WorkDayDetail.as_view(), name='workday_detail'),
     path('workdays/update/<int:pk>', managers_views.WorkDayUpdate.as_view(), name='workday_update'),
+    path('workdays/delete/<int:pk>', managers_views.WorkDayDelete.as_view(), name='workday_delete'),
 ]

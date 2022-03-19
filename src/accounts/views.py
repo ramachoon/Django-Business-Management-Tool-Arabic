@@ -47,11 +47,11 @@ def otp_login(request):
 @authenticated_user()
 def verify_phone_otp(request):
     # raise http404, if http referer is not equal to login.
-    http_referer = request.META.get('HTTP_REFERER')
-    login_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:login')}"
-    verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
-    if not http_referer == login_full_url and not http_referer == verify_otp_full_url:
-        raise Http404
+    # http_referer = request.META.get('HTTP_REFERER')
+    # login_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:login')}"
+    # verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
+    # if not http_referer == login_full_url and not http_referer == verify_otp_full_url:
+    #     raise Http404
 
     verify_otp_form = VerifyOtpForm(request.POST or None)
     phone_number = request.session['phone_number']

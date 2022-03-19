@@ -177,7 +177,14 @@ class WorkDayCreate(SuperuserAccessMixin, CreateView):
     template_name = 'managers/workday_create_update.html'
     form_class = WorkDaysForm
 
+
 class WorkDayUpdate(SuperuserAccessMixin, UpdateView):
     model = WorkDay
     template_name = 'managers/workday_create_update.html'
     form_class = WorkDaysForm
+
+
+class WorkDayDelete(SuperuserAccessMixin, DeleteView):
+    model = WorkDay
+    template_name = 'managers/workday_delete.html'
+    success_url = reverse_lazy('managers:project_list')
