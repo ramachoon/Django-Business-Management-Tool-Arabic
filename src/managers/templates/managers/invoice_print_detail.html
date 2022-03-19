@@ -1,0 +1,408 @@
+{% load humanize %}
+{% load static %}
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>{{ object }}</title>
+    <style>
+        /** GLOBAL **/
+
+        html, body {
+            height: 100%;
+            background: #002336;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            left: 0;
+            top: 0;
+            font-size: 100%;
+        }
+
+        * {
+            color: #333447;
+            line-height: 1.5;
+        }
+
+        /* TYPOGRAPHY */
+
+        h1 {
+            font-size: 2rem;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+        }
+
+        h3 {
+            font-size: 1rem;
+        }
+
+        h4 {
+            font-size: 0.75rem;
+        }
+
+        h5 {
+            font-size: 0.5rem;
+        }
+
+        h6 {
+            font-size: 0.5rem;
+        }
+
+        p {
+            font-size: 0.9rem;
+            font-weight: 200;
+            line-height: 1.8;
+        }
+
+        .font-light {
+            font-weight: 300;
+        }
+
+        .font-regular {
+            font-weight: 400;
+        }
+
+        .font-heavy {
+            font-weight: 700;
+        }
+
+        /* POSITIONING */
+
+        .left {
+            text-align: left;
+        }
+
+        .right {
+            float: right;
+            text-align: right;
+        }
+
+        .center {
+            text-align: center;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .justify {
+            text-align: justify;
+        }
+
+        /** standard padding**/
+
+        .no-padding {
+            padding: 0px;
+        }
+
+        .standard-padding {
+            padding: 20px;
+        }
+
+        .standard-padding-right {
+            padding-right: 20px;
+        }
+
+        .standard-padding-left {
+            padding-left: 20px;
+        }
+
+        .standard-padding-right {
+            padding-left: 20px;
+        }
+
+        .standard-padding-top {
+            padding-top: 20px;
+        }
+
+        .standard-padding-bottom {
+            padding-bottom: 20px;
+        }
+
+        .container {
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .row {
+            position: relative;
+            width: 100%;
+        }
+
+        .row [class^="col"] {
+            float: left;
+            margin: 0.5rem 2%;
+            min-height: 0.125rem;
+        }
+
+        .row::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        .hidden-sm {
+            display: none;
+        }
+
+        .invoice-box {
+            background: #ffffff;
+            max-width: 900px;
+            margin: 60px auto;
+            padding: 30px;
+            border: 1px solid #002336;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+            font-size: 16px;
+            line-height: 24px;
+            color: #002336;
+        }
+
+        .title {
+            margin-bottom: 0px;
+            padding-bottom: 0px;
+            margin-left: 10px;
+            margin-right: 10px;
+            font-weight: bold;
+            border-bottom: 1px solid #8B8B8B;
+            margin-bottom: 4px;
+        }
+
+        .infoblock {
+            margin-left: 10px;
+            margin-right: 10px;
+            margin-top: 0px;
+            padding-top: 0px;
+        }
+
+        .titles {
+            padding-top: 4px;
+            margin-top: 20px;
+            background: #DCDCDC;
+            font-weight: bold;
+        }
+
+        @media only screen and (max-width: 600px) {
+            .invoice-box table tr.top table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+
+            .invoice-box table tr.information table td {
+                width: 100%;
+                display: block;
+                text-align: center;
+            }
+        }
+
+        /** RTL **/
+
+        .rtl {
+            direction: rtl;
+            font-family: "Lato", Tahoma, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        }
+
+        .rtl table {
+            text-align: right;
+        }
+
+        .rtl table tr td:nth-child(2) {
+            text-align: left;
+        }
+
+        .eqWrap {
+            display: flex;
+        }
+
+        .eq {
+            padding: 10px;
+        }
+
+        .item:nth-of-type(odd) {
+            background: #F9F9F9;
+        }
+
+        .item:nth-of-type(even) {
+            background: #fff;
+        }
+
+        .equalHW {
+            flex: 1;
+        }
+
+        .equalHM {
+            width: 32%;
+        }
+
+        .equalHMR {
+            width: 32%;
+            margin-bottom: 2%;
+        }
+
+        table.table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+        }
+
+        .table th, .table td {
+            text-align: left;
+            padding: 0.25em;
+        }
+
+        .table tr {
+            border-bottom: 1px solid #DDD;
+        }
+
+        button:hover {
+            box-shadow: 0 0 4px rgba(3, 3, 3, 0.8);
+            opacity: 0.9;
+        }
+    </style>
+    <link rel="stylesheet" href="{% static 'font-style.css' %}">
+</head>
+<body dir="rtl">
+<div class="invoice-box">
+    <div class="container">
+        <div class="row">
+            <div class="equalHWrap eqWrap top">
+                <div class="equalHW eq center logo-block">
+
+                </div>
+                <div class="equalHW eq contact-info-block">
+                    <span id="AccountEmail">admin@local.host</span><br>
+                    <span id="AccountPhone">000 000 00 000</span>
+                </div>
+                <div class="equalHW eq title-block">
+                    <h2 class="right no-padding" id="InvoiceSumExVat" style="margin:0px;">گروه فلزکاری برادران عبدی</h2>
+                </div>
+            </div>
+            <div class="row" style="margin-top:20px;">
+                <div class="equalHWrap eqWrap nomargin-nopadding to-block">
+                    <div class="equalHW eq nomargin-nopadding title">
+                        از جانب
+                    </div>
+                    <div class="equalHW eq nomargin-nopadding title from-block">
+                        به
+                    </div>
+                    <div class="equalHW eq nomargin-nopadding title info-block">
+                        جزئیات فاکتور
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="equalHWrap eqWrap">
+                        <div class="equalHW eq infoblock to-block">
+                            <span id="CustomerName">شرکت توسعه وب و وب اپلیکیشن</span><br>
+                            <span id="AccountProject">عبدی وب</span><br>
+                        </div>
+                        <div class="equalHW eq infoblock from-block">
+                            <span id="AccountName">پروژه : {{ object.project.name }}</span><br>
+                            <span id="AccountProject">
+                                کارفرمایان:
+                                {% for customer in object.project.customers.all %}
+                                    {{ customer.get_full_name }},
+                                {% endfor %}
+
+                            </span><br>
+                        </div>
+                        <div class="equalHW eq infoblock info-block">
+                            <span id="">عنوان فاکتور: {{ object.short_description }}</span><br>
+                            <span id="">تاریخ: {{ object.date }}</span><br>
+                            <span id=""> وضعیت پرداخت:
+                                {% if object.is_paid %}
+                                    پرداخت شده
+                                {% else %}
+                                    پرداخت نشده
+                                {% endif %}
+                            </span><br>
+                        </div>
+                    </div>
+                </div>
+                <h3>مقادیر فاکتور: </h3>
+                <table class="table">
+                    <tr class="titles">
+                        <th>شماره</th>
+                        <th>عنوان</th>
+                        <th>مقدار</th>
+                        <th>قیمت واحد</th>
+                        <th>جمع</th>
+                    </tr>
+                    {% for factor_detail in object.invoice_details.all %}
+                        <tr class="item" id="ProductList">
+                            <td>{{ forloop.counter }}</td>
+                            <td><span id="ProductNumUnits">{{ factor_detail.name }}<span></span></span></td>
+                            <td><span id="ProductUnit">{{ factor_detail.quantity }}<span></span></span></td>
+                            <td><span id="ProductUnitPrice">{{ factor_detail.amount|intcomma:False }} تومان</span></td>
+                            <td><span
+                                    id="ProductDiscount">{{ factor_detail.get_total_price|intcomma:False }} تومان</span>
+                            </td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+            <div class="row">
+                <div class="equalHWrap eqWrap">
+                    <div class="equalHW eq">
+                        <table class="right">
+                            <tr>
+                                <td><span
+                                        style="display:inline-block;margin-right:10px;"><strong>جمع کل (تومان): {{ object.get_total_invoice_price }}</strong></span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><span
+                                        style="display:inline-block;margin-right:10px;"><strong>مالیات: 0.0</strong></span>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            {% if invoice.payments.all %}
+                {% if object.is_paid %}
+
+                    <div class="row">
+                        <h3>تاریخچه پرداخت: </h3>
+                        <table class="table">
+                            <tr class="titles">
+                                <th>وضعیت پرداخت</th>
+                                <th>توضیحات</th>
+                                <th>توسط</th>
+                                <th>زمان شروع عملیات پرداخت</th>
+                                <th>مبلغ پرداختی (ریال)</th>
+                            </tr>
+                            {% for payment in object.payments.all %}
+                                <tr class="item" id="ProductList">
+                                    {% if payment.status %}
+                                        <td><i class="fa fa-check-circle"></i></td>
+                                        <td><span id="ProductNumUnits">پرداخت با موفقیت انجام شد<span></span></span>
+                                        </td>
+                                    {% else %}
+                                        <td><i class="fa fa-times-circle"></i></td>
+                                        <td><span id="ProductNumUnits">پرداخت با خطا مواجه شد<span></span></span></td>
+                                    {% endif %}
+                                    <td><span id="ProductNumUnits">{{ payment.user.get_full_name }}<span></span></span>
+                                    </td>
+                                    <td><span id="ProductUnitPrice">{{ payment.get_payment_date_jalali }}</span></td>
+                                    <td><span
+                                            id="ProductDiscount">{{ payment.amount|intcomma:False }}</span>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+
+                        </table>
+                    </div>
+                    </div>
+
+                {% endif %}
+            {% endif %}
+    </div>
+
+</div>
+</body>
+<script>
+    window.print()
+</script>
+</html>

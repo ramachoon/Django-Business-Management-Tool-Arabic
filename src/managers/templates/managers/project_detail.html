@@ -544,9 +544,8 @@
                                                                         <div class="d-flex align-items-center">
 
                                                                             <div>
-                                                                                <a href=""
+                                                                                <a href="{% url 'managers:invoice_detail' factor.pk %}"
                                                                                    class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ factor.short_description }}</a>
-                                                                                <span class="text-muted font-weight-bold d-block">شناسه: {{ factor.id|truncatechars:10 }}</span>
                                                                             </div>
                                                                         </div>
                                                                     </td>
