@@ -35,10 +35,12 @@
                 <!--begin::Toolbar-->
                 <div class="d-flex align-items-center">
                     <!--begin::دکمه-->
-                    <a href=""
-                       class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                    {% if url_name == 'workday_update' %}
+                        <a href="{% url 'managers:workday_detail' object.pk %}"
+                           class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
 
-                        بازگشت </a>
+                            بازگشت </a>
+                    {% endif %}
                     <!--end::دکمه-->
                 </div>
                 <!--end::Toolbar-->
@@ -64,12 +66,12 @@
                                 {% csrf_token %}
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 {{ form.project|as_crispy_field }}
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 {{ form.day|as_crispy_field }}
                                             </div>
@@ -92,7 +94,7 @@
                                                 {{ form.end_time|as_crispy_field }}
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
+                                        <div class="col-md-4">
                                             <div class="form-group">
                                                 {{ form.accessibility|as_crispy_field }}
                                             </div>

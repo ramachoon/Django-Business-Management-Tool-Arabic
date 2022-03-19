@@ -279,7 +279,7 @@
                                                         <span class="text-muted mt-3 font-weight-bold font-size-sm">{{ project.workdays.all.count }} روزکاری</span>
                                                     </h3>
                                                     <div class="card-toolbar">
-                                                        <a href=""
+                                                        <a href="{% url 'managers:workday_create' %}"
                                                            class="btn btn-light-primary font-weight-bolder font-size-sm"><span
                                                                 class="svg-icon svg-icon-md svg-icon-white"><!--begin::Svg Icon | path:assets/media/svg/icons/ارتباطات/Add-user.svg--><svg
                                                                 xmlns="http://www.w3.org/2000/svg"
@@ -293,7 +293,7 @@
         <path d="M0.00065168429,20.1992055 C0.388258525,15.4265159 4.26191235,13 8.98334134,13 C13.7712164,13 17.7048837,15.2931929 17.9979143,20.2 C18.0095879,20.3954741 17.9979143,21 17.2466999,21 C13.541124,21 8.03472472,21 0.727502227,21 C0.476712155,21 -0.0204617505,20.45918 0.00065168429,20.1992055 Z"
               fill="#000000" fill-rule="nonzero"></path>
     </g>
-</svg><!--end::Svg Icon--></span>ایجاد روزکاری برای این پروژه</a>
+</svg><!--end::Svg Icon--></span>ایجاد روزکاری</a>
                                                     </div>
                                                 </div>
                                                 <!--end::Header-->
@@ -321,7 +321,7 @@
                                                                         <div class="d-flex align-items-center">
 
                                                                             <div>
-                                                                                <a href=""
+                                                                                <a href="{% url 'managers:workday_detail' workday.pk %}"
                                                                                    class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ workday.date }}</a>
                                                                                 <span class="text-muted font-weight-bold d-block">روز: {{ workday.get_day_display }}</span>
                                                                             </div>
@@ -342,7 +342,7 @@
                                                                     </td>
                                                                     <td class="text-left pr-0">
                                                                         <a
-                                                                                href=""
+                                                                                href="{% url 'managers:workday_update' workday.pk %}"
                                                                                 class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                                                             <span class="svg-icon svg-icon-md svg-icon-primary">									<svg
                                                                                     xmlns="http://www.w3.org/2000/svg"
@@ -538,7 +538,7 @@
                                                             </thead>
                                                             <tbody>
 
-                                                            {% for factor in object.factors.all %}
+                                                            {% for factor in object.invoices.all %}
                                                                 <tr>
                                                                     <td class="pl-0 py-8">
                                                                         <div class="d-flex align-items-center">
@@ -569,7 +569,7 @@
                                                                     </td>
 
                                                                     <td>
-                                                                        <span class="label label-lg label-light-primary label-inline">{{ factor.get_total_factor_price|intcomma:False }} تومان</span>
+                                                                        <span class="label label-lg label-light-primary label-inline">{{ factor.get_total_invoice_price|intcomma:False }} تومان</span>
                                                                     </td>
                                                                     <td class="text-left pr-0">
                                                                         {% if request.user.is_staff %}
@@ -613,7 +613,7 @@
                                                                      role="alert">
                                                                     <div class="alert-icon"><i
                                                                             class="flaticon-warning"></i></div>
-                                                                    <div class="alert-text">روزکاری ای پیدا نشد!
+                                                                    <div class="alert-text">صورتحسابی پیدا نشد!
                                                                     </div>
                                                                     <div class="alert-close">
                                                                         <button type="button" class="close"
