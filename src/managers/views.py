@@ -231,8 +231,6 @@ def invoice_create(request, *args, **kwargs):
 def invoice_update(request, *args, **kwargs):
     # get factor
     invoice = get_object_or_404(Invoice, pk=kwargs.get('pk'))
-    if invoice.is_paid:
-        raise Http404
 
     invoice_form = InvoicesForm(request.POST or None, instance=invoice)
     invoice_detail_formset = modelformset_factory(
@@ -266,3 +264,9 @@ def invoice_update(request, *args, **kwargs):
         'form_length': qs.count()
     }
     return render(request, 'managers/invoice_create_update.html', context=context)
+
+
+class InvoiceDelete(SuperuserAccessMixin, DeleteView):
+    model = Invoice
+    template_name = 'managers/invoice_delete.html'
+    success_url = reverse_lazy('managers:project_list')
