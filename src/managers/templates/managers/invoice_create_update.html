@@ -49,7 +49,7 @@
                                 </h3>
                             </div>
                             <!--begin::Form-->
-                            <form class="form" method="post">
+                            <form class="form" method="post" autocomplete="off">
                                 {% csrf_token %}
                                 <div class="card-body">
                                     <div class="row">
@@ -175,9 +175,6 @@
                                         <button type="submit" class="btn btn-light-warning font-weight-bold mr-2">ویرایش
                                         </button>
                                     {% endif %}
-                                    <a href=""
-                                       class="btn btn-light-primary font-weight-bold mr-2">بازگشت
-                                    </a>
                                 </div>
                             </form>
                             <!-- end::Form -->

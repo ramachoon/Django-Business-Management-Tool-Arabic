@@ -35,4 +35,5 @@ urlpatterns = [
     path('invoices/<str:pk>', managers_views.InvoiceDetailView.as_view(), name='invoice_detail'),
     path('invoices/print/<str:pk>', managers_views.InvoicePrintDetail.as_view(), name='invoice_print_detail'),
     path('invoices/update/<str:pk>', managers_views.invoice_update, name='invoice_update'),
+    path('invoices/delete/<str:pk>', managers_views.InvoiceDelete.as_view(), name='invoice_delete'),
 ]

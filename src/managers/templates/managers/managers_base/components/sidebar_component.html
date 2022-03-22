@@ -46,12 +46,11 @@
                                                                class="menu-link "><i
                         class="menu-icon fa fa-key"></i><span class="menu-text">تغییر رمز عبور</span></a>
                 </li>
-                {% if request.user.is_superuser %}
                     <li class="menu-section ">
                         <h4 class="menu-text">مدیریت کاربران</h4>
                         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                     </li>
-                    <li class="menu-item  menu-item-submenu menu-item-open" aria-haspopup="true"
+                    <li class="menu-item  menu-item-submenu" aria-haspopup="true"
                         data-menu-toggle="hover"><a
                             href="javascript:;" class="menu-link menu-toggle"><i
                             class="menu-icon fa fa-users"></i><span class="menu-text">کاربران</span><i
@@ -63,34 +62,26 @@
                                         class="menu-text">لیست کاربران</span></span></li>
                                 <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a
-                                            href="" class="menu-link menu-toggle"><i
+                                            href="{% url 'managers:user_list' %}" class="menu-link menu-toggle"><i
                                             class="menu-bullet menu-bullet-line"><span></span></i><span
                                             class="menu-text">لیست کاربران</span></a>
                                 </li>
                                 <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a
-                                            href="" class="menu-link menu-toggle"><i
+                                            href="{% url 'managers:user_create' %}" class="menu-link menu-toggle"><i
                                             class="menu-bullet menu-bullet-line"><span></span></i><span
-                                            class="menu-text">لیست کاربران حذف شده</span></a>
-                                </li>
-                                <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
-                                    <a
-                                            href="" class="menu-link menu-toggle"><i
-                                            class="menu-bullet menu-bullet-line"><span></span></i><span
-                                            class="menu-text">ایجاد کاربر</span></a>
+                                            class="menu-text">افزودن کاربر</span></a>
                                 </li>
                                 </li>
                             </ul>
                         </div>
                     </li>
-                {% endif %}
 
-                {% if request.user.is_superuser %}
                     <li class="menu-section ">
                         <h4 class="menu-text">مدیریت دپارتمان ها</h4>
                         <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                     </li>
-                    <li class="menu-item  menu-item-submenu menu-item-open" aria-haspopup="true"
+                    <li class="menu-item  menu-item-submenu" aria-haspopup="true"
                         data-menu-toggle="hover"><a
                             href="javascript:;" class="menu-link menu-toggle"><i
                             class="menu-icon fa fa-building"></i><span class="menu-text">دپارتمان ها</span><i
@@ -102,30 +93,28 @@
                                         class="menu-text">لیست دپارتمان ها</span></span></li>
                                 <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                     <a
-                                            href="" class="menu-link menu-toggle"><i
+                                            href="{% url 'managers:department_list' %}" class="menu-link menu-toggle"><i
                                             class="menu-bullet menu-bullet-line"><span></span></i><span
-                                            class="menu-text">لیست دپارتمان ها</span></a>
+                                            class="menu-text"> دپارتمان ها</span></a>
                                 </li>
-                                {% if request.user.is_superuser %}
                                     <li class="menu-item  menu-item-submenu" aria-haspopup="true"
                                         data-menu-toggle="hover">
                                         <a
-                                                href="" class="menu-link menu-toggle"><i
+                                                href="{% url 'managers:department_create' %}" class="menu-link menu-toggle"><i
                                                 class="menu-bullet menu-bullet-line"><span></span></i><span
                                                 class="menu-text">ایجاد دپارتمان</span></a>
                                     </li>
-                                {% endif %}
                                 </li>
                             </ul>
                         </div>
                     </li>
-                {% endif %}
+
 
                 <li class="menu-section ">
                     <h4 class="menu-text">مدیریت پروژه ها</h4>
                     <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
                 </li>
-                <li class="menu-item  menu-item-submenu menu-item-open" aria-haspopup="true"
+                <li class="menu-item  menu-item-submenu" aria-haspopup="true"
                     data-menu-toggle="hover"><a
                         href="javascript:;" class="menu-link menu-toggle"><i
                         class="menu-icon fa fa-project-diagram"></i><span class="menu-text">پروژه ها</span><i
@@ -137,24 +126,90 @@
                                     class="menu-text">لیست پروژه ها</span></span></li>
                             <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
                                 <a
-                                        href="" class="menu-link menu-toggle"><i
+                                        href="{% url 'managers:project_list' %}" class="menu-link menu-toggle"><i
                                         class="menu-bullet menu-bullet-line"><span></span></i><span
-                                        class="menu-text">لیست پروژه ها</span></a>
+                                        class="menu-text"> پروژه ها</span></a>
                             </li>
-                            {% if request.user.is_superuser %}
                                 <li class="menu-item  menu-item-submenu" aria-haspopup="true"
                                     data-menu-toggle="hover">
                                     <a
-                                            href="" class="menu-link menu-toggle"><i
+                                            href="{% url 'managers:project_create' %}" class="menu-link menu-toggle"><i
                                             class="menu-bullet menu-bullet-line"><span></span></i><span
                                             class="menu-text">ایجاد پروژه</span></a>
                                 </li>
-                            {% endif %}
                             </li>
                         </ul>
                     </div>
                 </li>
+
+                <li class="menu-section ">
+                    <h4 class="menu-text">مدیریت روزهای کاری</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+                <li class="menu-item  menu-item-submenu" aria-haspopup="true"
+                    data-menu-toggle="hover"><a
+                        href="javascript:;" class="menu-link menu-toggle"><i
+                        class="menu-icon fa fa-project-diagram"></i><span class="menu-text">روزهای کاری</span><i
+                        class="menu-arrow"></i></a>
+                    <div class="menu-submenu "><i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true"><span
+                                    class="menu-link"><span
+                                    class="menu-text">روزهای کاری</span></span></li>
+                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a
+                                        href="" class="menu-link menu-toggle"><i
+                                        class="menu-bullet menu-bullet-line"><span></span></i><span
+                                        class="menu-text">روزهای کاری</span></a>
+                            </li>
+                                <li class="menu-item  menu-item-submenu" aria-haspopup="true"
+                                    data-menu-toggle="hover">
+                                    <a
+                                            href="{% url 'managers:workday_create' %}" class="menu-link menu-toggle"><i
+                                            class="menu-bullet menu-bullet-line"><span></span></i><span
+                                            class="menu-text">ایجاد روزکاری</span></a>
+                                </li>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
+                <li class="menu-section ">
+                    <h4 class="menu-text">مدیریت صورتحساب ها</h4>
+                    <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                </li>
+                <li class="menu-item  menu-item-submenu" aria-haspopup="true"
+                    data-menu-toggle="hover"><a
+                        href="javascript:;" class="menu-link menu-toggle"><i
+                        class="menu-icon fa fa-project-diagram"></i><span class="menu-text">صورتحساب ها</span><i
+                        class="menu-arrow"></i></a>
+                    <div class="menu-submenu "><i class="menu-arrow"></i>
+                        <ul class="menu-subnav">
+                            <li class="menu-item  menu-item-parent" aria-haspopup="true"><span
+                                    class="menu-link"><span
+                                    class="menu-text">صورتحساب ها</span></span></li>
+                            <li class="menu-item  menu-item-submenu" aria-haspopup="true" data-menu-toggle="hover">
+                                <a
+                                        href="" class="menu-link menu-toggle"><i
+                                        class="menu-bullet menu-bullet-line"><span></span></i><span
+                                        class="menu-text">صورتحساب ها</span></a>
+                            </li>
+                                <li class="menu-item  menu-item-submenu" aria-haspopup="true"
+                                    data-menu-toggle="hover">
+                                    <a
+                                            href="{% url 'managers:invoice_create' %}" class="menu-link menu-toggle"><i
+                                            class="menu-bullet menu-bullet-line"><span></span></i><span
+                                            class="menu-text">ایجاد صورتحساب</span></a>
+                                </li>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+
             </ul>
+
+
+
             <!--end::Menu Nav-->
             <div class="ps__rail-x" style="left: 0px; bottom: 0px;">
                 <div class="ps__thumb-x" tabindex="0" style="left: 0px; width: 0px;"></div>

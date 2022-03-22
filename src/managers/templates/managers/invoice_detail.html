@@ -232,15 +232,15 @@
                     <!-- begin: فاکتور action-->
                     <div class="row justify-content-center {% if object.payments.count > 0 %}bg-gray-100{% endif %} py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
-{#                            {% if not factor.is_paid %}#}
-{#                                <div class="d-flex justify-content-between">#}
-{#                                <a href=""#}
-{#                                   class="btn btn-success font-weight-bold">#}
-{#                                    پرداخت#}
-{#                                </a>#}
-{#                                <div>#}
-{##}
-{#                            {% endif %}#}
+                            {#                            {% if not factor.is_paid %}#}
+                            {#                                <div class="d-flex justify-content-between">#}
+                            {#                                <a href=""#}
+                            {#                                   class="btn btn-success font-weight-bold">#}
+                            {#                                    پرداخت#}
+                            {#                                </a>#}
+                            {#                                <div>#}
+                            {##}
+                            {#                            {% endif %}#}
 
                             <a href="{% url 'managers:invoice_print_detail' invoice.pk %}"
                                class="btn btn-light-primary font-weight-bold" target="_blank">
@@ -252,45 +252,26 @@
                                 چاپ فاکتور
                             </a>
 
+                            <a href="{% url 'managers:invoice_delete' object.pk %}"
+                               class="btn btn-light-danger font-weight-bold">
+                                حذف
+                            </a>
+                            <a href="{% url 'managers:invoice_update' invoice.pk %}"
+                               class="btn btn-light-warning font-weight-bold">
+                                ویرایش
+                            </a>
 
-
-                                {% if invoice.is_paid %}
-                                    <span
-                                            class="btn btn-outline-secondary font-weight-bold" data-toggle="tooltip"
-                                            title=""
-                                            data-placement="top"
-                                            data-original-title="فاکتور پرداخت شده و غیر قابل حذف میباشد">
-                                        حذف
-                                    </span>
-                                    <span
-                                            class="btn btn-outline-secondary font-weight-bold" data-toggle="tooltip"
-                                            title=""
-                                            data-placement="top"
-                                            data-original-title="فاکتور پرداخت شده و غیر قابل ویرایش میباشد">
-                                        ویرایش
-                                    </span>
-                                {% else %}
-                                    <a href=""
-                                       class="btn btn-light-danger font-weight-bold">
-                                        حذف
-                                    </a>
-                                    <a href="{% url 'managers:invoice_update' invoice.pk %}"
-                                       class="btn btn-light-warning font-weight-bold">
-                                        ویرایش
-                                    </a>
-                                {% endif %}
-
-                            </div>
-                            </div>
                         </div>
                     </div>
-                    <!-- end: فاکتور action-->
-
-                    <!-- end: فاکتور-->
                 </div>
             </div>
-            <!-- end::Card-->
+            <!-- end: فاکتور action-->
+
+            <!-- end: فاکتور-->
         </div>
-        <!--end::Container-->
+    </div>
+    <!-- end::Card-->
+    </div>
+    <!--end::Container-->
     </div>
 {% endblock %}
