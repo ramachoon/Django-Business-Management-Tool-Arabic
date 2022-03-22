@@ -147,6 +147,7 @@ class Invoice(models.Model):
     class Meta:
         verbose_name = 'صورتحساب'
         verbose_name_plural = 'صورتحساب ها'
+        ordering = ('-id',)
 
     def get_total_invoice_price(self):
         total = 0

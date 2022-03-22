@@ -348,7 +348,7 @@
                         <table class="right">
                             <tr>
                                 <td><span
-                                        style="display:inline-block;margin-right:10px;"><strong>جمع کل (تومان): {{ object.get_total_invoice_price }}</strong></span>
+                                        style="display:inline-block;margin-right:10px;"><strong>جمع کل (تومان): {{ object.get_total_invoice_price|intcomma:False }}</strong></span>
                                 </td>
                             </tr>
                             <tr>

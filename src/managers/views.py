@@ -1,5 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404
+from django.forms import formset_factory, modelformset_factory
+from django.http import HttpResponse, Http404
+from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 from accounts.models import User
@@ -11,8 +12,8 @@ from core.mixins import (
 )
 from departments.forms import DepartmentForm
 from departments.models import Department
-from projects.forms import ProjectsForm, WorkDaysForm
-from projects.models import Project, WorkDay, Invoice
+from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm
+from projects.models import Project, WorkDay, Invoice, InvoiceDetail
 
 
 # Create your views here.
@@ -190,12 +191,78 @@ class WorkDayDelete(SuperuserAccessMixin, DeleteView):
     success_url = reverse_lazy('managers:project_list')
 
 
-class InvoiceDetail(SuperuserAccessMixin, DetailView):
+class InvoiceDetailView(SuperuserAccessMixin, DetailView):
     model = Invoice
     template_name = 'managers/invoice_detail.html'
+
 
 class InvoicePrintDetail(SuperuserAccessMixin, DetailView):
     model = Invoice
     template_name = 'managers/invoice_print_detail.html'
 
 
+def invoice_create(request, *args, **kwargs):
+    invoice_form = InvoicesForm(request.POST or None)
+    invoice_detail_formset = formset_factory(InvoiceDetailsForm, extra=0)
+    formset = invoice_detail_formset(request.POST or None)
+
+    if all([invoice_form.is_valid(), formset.is_valid()]):
+        invoice = invoice_form.save()
+        for form in formset:
+            factor_detail = form.save(commit=False)
+            factor_detail.invoice = invoice
+            factor_detail.save()
+
+        return redirect(
+            reverse_lazy(
+                'managers:invoice_detail',
+                kwargs={'pk': invoice.pk}
+            )
+        )
+
+    context = {
+        'factor_form': invoice_form,
+        'factor_detail_formset': formset,
+        'form_length': 0
+    }
+    return render(request, 'managers/invoice_create_update.html', context=context)
+
+
+def invoice_update(request, *args, **kwargs):
+    # get factor
+    invoice = get_object_or_404(Invoice, pk=kwargs.get('pk'))
+    if invoice.is_paid:
+        raise Http404
+
+    invoice_form = InvoicesForm(request.POST or None, instance=invoice)
+    invoice_detail_formset = modelformset_factory(
+        InvoiceDetail, form=InvoiceDetailsForm, extra=0, can_delete=True
+    )
+    qs = invoice.invoice_details.all()
+    formset = invoice_detail_formset(request.POST or None, queryset=qs)
+
+    if all([invoice_form.is_valid(), formset.is_valid()]):
+        invoice = invoice_form.save()
+
+        for form in formset:
+            factor_detail = form.save(commit=False)
+            factor_detail.invoice = invoice
+            if form.cleaned_data['DELETE']:
+                factor_detail.delete()
+            else:
+                factor_detail.save()
+
+        return redirect(
+            reverse_lazy(
+                'managers:invoice_detail',
+                kwargs={'pk': invoice.pk}
+            )
+        )
+
+    context = {
+        'factor_form': invoice_form,
+        'factor_detail_formset': formset,
+        'factor': invoice,
+        'form_length': qs.count()
+    }
+    return render(request, 'managers/invoice_create_update.html', context=context)

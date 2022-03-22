@@ -24,7 +24,7 @@ def superuser_access_decorator():
         def inner(request, *args, **kwargs):
             if request.user.is_authenticated and request.user.is_superuser:
                 return view_func(request, *args, **kwargs)
-            return Http404
+            raise Http404
 
         return inner
 
