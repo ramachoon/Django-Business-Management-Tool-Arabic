@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 from accounts.models import User
 from jalali_date.widgets import AdminJalaliDateWidget
-from .models import Project, WorkDay
+from .models import Project, WorkDay, Invoice, InvoiceDetail
 
 
 class ProjectsForm(forms.ModelForm):
@@ -83,3 +83,35 @@ class WorkDaysForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['employees'].queryset = User.objects.filter(is_employee=True)
+
+
+class InvoicesForm(forms.ModelForm):
+    class Meta:
+        model = Invoice
+        fields = '__all__'
+        widgets = {
+            'date': AdminJalaliDateWidget(
+                attrs={'autocomplete': 'off', }
+            )
+        }
+
+
+class InvoiceDetailsForm(forms.ModelForm):
+    class Meta:
+        model = InvoiceDetail
+        fields = '__all__'
+        widgets = {
+            'name': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': 'نام'}
+            ),
+            'quantity': forms.NumberInput(
+                attrs={'class': 'form-control', 'placeholder': 'تعداد'}
+            ),
+            'amount': forms.NumberInput(
+                attrs={'class': 'form-control', 'placeholder': 'قیمت'}
+            )
+        }
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['invoice'].required = False
