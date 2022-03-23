@@ -115,3 +115,16 @@ class InvoiceDetailsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['invoice'].required = False
+
+
+class FilterWorkDayForm(forms.Form):
+    from_date = forms.DateField(
+        widget=AdminJalaliDateWidget(
+            attrs={'autocomplete': 'off', 'placeholder': 'از تاریخ'}
+        )
+    )
+    to_date = forms.DateField(
+        widget=AdminJalaliDateWidget(
+            attrs={'autocomplete': 'off', 'placeholder': 'تا تاریخ'}
+        )
+    )

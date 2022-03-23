@@ -7,6 +7,8 @@ from django.utils import timezone
 from accounts.models import User
 from departments.models import Department
 from django_jalali.db import models as jmodels
+
+from .managers import WorkDayManager
 from src.extensions.utils import jalali_converter
 
 # Create your models here.
@@ -115,7 +117,9 @@ class WorkDay(models.Model):
     class Meta:
         verbose_name = 'روز کاری'
         verbose_name_plural = 'روزهای کاری'
-        ordering = ('-id',)
+        ordering = ('-date',)
+
+    objects = WorkDayManager()
 
     def __str__(self):
         return f"{self.date.year}/{self.date.month}/{self.date.day} | {self.get_day_display()}"

@@ -1,0 +1,61 @@
+{% load static %}
+<html dir="rtl">
+<head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+    <title>{{ request.GET.from_date }} تا {{ request.GET.to_date }}</title>
+    <link rel="stylesheet" href="{% static 'managers/css/print-page-style.css' %}">
+    <link rel="stylesheet" href="{% static 'font-style.css' %}">
+</head>
+<body dir="rtl">
+<div class="invoice-box">
+    <div class="container">
+        <div class="row">
+            <div class="row" style="margin-top:20px;">
+                <div class="row">
+                    <div class="equalHWrap eqWrap">
+                        <div class="equalHW eq infoblock to-block">
+                            <div class="equalHW eq nomargin-nopadding title">
+                                لیست روزهای کاری
+                            </div>
+                            <span>
+                                {{ request.GET.from_date }} - {{ request.GET.to_date }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <table class="table">
+                    <tr class="titles">
+                        <th>روز</th>
+                        <th>توضیحات</th>
+                        <th>شروع کار</th>
+                        <th>پایان کار</th>
+                        <th>کارمندان</th>
+                    </tr>
+                    {% for workday in workdays %}
+                        <tr class="item" id="ProductList">
+                            <td><span id="ProductNumUnits">{{ workday }}<span></span></span></td>
+                            <td><span id="ProductUnit">{{ workday.description }}<span></span></span></td>
+                            <td><span id="ProductUnitPrice">{{ workday.start_time }} </span></td>
+                            <td><span
+                                    id="ProductDiscount">{{ workday.end_time }} </span>
+                            </td>
+                            <td><span id="ProductUnitPrice">
+                                {% for employee in workday.employees.all %}
+                                    {{ employee.get_full_name }} ،
+                                {% endfor %}
+                            </span></td>
+                        </tr>
+                    {% endfor %}
+
+                </table>
+            </div>
+        </div>
+
+    </div>
+</div>
+</body>
+<script>
+    window.print()
+</script>
+</html>
