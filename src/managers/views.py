@@ -12,7 +12,7 @@ from core.mixins import (
 )
 from departments.forms import DepartmentForm
 from departments.models import Department
-from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm
+from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm, FilterWorkDayForm
 from projects.models import Project, WorkDay, Invoice, InvoiceDetail
 
 
@@ -166,6 +166,37 @@ class ProjectDelete(SuperuserAccessMixin, DeleteView):
     model = Project
     template_name = 'managers/project_delete.html'
     success_url = reverse_lazy('managers:project_list')
+
+
+class WorkDayList(SuperuserAccessMixin, ListView):
+    def get_context_data(self, **kwargs):
+        context = super(WorkDayList, self).get_context_data(**kwargs)
+        context['filter_form'] = FilterWorkDayForm()
+        return context
+
+    model = WorkDay
+    template_name = 'managers/workday_list.html'
+    context_object_name = 'workdays'
+    paginate_by = 30
+
+
+class WorkDayPrintList(SuperuserAccessMixin, ListView):
+    def get_queryset(self):
+        get_method = self.request.GET
+        accessibility = get_method.get('accessibility')
+        from_date = get_method.get('from_date')
+        to_date = get_method.get('to_date')
+        if accessibility and from_date and to_date:
+            queryset = WorkDay.objects.filter_workday(
+                from_date=from_date,
+                to_date=to_date,
+                accessibility=accessibility,
+            )
+            return queryset
+        raise Http404
+
+    template_name = 'managers/workday_print_list.html'
+    context_object_name = 'workdays'
 
 
 class WorkDayDetail(SuperuserAccessMixin, DetailView):
