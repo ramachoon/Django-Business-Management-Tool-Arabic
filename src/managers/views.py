@@ -222,6 +222,13 @@ class WorkDayDelete(SuperuserAccessMixin, DeleteView):
     success_url = reverse_lazy('managers:project_list')
 
 
+class InvoiceList(SuperuserAccessMixin, ListView):
+    model = Invoice
+    template_name = 'managers/invoice_list.html'
+    context_object_name = 'invoices'
+    paginate_by = 30
+
+
 class InvoiceDetailView(SuperuserAccessMixin, DetailView):
     model = Invoice
     template_name = 'managers/invoice_detail.html'

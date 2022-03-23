@@ -33,6 +33,7 @@ urlpatterns = [
     path('workdays/delete/<int:pk>', managers_views.WorkDayDelete.as_view(), name='workday_delete'),
 
     # invoices
+    path('invoices/', managers_views.InvoiceList.as_view(), name='invoice_list'),
     path('invoices/create/', managers_views.invoice_create, name='invoice_create'),
     path('invoices/<str:pk>', managers_views.InvoiceDetailView.as_view(), name='invoice_detail'),
     path('invoices/print/<str:pk>', managers_views.InvoicePrintDetail.as_view(), name='invoice_print_detail'),
