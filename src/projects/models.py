@@ -101,8 +101,13 @@ class Project(models.Model):
 
 class WorkDay(models.Model):
     project = models.ForeignKey(
-        Project, on_delete=models.CASCADE, verbose_name='پروژه', related_name='workdays'
+        Project, on_delete=models.CASCADE,
+        verbose_name='پروژه',
+        related_name='workdays',
+        null=True,
+        blank=True
     )
+    description = models.CharField(max_length=75, verbose_name='توضیحات')
     day = models.CharField(max_length=20, choices=DAYS_CHOICES, verbose_name='روز')
     date = jmodels.jDateField(verbose_name='تاریخ')
     start_time = models.TimeField(default=timezone.now, verbose_name='ساعت شروع کار')
