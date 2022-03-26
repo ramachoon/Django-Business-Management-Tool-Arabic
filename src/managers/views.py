@@ -19,6 +19,16 @@ from projects.models import Project, WorkDay, Invoice, InvoiceDetail
 # Create your views here.
 
 
+class AccountUpdate(SuperuserAccessMixin, UpdateView):
+    def get_object(self, queryset=None):
+        user = get_object_or_404(User, username=self.request.user.username)
+        return user
+
+    template_name = 'managers/account_update.html'
+    success_url = reverse_lazy('managers:account_update')
+    fields = ('username', 'email', 'first_name', 'last_name', 'avatar', 'bio')
+
+
 class UsersList(SuperuserAccessMixin, ListView):
     def get_queryset(self):
         users = User.objects.all().order_by('-id')

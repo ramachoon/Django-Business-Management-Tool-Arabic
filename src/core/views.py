@@ -9,5 +9,5 @@ from django.urls import reverse
 @login_required(login_url='account:login')
 def main_view(request):
     if request.user.is_superuser:
-        return redirect(reverse('managers:user_list'))
+        return redirect(reverse('managers:department_list'))
     return HttpResponse('خوش آمدید')

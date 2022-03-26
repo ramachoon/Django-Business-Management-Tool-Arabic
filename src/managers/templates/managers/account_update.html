@@ -1,0 +1,119 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+
+{% block title %}
+    ویرایش حساب کاربری
+{% endblock %}
+
+{% block content %}
+    <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+        <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <div class="d-flex align-items-center flex-wrap mr-2">
+
+                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    حساب کاربری </h5>
+
+                <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+
+                <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                          ویرایش اطلاعات                                  </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--begin::Entry-->
+    <div class="d-flex flex-column-fluid">
+        <!--begin::Container-->
+        <div class=" container ">
+            <!--begin::پروفایل بررسی-->
+            <div class="d-flex flex-row">
+                <!--begin::Content-->
+                <div class="flex-row-fluid ml-lg-12">
+                    <!--begin::Card-->
+                    <div class="card card-custom">
+                        <!--begin::Header-->
+                        <div class="card-header py-3">
+                            <div class="card-title align-items-start flex-column">
+                                <h3 class="card-label font-weight-bolder text-dark">اطلاعات حساب</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">تنظیمات حساب خود را تغییر دهید</span>
+                            </div>
+                        </div>
+                        <!--end::Header-->
+                        <!--begin::Form-->
+                        <form class="form" method="post" enctype="multipart/form-data">
+                            {% csrf_token %}
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.username|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.email|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.first_name|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.last_name|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.avatar|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-12">
+                                        <div class="form-group mb-2">
+                                            <div>
+                                                {{ form.bio|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group mb-2">
+                                        <div>
+                                            <button class="btn btn-light-primary font-weight-bold">ویرایش
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Card-->
+                </div>
+                <!--end::Content-->
+            </div>
+            <!--end::پروفایل بررسی-->
+        </div>
+        <!--end::Container-->
+    </div>
+    <!--end::Entry-->
+{% endblock %}
