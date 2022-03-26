@@ -7,9 +7,7 @@ from accounts.models import User
 
 from accounts.forms import UsersForm
 from core.decorators import superuser_access_decorator
-from core.mixins import (
-    SuperuserAccessMixin
-)
+from core.mixins import SuperuserAccessMixin
 from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm, FilterWorkDayForm
@@ -58,40 +56,36 @@ class UserCreate(CreateView):
 
 
 class UserUpdate(SuperuserAccessMixin, UpdateView):
-    def get_object(self, queryset=None):
-        user = get_object_or_404(User, id=self.kwargs.get('pk'))
-        return user
-
+    model = User
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
     form_class = UsersForm
 
 
 class UserDelete(SuperuserAccessMixin, DeleteView):
-    def get_object(self, queryset=None):
-        user = get_object_or_404(User, id=self.kwargs.get('pk'))
-        return user
-
+    model = User
     template_name = 'managers/user_delete.html'
     success_url = reverse_lazy('managers:user_list')
 
 
 @superuser_access_decorator()
 def user_activate_deactivate(request, *args, **kwargs):
-    user_id = request.POST['user_id']
+    if request.method == "POST":
+        user_id = request.POST['user_id']
+        try:
+            message = 'deactivate'
+            user = User.objects.get(id=user_id)
+            if user.is_active:
+                user.is_active = False
+            elif not user.is_active:
+                user.is_active = True
+                message = 'activate'
+            user.save()
+            return HttpResponse(message, status=200)
+        except User.DoesNotExist:
+            return HttpResponse(status=502)
 
-    try:
-        message = 'deactivate'
-        user = User.objects.get(id=user_id)
-        if user.is_active:
-            user.is_active = False
-        elif not user.is_active:
-            user.is_active = True
-            message = 'activate'
-        user.save()
-        return HttpResponse(message, status=200)
-    except User.DoesNotExist:
-        return HttpResponse(status=502)
+    raise Http404
 
 
 class DepartmentsList(SuperuserAccessMixin, ListView):
@@ -103,10 +97,7 @@ class DepartmentsList(SuperuserAccessMixin, ListView):
 
 
 class DepartmentDetail(SuperuserAccessMixin, DetailView):
-    def get_object(self, queryset=None):
-        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
-        return department
-
+    model = Department
     template_name = 'managers/department_detail.html'
     context_object_name = 'department'
 
@@ -124,25 +115,19 @@ class DepartmentCreate(SuperuserAccessMixin, CreateView):
 
 
 class DepartmentUpdate(SuperuserAccessMixin, UpdateView):
-    def get_object(self, queryset=None):
-        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
-        return department
-
     def form_valid(self, form):
         department_form = form.save(commit=False)
         department_form.maker = self.request.user
         department_form.save()
         return super(DepartmentUpdate, self).form_valid(form)
 
+    model = Department
     template_name = 'managers/department_create_update.html'
     form_class = DepartmentForm
 
 
 class DepartmentDelete(SuperuserAccessMixin, DeleteView):
-    def get_object(self, queryset=None):
-        department = get_object_or_404(Department, id=self.kwargs.get('pk'))
-        return department
-
+    model = Department
     template_name = 'managers/department_delete.html'
     success_url = reverse_lazy('managers:department_list')
 
@@ -152,7 +137,6 @@ class ProjectsList(SuperuserAccessMixin, ListView):
     template_name = 'managers/project_list.html'
     context_object_name = 'projects'
     paginate_by = 6
-    ordering = '-id'
 
 
 class ProjectDetail(SuperuserAccessMixin, DetailView):
@@ -249,6 +233,7 @@ class InvoicePrintDetail(SuperuserAccessMixin, DetailView):
     template_name = 'managers/invoice_print_detail.html'
 
 
+@superuser_access_decorator()
 def invoice_create(request, *args, **kwargs):
     invoice_form = InvoicesForm(request.POST or None)
     invoice_detail_formset = formset_factory(InvoiceDetailsForm, extra=0)
@@ -276,6 +261,7 @@ def invoice_create(request, *args, **kwargs):
     return render(request, 'managers/invoice_create_update.html', context=context)
 
 
+@superuser_access_decorator()
 def invoice_update(request, *args, **kwargs):
     # get factor
     invoice = get_object_or_404(Invoice, pk=kwargs.get('pk'))
