@@ -104,11 +104,11 @@
                                             <td>{{ workday.description }}</td>
                                             <td>{{ workday.start_time }}</td>
                                             <td>{{ workday.end_time }}</td>
-                                            {% for employee in workday.employees.all %}
-                                                <td>
+                                            <td>
+                                                {% for employee in workday.employees.all %}
                                                     {{ employee.get_full_name }}،
-                                                </td>
-                                            {% endfor %}
+                                                {% endfor %}
+                                            </td>
                                         </tr>
                                     {% endfor %}
 

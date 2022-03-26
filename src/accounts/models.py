@@ -22,8 +22,10 @@ class User(AbstractUser):
 
     bio = models.TextField(default='بیوگرافی خودرا ویرایش کنید', verbose_name='بیوگرافی')
     avatar = models.ImageField(
-        upload_to=upload_avatar_path, default='accounts/avatars/default.jpg', validators=[validate_avatar],
-        verbose_name='avatar'
+        upload_to=upload_avatar_path,
+        default='accounts/avatars/default.jpg',
+        validators=[validate_avatar],
+        verbose_name='تصویر پروفایل'
     )
     is_employee = models.BooleanField(default=False, verbose_name='کارمند')
     is_customer = models.BooleanField(default=False, verbose_name='کارفرما')
