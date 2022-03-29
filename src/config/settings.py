@@ -161,7 +161,7 @@ RECAPTCHA_PRIVATE_KEY = config('RECAPTCHA_PRIVATE_KEY')
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
-PWA_APP_NAME = 'فلزکاری عبدی'
+PWA_APP_NAME = 'گروه فلزکاری عبدی'
 PWA_APP_DESCRIPTION = "Abdi Metallurgy Group"
 PWA_APP_THEME_COLOR = '#000000'
 PWA_APP_BACKGROUND_COLOR = '#ffffff'

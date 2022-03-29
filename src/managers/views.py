@@ -17,6 +17,21 @@ from projects.models import Project, WorkDay, Invoice, InvoiceDetail
 # Create your views here.
 
 
+def managers_home_page(request):
+    projects = Project.objects.all().order_by('end_date')[:5]
+    invoices = Invoice.objects.all()[:5]
+    workdays = WorkDay.objects.all()[:5]
+    users = User.objects.all().order_by('-last_login')[:5]
+
+    context = {
+        'projects': projects,
+        'invoices': invoices,
+        'workdays': workdays,
+        'users': users
+    }
+    return render(request, 'managers/managers_home_page.html', context)
+
+
 class AccountUpdate(SuperuserAccessMixin, UpdateView):
     def get_object(self, queryset=None):
         user = get_object_or_404(User, username=self.request.user.username)

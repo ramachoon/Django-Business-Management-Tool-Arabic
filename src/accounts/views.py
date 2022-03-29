@@ -22,7 +22,7 @@ def otp_login(request):
 
     if login_form.is_valid():
         phone_number = login_form.cleaned_data.get('phone_number')
-        _code = random.randint(111111, 999999)
+        _code = random.randint(1111, 9999)
         send_otp_sms(phone_number, _code)
         hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
 
