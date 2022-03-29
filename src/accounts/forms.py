@@ -29,8 +29,8 @@ class VerifyOtpForm(BaseCaptchaForm):
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'کد تائید'
         }),
         label='کد تائید',
-        min_length=6,
-        max_length=6
+        min_length=4,
+        max_length=4
     )
 
 

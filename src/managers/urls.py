@@ -3,7 +3,8 @@ from . import views as managers_views
 
 app_name = 'managers'
 urlpatterns = [
-    path('', managers_views.AccountUpdate.as_view(), name='account_update'),
+    path('', managers_views.managers_home_page, name='home'),
+    path('update/', managers_views.AccountUpdate.as_view(), name='account_update'),
 
     # users
     path('users/', managers_views.UsersList.as_view(), name='user_list'),
