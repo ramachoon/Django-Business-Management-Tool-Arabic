@@ -147,7 +147,12 @@ class Invoice(models.Model):
     short_description = models.CharField(max_length=100, verbose_name='توضیح کوتاه')
     date = jmodels.jDateField(verbose_name='تاریخ')
     project = models.ForeignKey(
-        Project, related_name='invoices', on_delete=models.CASCADE, verbose_name='پروژه'
+        Project,
+        related_name='invoices',
+        on_delete=models.CASCADE,
+        verbose_name='پروژه',
+        null=True,
+        blank=True
     )
     is_paid = models.BooleanField(default=False, verbose_name='پرداخت شده / نشده')
     created = models.DateTimeField(auto_now_add=True)
