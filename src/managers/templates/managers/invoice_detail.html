@@ -116,23 +116,25 @@
                             <div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
                                 <div class="d-flex flex-column mb-10 mb-md-0">
                                     <div class="font-weight-bolder font-size-lg mb-3">مشخصات فاکتور</div>
+                                    {% if object.project %}
 
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <span class="mr-15 font-weight-bold">نام پروژه:</span>
-                                        <a href="{% url 'managers:project_detail' invoice.project.pk %}"
-                                           class="text-right">{{ invoice.project.name }}</a>
-                                    </div>
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="mr-15 font-weight-bold">نام پروژه:</span>
+                                            <a href="{% url 'managers:project_detail' invoice.project.pk %}"
+                                               class="text-right">{{ invoice.project.name }}</a>
+                                        </div>
 
-                                    <div class="d-flex justify-content-between mb-3">
-                                        <span class="mr-15 font-weight-bold">کارفرمایان:</span>
-                                        <span class="text-right">
+                                        <div class="d-flex justify-content-between mb-3">
+                                            <span class="mr-15 font-weight-bold">کارفرمایان:</span>
+                                            <span class="text-right">
 
                                             {% for customer in object.project.customers.all %}
                                                 {{ customer.get_full_name }}،
                                             {% endfor %}
 
                                         </span>
-                                    </div>
+                                        </div>
+                                    {% endif %}
 
                                     <div class="d-flex justify-content-between">
                                         <span class="mr-15 font-weight-bold">وضعیت پرداخت:</span>
