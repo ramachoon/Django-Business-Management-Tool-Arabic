@@ -69,15 +69,17 @@
                                     <span class="opacity-70">{{ object.date }}</span>
                                 </div>
                                 <div class="d-flex flex-column flex-root">
-                                    <span class="font-weight-bolder mb-2">شناسه فاکتور</span>
-                                    <span class="opacity-70">{{ object.id|truncatechars:15 }}</span>
+                                    <span class="font-weight-bolder mb-2">
+                                        شناسه فاکتور
+                                    <i class="fa fa-copy text-success mx-2" style="cursor: pointer"
+                                       onclick="copyToClipboard('{{ object.id }}')"></i>
+                                    </span>
+                                    <span class="opacity-70">{{ object.id }}</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <!-- end: فاکتور header-->
 
-                    <!-- begin: فاکتور body-->
                     <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="table-responsive">
@@ -108,9 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <!-- end: فاکتور body-->
 
-                    <!-- begin: فاکتور footer-->
                     <div class="row justify-content-center bg-gray-100 py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             <div class="d-flex justify-content-between flex-column flex-md-row font-size-lg">
@@ -164,29 +164,24 @@
 
                         </div>
                     </div>
-                    <!-- end: فاکتور footer-->
 
                     {% if object.payments.count > 0 %}
                         <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
                             <div class="col-md-11">
 
                                 <div class="card gutter-b">
-                                    <!--begin::Header-->
                                     <div class="card-header align-items-center border-0 mt-4">
                                         <h3 class="card-title align-items-start flex-column">
                                             <span class="font-weight-bolder text-dark">تاریخچه پرداخت</span>
                                         </h3>
                                     </div>
-                                    <!--end::Header-->
 
-                                    <!--begin::Body-->
                                     <div class="card-body pt-1">
                                         <div class="timeline timeline-5">
 
 
                                             {% for payment in invoice.payments.all %}
                                                 <div class="timeline-item align-items-start">
-                                                    <!--begin::برچسب-->
                                                     <div class="timeline-label font-weight-bolder text-dark-75 font-size-lg">
                                                         {% if payment.status %}
                                                             موفق
@@ -194,15 +189,11 @@
                                                             ناموفق
                                                         {% endif %}
                                                     </div>
-                                                    <!--end::برچسب-->
 
-                                                    <!--begin::Badge-->
                                                     <div class="timeline-badge">
                                                         <i class="fa {% if payment.status %}fa-check-circle text-success{% else %}fa-times-circle text-danger{% endif %} icon-xl"></i>
                                                     </div>
-                                                    <!--end::Badge-->
 
-                                                    <!--begin::متن-->
                                                     <div class="font-weight-mormal font-size-lg timeline-content text-muted pl-3">
                                                         {% if payment.status %}
                                                             پرداخت شده
@@ -216,22 +207,18 @@
                                                         <br>
                                                         مبلغ (ریال): {{ payment.amount|intcomma:False }}
                                                     </div>
-                                                    <!--end::متن-->
                                                 </div>
                                             {% endfor %}
 
 
                                         </div>
-                                        <!--end: Items-->
                                     </div>
-                                    <!--end: Card Body-->
                                 </div>
 
                             </div>
                         </div>
                     {% endif %}
 
-                    <!-- begin: فاکتور action-->
                     <div class="row justify-content-center {% if object.payments.count > 0 %}bg-gray-100{% endif %} py-8 px-8 py-md-10 px-md-0">
                         <div class="col-md-9">
                             {#                            {% if not factor.is_paid %}#}
@@ -262,13 +249,8 @@
                     </div>
                 </div>
             </div>
-            <!-- end: فاکتور action-->
-
-            <!-- end: فاکتور-->
         </div>
     </div>
-    <!-- end::Card-->
     </div>
-    <!--end::Container-->
     </div>
 {% endblock %}

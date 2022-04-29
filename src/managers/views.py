@@ -17,19 +17,9 @@ from projects.models import Project, WorkDay, Invoice, InvoiceDetail
 # Create your views here.
 
 
+@superuser_access_decorator()
 def managers_home_page(request):
-    projects = Project.objects.all().order_by('end_date')[:5]
-    invoices = Invoice.objects.all()[:5]
-    workdays = WorkDay.objects.all()[:5]
-    users = User.objects.all().order_by('-last_login')[:5]
-
-    context = {
-        'projects': projects,
-        'invoices': invoices,
-        'workdays': workdays,
-        'users': users
-    }
-    return render(request, 'managers/managers_home_page.html', context)
+    return render(request, 'managers/managers_home_page.html', {})
 
 
 class AccountUpdate(SuperuserAccessMixin, UpdateView):
@@ -56,11 +46,13 @@ class UsersList(SuperuserAccessMixin, ListView):
             return users.filter(is_supporter=True)
         elif filter_params == 'admin':
             return users.filter(is_admin=True)
+        elif filter_params == 'staff':
+            return users.filter(is_staff=True)
         return users
 
     template_name = 'managers/user_list.html'
     context_object_name = 'users'
-    paginate_by = 12
+    paginate_by = 8
 
 
 class UserCreate(CreateView):
@@ -106,7 +98,6 @@ def user_activate_deactivate(request, *args, **kwargs):
 class DepartmentsList(SuperuserAccessMixin, ListView):
     model = Department
     template_name = 'managers/department_list.html'
-    ordering = '-id'
     context_object_name = 'departments'
     paginate_by = 9
 
@@ -278,7 +269,6 @@ def invoice_create(request, *args, **kwargs):
 
 @superuser_access_decorator()
 def invoice_update(request, *args, **kwargs):
-    # get factor
     invoice = get_object_or_404(Invoice, pk=kwargs.get('pk'))
 
     invoice_form = InvoicesForm(request.POST or None, instance=invoice)
