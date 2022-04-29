@@ -25,26 +25,18 @@
     </div>
 
 
-    <!--begin::Entry-->
     <div class="d-flex flex-column-fluid">
-        <!--begin::Container-->
         <div class=" container ">
-            <!--begin::پروفایل بررسی-->
             <div class="d-flex flex-row">
-                <!--begin::Content-->
                 <div class="flex-row-fluid ml-lg-12">
-                    <!--begin::Card-->
                     <div class="card card-custom">
-                        <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
                                 <h3 class="card-label font-weight-bolder text-dark">اطلاعات حساب</h3>
                                 <span class="text-muted font-weight-bold font-size-sm mt-1">تنظیمات حساب خود را تغییر دهید</span>
                             </div>
                         </div>
-                        <!--end::Header-->
-                        <!--begin::Form-->
-                        <form class="form" method="post" enctype="multipart/form-data">
+                        <form class="form" method="post" enctype="multipart/form-data" autocomplete="off">
                             {% csrf_token %}
                             <div class="card-body">
                                 <div class="row">
@@ -105,15 +97,10 @@
                                 </div>
                             </div>
                         </form>
-                        <!--end::Form-->
                     </div>
-                    <!--end::Card-->
                 </div>
-                <!--end::Content-->
             </div>
-            <!--end::پروفایل بررسی-->
         </div>
-        <!--end::Container-->
+
     </div>
-    <!--end::Entry-->
 {% endblock %}

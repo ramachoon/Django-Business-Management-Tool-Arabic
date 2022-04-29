@@ -1,5 +1,5 @@
 {% load static %}
-<!--begin::Global Config(global config for global جی اس scripts)-->
+
 <script>
     var KTAppSettings = {
         "breakpoints": {
@@ -60,10 +60,34 @@
         "font-family": "Poppins"
     };
 </script>
-<!--end::Global Config-->
 
-<!--begin::Global تم Bundle(used by all pages)-->
 <script src="{% static 'managers/plugins/global/plugins.bundle.js' %}"></script>
-<script src="{% static 'managers/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>
+{#<script src="{% static 'managers/plugins/custom/prismjs/prismjs.bundle.js' %}"></script>#}
 <script src="{% static 'managers/js/scripts.bundle.js' %}"></script>
-<!--end::Global تم Bundle-->
+<script src="{% static 'js/miscellaneous/toastr.js' %}"></script>
+<script>
+    toastr.options = {
+        "closeButton": false,
+        "newestOnTop": false,
+        "progressBar": false,
+        "positionClass": "toast-bottom-center",
+        "preventDuplicates": false,
+        "onclick": null,
+        "showDuration": "300",
+        "hideDuration": "1000",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000",
+        "showEasing": "swing",
+        "hideEasing": "linear",
+        "showMethod": "fadeIn",
+        "hideMethod": "fadeOut"
+    }
+
+    const copyToClipboard = (text) => {
+        navigator.clipboard
+            .writeText(text)
+            .then(() => toastr.success('---------در کلیپ بورد کپی شد'))
+            .catch(() => alert('Error'))
+    }
+
+</script>
