@@ -6,7 +6,7 @@ from accounts.models import User
 
 class LoginForm(BaseCaptchaForm):
     phone_number = forms.CharField(
-        widget=forms.TextInput(attrs={
+        widget=forms.NumberInput(attrs={
             'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'شماره موبایل'
         }),
         help_text='شماره موبایل با 09 شروع شود',

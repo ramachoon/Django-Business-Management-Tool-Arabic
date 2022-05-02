@@ -4,7 +4,7 @@
 <html direction="rtl" dir="rtl" style="direction: rtl">
 {% load pwa %}
 {% progressive_web_app_meta %}
-<!--begin::Head-->
+
 <head>
     <base href="">
     <meta charset="utf-8"/>
@@ -19,23 +19,17 @@
     {% endblock %}
 
 </head>
-<!--end::Head-->
+
 
 <body id="kt_body"
       class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
 
-<!--begin::Main-->
-<!--begin::Header Mobile-->
 <div id="kt_header_mobile" class="header-mobile align-items-center  header-mobile-fixed ">
-    <!--begin::Toolbar-->
     <div class="d-flex align-items-center">
-        <!--begin::Aside Mobile Toggle-->
         <button class="btn p-0 burger-icon burger-icon-left" id="kt_aside_mobile_toggle">
             <span></span>
         </button>
-        <!--end::Aside Mobile Toggle-->
 
-        <!--begin::Topbar Mobile Toggle-->
         <button class="btn btn-hover-text-primary p-0 ml-2" id="kt_header_mobile_topbar_toggle">
 			<span class="svg-icon svg-icon-xl"><!--begin::Svg Icon | path:assets/media/svg/icons/عمومی/User.svg--><svg
                     xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px"
@@ -84,14 +78,11 @@
     </div>
     <!--end::Page-->
 </div>
-<!--end::Main-->
 
 
-<!-- begin::User Panel-->
+
 {% include 'managers/managers_base/components/user_panel_component.html' %}
-<!-- end::User Panel-->
 
-<!--begin::Scrolltop-->
 <div id="kt_scrolltop" class="scrolltop">
 	<span class="svg-icon"><!--begin::Svg Icon | path:assets/media/svg/icons/Navigation/Up-2.svg--><svg
             xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"
@@ -102,7 +93,7 @@
         <path d="M6.70710678,12.7071068 C6.31658249,13.0976311 5.68341751,13.0976311 5.29289322,12.7071068 C4.90236893,12.3165825 4.90236893,11.6834175 5.29289322,11.2928932 L11.2928932,5.29289322 C11.6714722,4.91431428 12.2810586,4.90106866 12.6757246,5.26284586 L18.6757246,10.7628459 C19.0828436,11.1360383 19.1103465,11.7686056 18.7371541,12.1757246 C18.3639617,12.5828436 17.7313944,12.6103465 17.3242754,12.2371541 L12.0300757,7.38413782 L6.70710678,12.7071068 Z"
               fill="#000000" fill-rule="nonzero"/>
     </g>
-</svg><!--end::Svg Icon--></span></div>
+</svg></span></div>
 
 {% include 'managers/managers_base/_footer_references.html' %}
 
@@ -110,6 +101,4 @@
 
 {% endblock %}
 </body>
-<!--end::Body-->
-
 </html>
