@@ -10,4 +10,6 @@ from django.urls import reverse
 def main_view(request):
     if request.user.is_superuser:
         return redirect(reverse('managers:home'))
+    elif request.user.is_staff:
+        return redirect((reverse('staff_module:home')))
     return HttpResponse('خوش آمدید')

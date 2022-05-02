@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'managers',
     'departments',
     'projects',
+    'staff_module',
 ]
 
 MIDDLEWARE = [
