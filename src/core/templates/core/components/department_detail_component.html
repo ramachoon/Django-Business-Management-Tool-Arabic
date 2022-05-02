@@ -1,0 +1,228 @@
+{% load static %}
+<div class="row">
+
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+        <div class="card card-custom gutter-b card-stretch">
+            <div class="card-body p-12">
+                <div class="d-flex align-items-center mb-7">
+                    <div class="flex-shrink-0 mr-4">
+                        <div class="symbol symbol-circle symbol-lg-75">
+                            <div class="symbol symbol-60 symbol-xl-65 {% cycle 'symbol-light-success' 'symbol-light-info' 'symbol-light-danger' %}">
+                                <span class="font-size-h4 symbol-label font-weight-light">{{ department.name|truncatechars:6 }}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex flex-column">
+                                        <span
+                                                class="text-dark font-weight-bold text-hover-primary font-size-h4 mb-0">{{ department.name }}</span>
+                    </div>
+                </div>
+                <p class="mb-7">
+                    {{ department.description }}
+                </p>
+                {% if request.user.is_superuser %}
+                    <div class="row">
+                        <div class="col-md-6 mb-2">
+                            <a href="{% url 'managers:department_delete' department.pk %}"
+                               class="btn btn-block btn-sm btn-light-danger font-weight-bolder text-uppercase py-4">حذف</a>
+                        </div>
+                        <div class="col-md-6">
+                            <a href="{% url 'managers:department_update' department.pk %}"
+                               class="btn btn-block btn-sm btn-light-info font-weight-bolder text-uppercase py-4">ویرایش</a>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-8">
+        <div class="card card-custom card-stretch gutter-b">
+            <div class="card-header border-0 py-5">
+                <h3 class="card-title align-items-start flex-column">
+                    <span class="card-label font-weight-bolder text-dark">پروژه های این دپارتمان</span>
+                    <span class="text-muted mt-3 font-weight-bold font-size-sm">{{ department.projects.count }} پروژه</span>
+                </h3>
+                <div class="card-toolbar">
+                    <a href="{% url 'managers:project_create' %}"
+                       class="btn btn-light-primary font-weight-bolder font-size-sm">
+                                    <span
+                                            class="svg-icon svg-icon-md svg-icon-white"></span>ایجاد پروژه</a>
+                </div>
+            </div>
+
+            <div class="card-body pt-0 pb-3">
+                <!--begin::Table-->
+                <div class="table-responsive">
+                    <table class="table table-head-custom table-head-bg table-borderless table-vertical-center">
+                        <thead>
+                        <tr class="text-uppercase">
+                            <th style="min-width: 250px" class="pl-7"><span
+                                    class="text-dark-75">پروژه</span></th>
+                            <th style="min-width: 100px">توضیحات</th>
+                            <th style="min-width: 150px">دسترسی</th>
+                            <th style="min-width: 130px">تعداد کارفرمایان</th>
+                            <th style="min-width: 120px">مدیریت</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+
+                        {% for project in department.projects.all %}
+                            <tr>
+                                <td class="pl-0 py-8">
+                                    <div class="d-flex align-items-center">
+                                        <div class="symbol symbol-50 flex-shrink-0 mr-4">
+                                            <div class="symbol symbol-60 symbol-xl-50 symbol-light-success">
+                                                <span class="font-size-h4 symbol-label font-weight-light">...</span>
+                                            </div>
+                                        </div>
+
+                                        <div>
+                                            <a href="{% url 'managers:project_detail' project.pk %}"
+                                               class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ project.name }}</a>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>
+                            <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                               {{ project.description|truncatewords:3 }}
+                            </span>
+                                </td>
+                                <td>
+                                                    <span class="text-dark-75 font-weight-bolder d-block font-size-lg">
+                                                        {{ project.get_accessibility_display }}
+                                                    </span>
+                                    <span class="text-muted font-weight-bold"></span>
+                                </td>
+                                <td>
+                                    <span class="label label-lg label-light-primary label-inline">{{ project.customers.all.count }}</span>
+                                </td>
+                                <td class="pr-0">
+                                    <a href="{% url 'managers:project_update' project.pk %}"
+                                       class="btn btn-icon btn-light btn-hover-primary btn-sm">
+                                                    <span class="svg-icon svg-icon-md svg-icon-primary">
+                                                        <i class="fa fa-edit"></i>
+                                                    </span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% empty %}
+                            <div class="alert alert-custom alert-outline-info fade show mb-5" role="alert">
+                                <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                                <div class="alert-text">پروژه ای پیدا نشد!</div>
+                                <div class="alert-close">
+                                    <button type="button" class="close" data-dismiss="alert"
+                                            aria-label="نزدیک">
+                                        <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                                    </button>
+                                </div>
+                            </div>
+                        {% endfor %}
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-custom card-stretch gutter-b">
+            <div class="card-header border-0">
+                <h3 class="card-title font-weight-bolder text-dark">کاربران ارشد</h3>
+                {% if request.user.is_superuser %}
+                    <div class="card-toolbar">
+                        <div class="dropdown dropdown-inline">
+                            <a class="btn btn-light-primary btn-sm font-weight-bolder dropdown-toggle"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                کاربران
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right" style="">
+                                <ul class="navi navi-hover">
+                                    <li class="navi-header pb-1">
+                                        <span class="text-primary text-uppercase font-weight-bold font-size-sm"></span>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="{% url 'managers:user_list' %}" class="navi-link"
+                                           target="_blank">
+                                            <span class="navi-icon"><i class="flaticon2-graph-1"></i></span>
+                                            <span class="navi-text">لیست کاربران</span>
+                                        </a>
+                                    </li>
+                                    <li class="navi-item">
+                                        <a href="{% url 'managers:user_create' %}" class="navi-link"
+                                           target="_blank">
+                                            <span class="navi-icon"><i class="flaticon2-rocket-1"></i></span>
+                                            <span class="navi-text">ایجاد کاربر</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            </div>
+            <div class="card-body pt-2">
+
+                {% for staff_user in object.staff_users.all %}
+
+                    <div class="d-flex align-items-center mb-10">
+                        <div class="symbol symbol-40 symbol-light-success mr-5">
+                <span class="symbol-label">
+                    <img src="{% static 'media_files/svg/avatars/009-boy-4.svg' %}" class="h-75 align-self-end" alt="">
+                </span>
+                        </div>
+                        <div class="d-flex flex-column flex-grow-1 font-weight-bold">
+                            <a href="tel:{{ staff_user.username }}"
+                               class="text-dark text-hover-primary mb-1 font-size-lg">{{ staff_user.username }}</a>
+                            <span class="text-muted">{{ staff_user.get_full_name }}</span>
+                        </div>
+                        <!--end::متن-->
+                        {% if request.user.is_superuser %}
+                            <div class="dropdown dropdown-inline ml-2" data-toggle="tooltip" title=""
+                                 data-placement="left" data-original-title="اقدامات سریع">
+                                <a href="#" class="btn btn-hover-light-primary btn-sm btn-icon"
+                                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <i class="ki ki-bold-more-hor"></i>
+                                </a>
+                                <div class="dropdown-menu p-0 m-0 dropdown-menu-md dropdown-menu-right"
+                                     style="">
+                                    <ul class="navi navi-hover">
+                                        <li class="navi-header font-weight-bold py-4">
+                                            <span class="font-size-lg">انتخاب کنید:</span>
+                                        </li>
+                                        <li class="navi-separator mb-3 opacity-70"></li>
+                                        <li class="navi-item">
+                                            <a href="{% url 'managers:user_update' user.pk %}"
+                                               class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-warning">ویرایش</span>
+            </span>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        {% endif %}
+                    </div>
+                {% empty %}
+                    <div class="alert alert-custom alert-outline-info fade show mb-5" role="alert">
+                        <div class="alert-icon"><i class="flaticon-warning"></i></div>
+                        <div class="alert-text">کاربر ارشدی یافت نشد!</div>
+                        <div class="alert-close">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="نزدیک">
+                                <span aria-hidden="true"><i class="ki ki-close"></i></span>
+                            </button>
+                        </div>
+                    </div>
+
+                {% endfor %}
+
+
+            </div>
+        </div>
+    </div>
+</div>
