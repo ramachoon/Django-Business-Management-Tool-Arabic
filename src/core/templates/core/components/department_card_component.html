@@ -1,0 +1,74 @@
+<div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
+    <div class="card card-custom gutter-b card-stretch">
+        <div class="card-body pt-4">
+            <div class="d-flex justify-content-end">
+                <div class="dropdown dropdown-inline" data-toggle="tooltip" title=""
+                     data-placement="left" data-original-title="اقدامات سریع">
+                    <a class="btn btn-clean btn-hover-light-primary btn-sm btn-icon"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="ki ki-bold-more-hor"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-md dropdown-menu-right">
+                        <ul class="navi navi-hover">
+                            <li class="navi-header font-weight-bold py-4">
+                                <span class="font-size-lg">انتخاب کنید:</span>
+                                <i class="flaticon2-information icon-md text-muted"
+                                   data-toggle="tooltip" data-placement="right" title=""
+                                   data-original-title="اقدامات سریع..."></i>
+                            </li>
+                            <li class="navi-separator mb-3 opacity-70"></li>
+                            <li class="navi-item">
+                                <a href="{% if request.user.is_superuser %}{% url 'managers:department_detail' department.pk %}{% elif request.user.is_staff %}{% url 'staff_module:department_detail' department.pk %}{% endif %}"
+                                   class="navi-link">
+            <span class="navi-text">
+                <span class="label label-xl label-inline label-light-success">مشاهده</span>
+            </span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="d-flex align-items-center mb-7">
+                <div class="flex-shrink-0 mr-4">
+                    <div class="symbol symbol-circle symbol-lg-75">
+                        <div class="symbol symbol-60 symbol-xl-65">
+                            <span class="font-size-h4 symbol-label font-weight-light">{{ department.name|slice:3 }}..</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column">
+                    <span
+                       class="text-dark font-weight-bold font-size-h4 mb-0">{{ department.name }}</span>
+                </div>
+            </div>
+            <p class="mb-7">
+                {{ department.description }}
+            </p>
+            <div class="mb-7">
+                <div class="d-flex justify-content-between align-items-center">
+                    <span class="text-dark-75 font-weight-bolder mr-2">سازنده:</span>
+                    <span class="text-muted text-hover-primary">
+                                            {% if department.maker == request.user %}
+                                                شما
+                                            {% else %}
+                                                {{ department.maker.get_full_name }}
+                                            {% endif %}
+                                        </span>
+                </div>
+                <div class="d-flex justify-content-between align-items-cente my-1">
+                    <span class="text-dark-75 font-weight-bolder mr-2">وضعیت دسترسی:</span>
+                    <span class="text-muted text-hover-primary">
+                                            {% if department.is_active %}
+                                                فعال
+                                            {% else %}
+                                                غیرفعال
+                                            {% endif %}
+                                            </span>
+                </div>
+            </div>
+            <a href="{% if request.user.is_superuser %}{% url 'managers:department_detail' department.pk %}{% elif request.user.is_staff %}{% url 'staff_module:department_detail' department.pk %}{% endif %}"
+               class="btn btn-block btn-sm btn-light-primary font-weight-bolder text-uppercase py-4">مشاهده</a>
+        </div>
+    </div>
+</div>

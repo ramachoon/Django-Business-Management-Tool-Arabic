@@ -1,0 +1,27 @@
+{% extends 'core/panel/_panel_base.html' %}
+{% load static %}
+
+{% block title %}
+    جزئیات دپارتمان
+{% endblock %}
+
+{% block content %}
+    <div class="subheader py-4 py-lg-7" id="kt_subheader">
+        <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <div class="d-flex align-items-center flex-wrap mr-2">
+                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    دپارتمان </h5>
+                <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+                <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">{{ department }}</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column-fluid">
+        <div class=" container ">
+        {% include 'core/components/department_detail_component.html' with department=department %}
+        </div>
+    </div>
+{% endblock %}
