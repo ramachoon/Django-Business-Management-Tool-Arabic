@@ -34,7 +34,7 @@ class AccountUpdate(SuperuserAccessMixin, UpdateView):
 
 class UsersList(SuperuserAccessMixin, ListView):
     def get_queryset(self):
-        users = User.objects.all().order_by('-id')
+        users = User.objects.all().order_by('-last_login')
         filter_params = self.request.GET.get('filter')
         if filter_params == 'customer':
             return users.filter(is_customer=True)

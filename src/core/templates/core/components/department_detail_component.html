@@ -80,7 +80,7 @@
                                         </div>
 
                                         <div>
-                                            <a href="{% url 'managers:project_detail' project.pk %}"
+                                            <a href="{% if request.user.is_superuser %}{% url 'managers:project_detail' project.pk %}{% elif request.user.is_staff %}{% url 'staff_module:project_detail' project.pk %}{% endif %}"
                                                class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ project.name }}</a>
                                         </div>
                                     </div>
@@ -100,7 +100,7 @@
                                     <span class="label label-lg label-light-primary label-inline">{{ project.customers.all.count }}</span>
                                 </td>
                                 <td class="pr-0">
-                                    <a href="{% url 'managers:project_update' project.pk %}"
+                                    <a href="{% if request.user.is_superuser %}{% url 'managers:project_update' project.pk %}{% elif request.user.is_staff %}#{% endif %}"
                                        class="btn btn-icon btn-light btn-hover-primary btn-sm">
                                                     <span class="svg-icon svg-icon-md svg-icon-primary">
                                                         <i class="fa fa-edit"></i>
