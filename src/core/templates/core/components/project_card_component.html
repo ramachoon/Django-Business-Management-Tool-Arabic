@@ -1,0 +1,105 @@
+{% load humanize %}
+<div class="col-xl-6">
+    <div class="card card-custom gutter-b card-stretch">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="flex-shrink-0 mr-4 symbol symbol-65 symbol-circle">
+                    <div class="symbol symbol-60 symbol-xl-70">
+                        <span class="font-size-h4 symbol-label font-weight-boldest">{{ project.name|truncatechars:6 }}</span>
+                    </div>
+                </div>
+                <div class="d-flex flex-column mr-auto">
+                    <span class="card-title font-weight-bolder font-size-h5 text-dark mb-1">
+                        {{ project.name }}
+                    </span>
+                    <a href="
+                             {% if request.user.is_superuser %}
+                                {% url 'managers:department_detail' project.department.pk %}
+                                {% elif request.user.is_staff %}
+                                {% url 'staff_module:department_detail' project.department.pk %}
+                            {% endif %}
+"
+                       class="text-muted font-weight-bold">
+                        {{ project.department.name }}
+                    </a>
+                </div>
+            </div>
+            <div class="d-flex flex-wrap mt-14">
+                <div class="mr-12 d-flex flex-column mb-7">
+                                        <span class="d-block font-weight-bold mb-4">
+                                            تاریخ شروع
+                                        </span>
+                    <span class="btn btn-light-primary btn-sm font-weight-bold btn-upper btn-text">{{ project.start_date }}</span>
+                </div>
+                <div class="mr-12 d-flex flex-column mb-7">
+                                        <span class="d-block font-weight-bold mb-4">
+                                            موعد مقرر
+                                        </span>
+                    <span class="btn btn-light-danger btn-sm font-weight-bold btn-upper btn-text">{{ project.end_date }}</span>
+                </div>
+                <div class="flex-row-fluid mb-7">
+                                        <span class="d-block font-weight-bold mb-4">
+                                            {% if project.get_progress.final_date <= 0 %}
+                                                به اتمام رسیده
+                                            {% else %}
+                                                {{ project.get_progress.final_date }} روز تا اتمام
+                                            {% endif %}
+                                        </span>
+                    <div class="d-flex align-items-center pt-2">
+                        <div class="progress progress-xs mt-2 mb-2 w-100">
+
+                            {% include 'managers/managers_base/components/project_progress_component.html' with object=object %}
+
+                        </div>
+                        <span class="ml-3 font-weight-bolder">
+                                                {% if project.get_progress.progress > 100 %}
+                                                    100%
+                                                {% else %}
+                                                    {{ project.get_progress.progress }}%
+                                                {% endif %}
+                                            </span>
+                    </div>
+                </div>
+            </div>
+            <p class="mb-7 mt-3">
+                {{ project.description }}
+            </p>
+            <div class="d-flex flex-wrap">
+                <div class="mr-12 d-flex flex-column mb-7">
+                    <span class="font-weight-bolder mb-4">جمع فاکتور ها</span>
+                    <span class="font-weight-bolder font-size-h5 pt-1"><span
+                            class="font-weight-bold text-dark-50">تومان </span>{{ project.get_total_expenses|intcomma:False }}</span>
+                </div>
+                <div class="mr-12 d-flex flex-column mb-7">
+                    <span class="font-weight-bolder mb-4">جمع فاکتور های پرداخت شده</span>
+                    <span class="font-weight-bolder font-size-h5 pt-1"><span
+                            class="font-weight-bold text-dark-50">تومان </span>{{ project.get_total_expenses_paid|intcomma:False }}</span>
+                </div>
+                <div class="d-flex flex-column flex-lg-fill float-left mb-7">
+                    <span class="font-weight-bolder mb-4">کارفرمایان</span>
+                    <div class="symbol-group symbol-hover">
+                        {% for customer in project.customers.all %}
+                            <div class="symbol symbol-30 symbol-circle" data-toggle="tooltip"
+                                 title=""
+                                 data-original-title="{{ customer.get_full_name }}">
+                                <img alt="Pic" src="{{ customer.avatar.url }}">
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer d-flex align-items-center">
+            <a href="
+                        {% if request.user.is_superuser %}
+                                {% url 'managers:project_detail' project.pk %}
+                                {% elif request.user.is_staff %}
+                                {% url 'staff_module:project_detail' project.pk %}
+                            {% endif %}
+"
+               class="btn btn-primary btn-sm text-uppercase font-weight-bolder mt-5 mt-sm-0 mr-auto">
+                جزئیات
+            </a>
+        </div>
+    </div>
+</div>

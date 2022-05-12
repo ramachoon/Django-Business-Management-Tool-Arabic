@@ -1,30 +1,20 @@
-{% extends 'managers/managers_base/_managers_base.html' %}
-{% load static %}
-{% load humanize %}
+{% extends 'core/panel/_panel_base.html' %}
 
 {% block title %}
-    پروژه ها
+    لیست پروژه ها
 {% endblock %}
 
 {% block content %}
-    <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
-        <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+    <div class="subheader py-4 py-lg-7" id="kt_subheader">
+        <div class=" container  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
             <div class="d-flex align-items-center flex-wrap mr-2">
                 <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
                     پروژه ها </h5>
                 <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
-
                 <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
                                             تعداد : {{ projects.count }}                                   </span>
                 </div>
-
-            </div>
-
-            <div class="d-flex align-items-center">
-                <a href="{% url 'managers:project_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
-
-                    ایجاد پروژه </a>
             </div>
         </div>
     </div>
