@@ -1,10 +1,11 @@
+from django.contrib.auth.models import Group
 from django.forms import formset_factory, modelformset_factory
 from django.http import HttpResponse, Http404
 from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
-from accounts.models import User
 
+from accounts.models import User
 from accounts.forms import UsersForm
 from core.decorators import superuser_access_decorator
 from core.mixins import SuperuserAccessMixin
@@ -55,7 +56,7 @@ class UsersList(SuperuserAccessMixin, ListView):
     paginate_by = 8
 
 
-class UserCreate(CreateView):
+class UserCreate(SuperuserAccessMixin, CreateView):
     model = User
     template_name = 'managers/user_create_update.html'
     success_url = reverse_lazy('managers:user_list')
@@ -73,6 +74,34 @@ class UserDelete(SuperuserAccessMixin, DeleteView):
     model = User
     template_name = 'managers/user_delete.html'
     success_url = reverse_lazy('managers:user_list')
+
+
+class GroupList(SuperuserAccessMixin, ListView):
+    model = Group
+    template_name = 'managers/group_list.html'
+    context_object_name = 'groups'
+    paginate_by = 12
+    ordering = '-id'
+
+
+class GroupCreate(SuperuserAccessMixin, CreateView):
+    model = Group
+    template_name = 'managers/group_create_update.html'
+    success_url = reverse_lazy('managers:group_list')
+    fields = ('name', 'permissions')
+
+
+class GroupDelete(SuperuserAccessMixin, DeleteView):
+    model = Group
+    template_name = 'managers/group_delete.html'
+    success_url = reverse_lazy('managers:group_list')
+
+
+class GroupUpdate(SuperuserAccessMixin, UpdateView):
+    model = Group
+    template_name = 'managers/group_create_update.html'
+    success_url = reverse_lazy('managers:group_list')
+    fields = ('name', 'permissions')
 
 
 @superuser_access_decorator()
