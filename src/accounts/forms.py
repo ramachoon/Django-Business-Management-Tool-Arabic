@@ -60,7 +60,7 @@ class UsersForm(forms.ModelForm):
         model = User
         fields = (
             'username', 'email', 'first_name', 'last_name', 'is_staff', 'is_customer', 'is_superuser',
-            'is_employee', 'is_admin', 'is_supporter'
+            'is_employee', 'is_admin', 'is_supporter', 'user_permissions', 'groups'
         )
         widgets = {
             'username': forms.TextInput(
@@ -74,6 +74,12 @@ class UsersForm(forms.ModelForm):
             ),
             'last_name': forms.TextInput(
                 attrs={'class': 'form-control form-control-solid form-control-lg', 'placeholder': 'نام خانوادگی'}
+            ),
+            'user_permissions': forms.SelectMultiple(
+                attrs={'class': 'form-control form-control-solid form-control-lg', 'placeholder': 'دسترسی ها'}
+            ),
+            'groups': forms.SelectMultiple(
+                attrs={'class': 'form-control form-control-solid form-control-lg', 'placeholder': 'گروه ها'}
             ),
         }
 

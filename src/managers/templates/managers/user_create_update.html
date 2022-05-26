@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    ایجاد کاربر
+    ایجاد / ویرایش کاربر
 {% endblock %}
 
 {% block content %}
@@ -23,7 +23,8 @@
 
                 </div>
                 <div class="d-flex align-items-center">
-                    <a href="{% url 'managers:user_list' %}" class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
+                    <a href="{% url 'managers:user_list' %}"
+                       class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
 
                         بازگشت </a>
                 </div>
@@ -166,6 +167,7 @@
                                                                 دسترسی</h5>
 
                                                             <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">سطح</label>
                                                                 <div class="col-xl-9 col-lg-9">
                                                                     <div class="checkbox-inline flex-column">
                                                                         <label class="checkbox checkbox-outline checkbox-info mb-2">
@@ -201,6 +203,23 @@
                                                                     </div>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">گروه
+                                                                    ها</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.groups }}
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group row fv-plugins-icon-container">
+                                                                <label class="col-xl-3 col-lg-3 col-form-label">فیلتر
+                                                                    دسترسی ها</label>
+                                                                <div class="col-lg-9 col-xl-9">
+                                                                    {{ form.user_permissions }}
+                                                                </div>
+                                                            </div>
+
 
                                                         </div>
                                                         <div class="my-5 step" data-wizard-type="step-content">

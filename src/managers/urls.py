@@ -13,6 +13,12 @@ urlpatterns = [
     path('users/delete/<int:pk>', managers_views.UserDelete.as_view(), name='user_delete'),
     path('users/is-active', managers_views.user_activate_deactivate, name='user_is_active'),
 
+    # groups
+    path('groups/', managers_views.GroupList.as_view(), name='group_list'),
+    path('groups/create/', managers_views.GroupCreate.as_view(), name='group_create'),
+    path('groups/update/<int:pk>', managers_views.GroupUpdate.as_view(), name='group_update'),
+    path('groups/delete/<int:pk>', managers_views.GroupDelete.as_view(), name='group_delete'),
+
     # departments
     path('departments/', managers_views.DepartmentsList.as_view(), name='department_list'),
     path('departments/create/', managers_views.DepartmentCreate.as_view(), name='department_create'),
