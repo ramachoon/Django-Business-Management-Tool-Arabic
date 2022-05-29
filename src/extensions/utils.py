@@ -1,3 +1,5 @@
+import random
+
 from . import jalali
 
 
@@ -17,3 +19,11 @@ def jalali_converter(time):
     output = f'{time_to_list[2]} {time_to_list[1]} {time_to_list[0]} '
 
     return output
+
+
+def generate_kala_id():
+    """
+    generate random ID for Kala model.
+    """
+    number = random.randint(1000000, 9999999)
+    return f"AB-{number}"
