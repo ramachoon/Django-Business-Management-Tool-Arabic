@@ -13,3 +13,4 @@ django-redis==5.2.0
 django-jalali==5.0.0
 django-jalali-date==1.0.1
 django-pwa==1.0.10
+qrcode==7.3.1
