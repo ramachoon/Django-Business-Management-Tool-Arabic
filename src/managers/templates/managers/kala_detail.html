@@ -1,0 +1,164 @@
+{% extends 'managers/managers_base/_managers_base.html' %}
+{% load static %}
+
+{% block title %}
+    جزئیات کالا
+{% endblock %}
+
+{% block content %}
+    <div class="subheader py-2 py-lg-4  subheader-solid " id="kt_subheader">
+        <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
+            <div class="d-flex align-items-center flex-wrap mr-2">
+
+                <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
+                    جزئیات کالا </h5>
+
+                <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
+
+                <div class="d-flex align-items-center" id="kt_subheader_search">
+                <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
+                                         {{ object.name }}                             </span>
+                </div>
+            </div>
+            <div class="d-flex align-items-center">
+                <a href="{% url 'managers:kala_list' %}" class="btn btn-light-primary font-weight-bold ml-2">
+
+                    لیست کالا ها </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="d-flex flex-column-fluid">
+        <div class=" container ">
+
+            <div class="card card-custom overflow-hidden">
+                <div class="card-body p-0">
+                    <div class="row justify-content-center py-8 px-8 py-md-27 px-md-0">
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-between pb-10 pb-md-20 flex-column flex-md-row">
+                                <h1 class="display-4 font-weight-boldest mb-10">برگه اطلاعات کالا</h1>
+                                <div class="d-flex flex-column align-items-md-end px-0">
+                                    <!--begin::Logo-->
+                                    <span>
+                                        <img src="{{ object.qr_image.url }}" alt="{{ object.name }}" width="90"
+                                             height="90">
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="border-bottom w-100"></div>
+                            <div class="d-flex justify-content-between pt-6">
+                                <div class="d-flex flex-column flex-root">
+                        <span class="font-weight-bolder mb-2">
+                            شناسه
+                        <i class="fa fa-copy text-success mx-2" style="cursor: pointer"
+                           onclick="copyToClipboard('{{ object.id }}')"></i>
+                        </span>
+                                    <span class="opacity-70">{{ object.id }}</span>
+                                </div>
+                                <div class="d-flex flex-column flex-root">
+                                    <span class="font-weight-bolder mb-2">نام کالا</span>
+                                    <span class="opacity-70">{{ object.name }}</span>
+                                </div>
+                                <div class="d-flex flex-column flex-root">
+                                    <span class="font-weight-bolder mb-2">توضیحات</span>
+                                    <span class="opacity-70">{{ object.description|linebreaks }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+                        <div class="col-md-9 mb-5">
+                            <div class="table-responsive">
+                                <h4 class="mb-5">
+                                    جزئیات کالا :
+                                    <i class="fa fa-plus-circle text-info font-size-h4" style="cursor: pointer"></i>
+                                </h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 font-weight-bold text-muted  text-uppercase">عنوان</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">واحد</th>
+                                        <th class="text-right font-weight-bold text-muted text-uppercase">قیمت</th>
+                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">جمع
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for kala_detail in kala.kala_details.all %}
+                                        <tr class="font-weight-boldest">
+                                            <td class="pl-0 pt-7">{{ kala_detail.name }}</td>
+                                            <td class="text-right pt-7">
+                                                {% if kala_detail.quantity %}{{ kala_detail.quantity }}{% else %}
+                                                    ---{% endif %}</td>
+                                            <td class="text-right pt-7">
+                                                {% if kala_detail.price %}{{ kala_detail.price }}{% else %}
+                                                    ---{% endif %}</td>
+                                            <td class="text-warning pr-0 pt-7 text-right">
+                                                {% if kala_detail.total %}{{ kala_detail.total }}{% else %}
+                                                    ---{% endif %}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td class="pl-0 pt-7 opacity-70 h5">جزئیاتی یافت نشد!</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-9 pt-5">
+                            <div class="table-responsive">
+                                <h4 class="mb-5">
+                                    تاریخچه کالا :
+                                    <i class="fa fa-plus-circle text-info font-size-h4" style="cursor: pointer"></i>
+                                </h4>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th class="pl-0 font-weight-bold text-muted  text-uppercase">تاریخ</th>
+                                        <th class="font-weight-bold text-muted text-uppercase">توضیحات</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+
+                                    {% for kala_history in kala.kala_histories.all %}
+                                        <tr class="font-weight-boldest">
+                                            <td class="pl-0 pt-7 text-info">{{ kala_history.date }}</td>
+                                            <td class="pt-7">{{ kala_history.short_description }}</td>
+                                        </tr>
+                                    {% empty %}
+                                        <tr>
+                                            <td class="pl-0 pt-7 opacity-70 h5">تاریخچه ای یافت نشد!</td>
+                                        </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row justify-content-center py-8 px-8 py-md-10 px-md-0">
+                        <div class="col-md-9">
+                            <div class="d-flex justify-content-between">
+                                <button type="button" class="btn btn-light-primary font-weight-bold"
+                                        onclick="window.print();">دانلود برگه
+                                </button>
+                                <a href="{{ kala.qr_image.url }}" download type="button"
+                                   class="btn btn-light-primary font-weight-bold">دانلود QR
+                                </a>
+                                <a href="#" type="button" class="btn btn-light-warning font-weight-bold">ویرایش
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+{% endblock %}
