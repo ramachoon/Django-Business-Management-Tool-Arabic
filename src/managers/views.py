@@ -13,6 +13,7 @@ from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm, FilterWorkDayForm
 from projects.models import Project, WorkDay, Invoice, InvoiceDetail
+from storeroom.models import Kala
 
 
 # Create your views here.
@@ -338,3 +339,22 @@ class InvoiceDelete(SuperuserAccessMixin, DeleteView):
     model = Invoice
     template_name = 'managers/invoice_delete.html'
     success_url = reverse_lazy('managers:project_list')
+
+
+class KalaList(SuperuserAccessMixin, ListView):
+    def get_queryset(self):
+        kala_filter = self.request.GET.get('filter')
+        if kala_filter == '0':
+            return Kala.objects.filter(filter=0)
+        elif kala_filter == '1':
+            return Kala.objects.filter(filter=1)
+        else:
+            return Kala.objects.all()
+
+    template_name = 'managers/kala_list.html'
+    paginate_by = 30
+
+
+class KalaDetail(SuperuserAccessMixin, DetailView):
+    model = Kala
+    template_name = 'managers/kala_detail.html'

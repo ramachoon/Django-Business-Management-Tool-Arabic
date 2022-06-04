@@ -48,4 +48,8 @@ urlpatterns = [
     path('invoices/print/<str:pk>', managers_views.InvoicePrintDetail.as_view(), name='invoice_print_detail'),
     path('invoices/update/<str:pk>', managers_views.invoice_update, name='invoice_update'),
     path('invoices/delete/<str:pk>', managers_views.InvoiceDelete.as_view(), name='invoice_delete'),
+
+    # Storeroom
+    path('storeroom/kala-list/', managers_views.KalaList.as_view(), name='kala_list'),
+    path('storeroom/kala-detail/<str:pk>', managers_views.KalaDetail.as_view(), name='kala_detail'),
 ]

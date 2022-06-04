@@ -5,6 +5,7 @@ from django.db import models
 from io import BytesIO
 from django.core.files import File
 from PIL import Image, ImageDraw
+from django.urls import reverse
 from django_jalali.db import models as jmodels
 
 from extensions.utils import generate_kala_id
@@ -39,16 +40,16 @@ class Kala(models.Model):
         return f"{self.name}"
 
     def save(self, *args, **kwargs):
-        qr_image = qrcode.make(self.id)
-        qr_offset = Image.new('RGB', (310, 310), 'white')
-        draw_img = ImageDraw.Draw(qr_offset)
-        qr_offset.paste(qr_image)
-        _number = random.randint(10000000, 99999999)
-        file_name = f'AB-QR-{_number}.png'
-        stream = BytesIO()
-        qr_offset.save(stream, 'PNG')
-        self.qr_image.save(file_name, File(stream), save=False)
-        qr_offset.close()
+        if not self.qr_image:
+            qr_image = qrcode.make(reverse('managers:kala_detail', kwargs={'pk': self.pk}))
+            qr_offset = Image.new('RGB', (350, 350), 'white')
+            draw_img = ImageDraw.Draw(qr_offset)
+            qr_offset.paste(qr_image)
+            file_name = f'AB-QR-{random.randint(10000000, 99999999)}.png'
+            stream = BytesIO()
+            qr_offset.save(stream, 'PNG')
+            self.qr_image.save(file_name, File(stream), save=False)
+            qr_offset.close()
         super().save(*args, **kwargs)
 
 

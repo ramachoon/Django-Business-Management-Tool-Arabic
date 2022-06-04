@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    گروه های دسترسی
+    لیست کالاها
 {% endblock %}
 
 {% block content %}
@@ -11,19 +11,19 @@
             <div class="d-flex align-items-center flex-wrap mr-2">
 
                 <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                    گروه های دسترسی </h5>
+                    کالاهای انبار</h5>
 
                 <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
 
                 <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
-                                            تعداد : {{ groups.count }}                                   </span>
+                                            تعداد : {{ object_list.count }}                                   </span>
                 </div>
             </div>
             <div class="d-flex align-items-center">
                 <a href="{% url 'managers:group_create' %}" class="btn btn-light-primary font-weight-bold ml-2">
 
-                    ایجاد گروه </a>
+                    ایجاد کالا </a>
             </div>
         </div>
     </div>
@@ -35,8 +35,14 @@
                 <div class="card-header flex-wrap border-0 pt-6 pb-0">
                     <div class="card-title">
                         <h3 class="card-label">
-                            گروه ها
+                            کالاها
                         </h3>
+                        <a href="{% url 'managers:kala_list' %}"
+                           class="btn{% if request.GET.filter == None %} btn-success{% else %} btn-outline-success{% endif %} btn-sm mx-1">همه</a>
+                        <a href="{% url 'managers:kala_list' %}?filter=0"
+                           class="btn{% if request.GET.filter == '0' %} btn-info{% else %} btn-outline-info{% endif %} btn-sm mx-1">مصرفی</a>
+                        <a href="{% url 'managers:kala_list' %}?filter=1"
+                           class="btn{% if request.GET.filter == '1' %} btn-warning{% else %} btn-outline-warning{% endif %} btn-sm mx-1">ابزار</a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -48,29 +54,32 @@
                                        style="width: 1234px;">
                                     <thead>
                                     <tr role="row">
-                                        <th>عنوان</th>
-                                        <th>تعداد دسترسی</th>
-                                        <th>کاربران</th>
+                                        <th>نام</th>
+                                        <th>در</th>
+                                        <th>مدیریت</th>
                                     </tr>
                                     </thead>
 
                                     <tbody>
-                                    {% for group in groups %}
+                                    {% for kala in object_list %}
                                         <tr>
                                             <td>
-                                                <a href="{% url 'managers:group_update' group.pk %}">{{ group.name }}</a>
+                                                <a href="{% url 'managers:kala_detail' kala.pk %}">{{ kala.name }}</a>
                                             </td>
                                             <td>
-                                                {{ group.permissions.count }} دسترسی
+                                                {{ kala.get_filter_display }}
                                             </td>
                                             <td>
-                                                {% if group.user_set.count %}
-                                                    {% for user in group.user_set.all %}
-                                                        {{ user.get_full_name }},
-                                                    {% endfor %}
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
+                                                <a href="{% url 'managers:kala_detail' kala.pk %}"
+                                                   class="badge badge-success">
+                                                    <i class="fa fa-eye text-white"></i>
+                                                </a>
+                                                <a href="{{ kala.qr_image.url }}" download class="badge badge-info">
+                                                    <i class="fa fa-download text-white"></i>
+                                                </a>
+                                                <a href="" class="badge badge-warning">
+                                                    <i class="fa fa-pen text-white"></i>
+                                                </a>
                                             </td>
                                         </tr>
                                     {% endfor %}
