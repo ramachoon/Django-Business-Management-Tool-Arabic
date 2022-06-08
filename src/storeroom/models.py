@@ -39,6 +39,9 @@ class Kala(models.Model):
     def __str__(self):
         return f"{self.name}"
 
+    def get_absolute_url(self):
+        return reverse('managers:kala_detail', kwargs={'pk': self.pk})
+
     def save(self, *args, **kwargs):
         if not self.qr_image:
             qr_image = qrcode.make(reverse('managers:kala_detail', kwargs={'pk': self.pk}))

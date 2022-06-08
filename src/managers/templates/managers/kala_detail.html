@@ -150,7 +150,7 @@
                                 <a href="{{ kala.qr_image.url }}" download type="button"
                                    class="btn btn-light-primary font-weight-bold">دانلود QR
                                 </a>
-                                <a href="#" type="button" class="btn btn-light-warning font-weight-bold">ویرایش
+                                <a href="{% url 'managers:kala_update' kala.pk %}" type="button" class="btn btn-light-warning font-weight-bold">ویرایش
                                 </a>
                             </div>
                         </div>

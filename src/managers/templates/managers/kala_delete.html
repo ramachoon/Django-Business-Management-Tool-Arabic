@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-    حذف صورتحساب
+    حذف {{ object }}
 {% endblock %}
 
 {% block content %}
@@ -11,7 +11,7 @@
             <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                 <div class="d-flex align-items-center flex-wrap mr-2">
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        صورتحساب </h5>
+                        کالا </h5>
                     <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
                     <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
@@ -30,7 +30,7 @@
                         <div class="card card-custom example example-compact">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    حذف صورتحساب
+                                    حذف کالا
                                 </h3>
                             </div>
                             <form class="form" method="post">
@@ -39,15 +39,15 @@
                                     <div class="row">
                                         <div class="col-md-12">
                                             <h4>از حذف "{{ object }}" اطمینان دارید؟ پس از حذف
-                                                ،صورتحساب
-                                                قابل بازگردانی نخواهد بود و تمام داده های صورتحساب از بین خواهد رفت.</h4>
+                                                ،کالا
+                                                قابل بازگردانی نخواهد بود و تمام داده های کالا از بین خواهد رفت.</h4>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
                                     <button type="submit" class="btn btn-light-danger font-weight-bold mr-2">تائید و حذف
                                     </button>
-                                    <a href="{% url 'managers:invoice_detail' object.pk %}"
+                                    <a href="{% url 'managers:kala_update' object.pk %}"
                                        class="btn btn-light-warning font-weight-bold mr-2">بازگشت
                                     </a>
                                 </div>
