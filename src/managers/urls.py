@@ -52,4 +52,7 @@ urlpatterns = [
     # Storeroom
     path('storeroom/kala-list/', managers_views.KalaList.as_view(), name='kala_list'),
     path('storeroom/kala-detail/<str:pk>', managers_views.KalaDetail.as_view(), name='kala_detail'),
+
+    # ip address
+    path('activities/', managers_views.IPAddressList.as_view(), name='ip_address_list'),
 ]

@@ -3,7 +3,7 @@ import random
 from . import jalali
 
 
-def jalali_converter(time):
+def jalali_converter(time) -> str:
     jmonths = ['فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد',
                'شهریور', 'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند']
 
@@ -21,9 +21,24 @@ def jalali_converter(time):
     return output
 
 
-def generate_kala_id():
+def generate_kala_id() -> str:
     """
     generate random ID for Kala model.
     """
     number = random.randint(1000000, 9999999)
     return f"AB-{number}"
+
+
+def get_client_ip(request) -> str:
+    """
+    get client ip address.
+    :param request:
+    :return ip:
+    """
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+
+    return ip

@@ -5,7 +5,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
-from accounts.models import User
+from accounts.models import User, IPAddress
 from accounts.forms import UsersForm
 from core.decorators import superuser_access_decorator
 from core.mixins import SuperuserAccessMixin
@@ -358,3 +358,9 @@ class KalaList(SuperuserAccessMixin, ListView):
 class KalaDetail(SuperuserAccessMixin, DetailView):
     model = Kala
     template_name = 'managers/kala_detail.html'
+
+
+class IPAddressList(SuperuserAccessMixin, ListView):
+    model = IPAddress
+    template_name = 'managers/ip_address_list.html'
+    paginate_by = 30

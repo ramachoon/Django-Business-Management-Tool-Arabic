@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
-from .models import User, PhoneOtp
+from .models import User, PhoneOtp, IPAddress
 
 # Register your models here.
 
@@ -12,3 +12,4 @@ UserAdmin.fieldsets[2][1]['fields'] = (
 
 admin.site.register(User, UserAdmin)
 admin.site.register(PhoneOtp)
+admin.site.register(IPAddress)
