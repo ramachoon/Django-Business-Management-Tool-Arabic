@@ -360,6 +360,24 @@ class KalaDetail(SuperuserAccessMixin, DetailView):
     template_name = 'managers/kala_detail.html'
 
 
+class KalaCreate(SuperuserAccessMixin, CreateView):
+    model = Kala
+    template_name = 'managers/kala_create_update.html'
+    fields = ('name', 'description', 'filter')
+
+
+class KalaUpdate(SuperuserAccessMixin, UpdateView):
+    model = Kala
+    template_name = 'managers/kala_create_update.html'
+    fields = ('name', 'description', 'filter')
+
+
+class KalaDelete(SuperuserAccessMixin, DeleteView):
+    model = Kala
+    template_name = 'managers/kala_delete.html'
+    success_url = reverse_lazy('managers:kala_list')
+
+
 class IPAddressList(SuperuserAccessMixin, ListView):
     model = IPAddress
     template_name = 'managers/ip_address_list.html'

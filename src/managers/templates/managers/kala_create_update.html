@@ -3,7 +3,7 @@
 {% load crispy_forms_tags %}
 
 {% block title %}
-    ایجاد/ویرایش روز کاری
+    ایجاد/ویرایش کالا
 {% endblock %}
 
 {% block content %}
@@ -12,20 +12,20 @@
             <div class=" container-fluid  d-flex align-items-center justify-content-between flex-wrap flex-sm-nowrap">
                 <div class="d-flex align-items-center flex-wrap mr-2">
                     <h5 class="text-dark font-weight-bold mt-2 mb-2 mr-5">
-                        روز کاری </h5>
+                        کالا </h5>
                     <div class="subheader-separator subheader-separator-ver mt-2 mb-2 mr-5 bg-gray-200"></div>
                     <div class="d-flex align-items-center" id="kt_subheader_search">
                 <span class="text-dark-50 font-weight-bold" id="kt_subheader_total">
-                                            جزئیات روزکاری را وارد  کنید                                    </span>
+                                            جزئیات کالا را وارد  کنید                                    </span>
                     </div>
                 </div>
 
                 <div class="d-flex align-items-center">
                     {% if url_name == 'workday_update' %}
-                        <a href="{% url 'managers:workday_detail' object.pk %}"
+                        <a href="{% url 'managers:kala_list' object.pk %}"
                            class="btn btn-default font-weight-bold btn-sm px-3 font-size-base">
 
-                            بازگشت </a>
+                            لیست کالاها </a>
                     {% endif %}
                 </div>
             </div>
@@ -38,87 +38,51 @@
                         <div class="card card-custom example example-compact">
                             <div class="card-header">
                                 <h3 class="card-title">
-                                    {% if url_name == 'workday_create' %}
-                                        ایجاد روزکاری
+                                    {% if url_name == 'kala_create' %}
+                                        ایجاد کالا
                                     {% else %}
-                                        ویرایش روزکاری
+                                        ویرایش کالا
                                     {% endif %}
                                 </h3>
                             </div>
-                            <!--begin::Form-->
                             <form class="form" method="post" autocomplete="off">
                                 {% csrf_token %}
                                 <div class="card-body">
                                     <div class="row">
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <div class="form-group">
-                                                {{ form.project|as_crispy_field }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                {{ form.day|as_crispy_field }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                <label for="id_start_time" class=" requiredField">
-                                                    تاریخ<span class="asteriskField">*</span>
-                                                </label>
-                                                {{ form.date }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                {{ form.start_time|as_crispy_field }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                {{ form.end_time|as_crispy_field }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group">
-                                                {{ form.accessibility|as_crispy_field }}
+                                                {{ form.name|as_crispy_field }}
                                             </div>
                                         </div>
                                         <div class="col-md-6">
+                                            <div class="form-group">
+                                                {{ form.filter|as_crispy_field }}
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
                                             <div class="form-group">
                                                 {{ form.description|as_crispy_field }}
-                                            </div>
-                                        </div>
-                                        <div class="col-md-6">
-                                            <div class="form-group">
-                                                {{ form.employees|as_crispy_field }}
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    {% if url_name == 'workday_create' %}
+                                    {% if url_name == 'kala_create' %}
                                         <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ایجاد
                                         </button>
                                     {% else %}
                                         <button type="submit" class="btn btn-light-info font-weight-bold mr-2">ویرایش
                                         </button>
+                                        <a href="{% url 'managers:kala_delete' object.pk %}" type="submit"
+                                           class="btn btn-outline-danger font-weight-bold mr-2">حذف
+                                        </a>
                                     {% endif %}
                                 </div>
                             </form>
-                            <!-- end::Form -->
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     {% endwith %}
-{% endblock %}
-
-{% block new_js_code %}
-    <link rel="stylesheet" href="{% static 'admin/jquery.ui.datepicker.jalali/themes/base/jquery-ui.min.css' %}">
-    <script src="{% static 'admin/js/django_jalali.min.js' %}"></script>
-    <script>
-        const jalaliDatePicker = document.getElementById('id_date')
-        jalaliDatePicker.classList += ' form-control'
-    </script>
 {% endblock %}
