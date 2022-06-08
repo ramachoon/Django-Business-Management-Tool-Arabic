@@ -1,5 +1,4 @@
 import random
-import os
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .validators import validate_avatar
@@ -48,3 +47,24 @@ class PhoneOtp(models.Model):
 
     def __str__(self):
         return f"{self.phone}"
+
+
+class IPAddress(models.Model):
+    """
+    The main IP address model,
+    save user information and save current url.
+    """
+
+    ip = models.GenericIPAddressField(null=True, blank=True, verbose_name="آدرس آیپی")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True, verbose_name="کاربر")
+    url = models.CharField(max_length=255, null=True, blank=True, verbose_name="ادرس صفحه")
+    time = models.DateTimeField(auto_now_add=True, verbose_name="زمان")
+    user_agent = models.CharField(max_length=255, verbose_name="اطلاعات سیستم")
+
+    class Meta:
+        verbose_name = 'آیپی'
+        verbose_name_plural = "آیپی ها"
+        ordering = ('-id',)
+
+    def __str__(self):
+        return f"{self.id} - {self.user} - {self.ip}"
