@@ -91,3 +91,6 @@
     }
 
 </script>
+{% if request.resolver_match.url_name == 'kala_detail' %}
+    <script src="{% static 'managers/js/storeroom/kalaDetailAndKalaHistory.js' %}"></script>
+{% endif %} 
