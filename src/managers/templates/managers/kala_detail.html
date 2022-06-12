@@ -50,7 +50,7 @@
                                 <div class="d-flex flex-column flex-root">
                         <span class="font-weight-bolder mb-2">
                             شناسه
-                        <i class="fa fa-copy text-success mx-2" style="cursor: pointer"
+                        <i class="fa fa-copy text-success mx-2 pointer"
                            onclick="copyToClipboard('{{ object.id }}')"></i>
                         </span>
                                     <span class="opacity-70">{{ object.id }}</span>
@@ -72,39 +72,23 @@
                             <div class="table-responsive">
                                 <h4 class="mb-5">
                                     جزئیات کالا :
-                                    <i class="fa fa-plus-circle text-info font-size-h4" style="cursor: pointer"></i>
+                                    <i class="fa fa-plus-circle text-info font-size-h4 pointer"
+                                       id="createKalaDetail"></i>
                                 </h4>
+
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th class="pl-0 font-weight-bold text-muted  text-uppercase">عنوان</th>
-                                        <th class="text-right font-weight-bold text-muted text-uppercase">واحد</th>
-                                        <th class="text-right font-weight-bold text-muted text-uppercase">قیمت</th>
-                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">جمع
+                                        <th class="font-weight-bold text-muted text-uppercase">واحد</th>
+                                        <th class="font-weight-bold text-muted text-uppercase">قیمت</th>
+                                        <th class="pr-0 font-weight-bold text-muted text-uppercase">جمع</th>
+                                        <th class="text-right pr-0 font-weight-bold text-muted text-uppercase">مدیریت
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-
-                                    {% for kala_detail in kala.kala_details.all %}
-                                        <tr class="font-weight-boldest">
-                                            <td class="pl-0 pt-7">{{ kala_detail.name }}</td>
-                                            <td class="text-right pt-7">
-                                                {% if kala_detail.quantity %}{{ kala_detail.quantity }}{% else %}
-                                                    ---{% endif %}</td>
-                                            <td class="text-right pt-7">
-                                                {% if kala_detail.price %}{{ kala_detail.price }}{% else %}
-                                                    ---{% endif %}</td>
-                                            <td class="text-warning pr-0 pt-7 text-right">
-                                                {% if kala_detail.total %}{{ kala_detail.total }}{% else %}
-                                                    ---{% endif %}</td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td class="pl-0 pt-7 opacity-70 h5">جزئیاتی یافت نشد!</td>
-                                        </tr>
-                                    {% endfor %}
-
+                                    <tbody id="kala-detail-table">
+                                    {% include 'managers/contents/kala_details_content.html' %}
                                     </tbody>
                                 </table>
                             </div>
@@ -113,13 +97,14 @@
                             <div class="table-responsive">
                                 <h4 class="mb-5">
                                     تاریخچه کالا :
-                                    <i class="fa fa-plus-circle text-info font-size-h4" style="cursor: pointer"></i>
+                                    <i class="fa fa-plus-circle text-info font-size-h4 pointer"></i>
                                 </h4>
                                 <table class="table">
                                     <thead>
                                     <tr>
                                         <th class="pl-0 font-weight-bold text-muted  text-uppercase">تاریخ</th>
                                         <th class="font-weight-bold text-muted text-uppercase">توضیحات</th>
+                                        <th class="font-weight-bold text-right text-muted text-uppercase">مدیریت</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -128,6 +113,10 @@
                                         <tr class="font-weight-boldest">
                                             <td class="pl-0 pt-7 text-info">{{ kala_history.date }}</td>
                                             <td class="pt-7">{{ kala_history.short_description }}</td>
+                                            <td class="text-right">
+                                                <i class="fa fa-pen text-warning pointer mr-2"></i>
+                                                <i class="fa fa-trash text-danger pointer"></i>
+                                            </td>
                                         </tr>
                                     {% empty %}
                                         <tr>
@@ -150,7 +139,8 @@
                                 <a href="{{ kala.qr_image.url }}" download type="button"
                                    class="btn btn-light-primary font-weight-bold">دانلود QR
                                 </a>
-                                <a href="{% url 'managers:kala_update' kala.pk %}" type="button" class="btn btn-light-warning font-weight-bold">ویرایش
+                                <a href="{% url 'managers:kala_update' kala.pk %}" type="button"
+                                   class="btn btn-light-warning font-weight-bold">ویرایش
                                 </a>
                             </div>
                         </div>
@@ -161,4 +151,56 @@
 
         </div>
     </div>
+
+    <!-- KalaDetail modal -->
+    <div class="modal fade" id="kalaDetailModal" tabindex="-1" role="dialog" aria-labelledby="kalaDetailModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kalaDetailModalLabel">جزئیات کالا</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="kalaDetailForm" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <input type="hidden" id="inputKalaDetailId">
+                                <input type="text" id="inputKalaDetailName" required placeholder="عنوان"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input type="text" id="inputKalaDetailQuantity" required placeholder="واحد"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input type="text" id="inputKalaDetailPrice" required placeholder="قیمت"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input type="text" id="inputKalaDetailTotal" required placeholder="جمع"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-kala-detail-btn">بستن</button>
+                    <button type="button" class="btn btn-light-info" id="send-kala-detail-btn">ارسال اطلاعات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KalaHistory modal -->
+{% endblock %}
+
+{% block new_js_code %}
+    <script>
+        const kala_id = '{{ kala.id }}'
+    </script>
+{#    <script src="{% static 'managers/js/storeroom/kalaDetailAndKalaHistory.js' %}"></script>#}
 {% endblock %}

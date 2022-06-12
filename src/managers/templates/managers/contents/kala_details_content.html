@@ -1,0 +1,20 @@
+{% for kala_detail in kala.kala_details.all %}
+    <tr class="font-weight-boldest" data-kala-detail-id="{{ kala_detail.pk }}">
+        <td class="pl-0 pt-7 kala-detail-name">{{ kala_detail.name }}</td>
+        <td class="pt-7 kala-detail-quantity">{% if kala_detail.quantity %}{{ kala_detail.quantity }}{% else %}
+            ---{% endif %}</td>
+        <td class="pt-7 kala-detail-price">{% if kala_detail.price %}{{ kala_detail.price }}{% else %}
+            ---{% endif %}</td>
+        <td class="text-warning pr-0 pt-7 kala-detail-total">{% if kala_detail.total %}{{ kala_detail.total }}{% else %}
+            ---{% endif %}</td>
+        <td class="text-right">
+            <i class="fa fa-pen text-black-50 pointer edit-kala-details" onclick="editKalaDetail(this)"></i>
+            <i class="fa fa-trash text-black-50 pointer delete-kala-detail" onclick="deleteKalaDetail(this)"
+               id="{{ kala_detail.pk }}"></i>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td class="pl-0 pt-7 opacity-70 h5">جزئیاتی یافت نشد!</td>
+    </tr>
+{% endfor %}

@@ -1,7 +1,8 @@
 from django.contrib.auth.models import Group
 from django.forms import formset_factory, modelformset_factory
-from django.http import HttpResponse, Http404
+from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
+from django.template.loader import render_to_string
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
 
@@ -13,7 +14,7 @@ from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm, FilterWorkDayForm
 from projects.models import Project, WorkDay, Invoice, InvoiceDetail
-from storeroom.models import Kala
+from storeroom.models import Kala, KalaDetail
 
 
 # Create your views here.
@@ -355,7 +356,7 @@ class KalaList(SuperuserAccessMixin, ListView):
     paginate_by = 30
 
 
-class KalaDetail(SuperuserAccessMixin, DetailView):
+class KalaDetailView(SuperuserAccessMixin, DetailView):
     model = Kala
     template_name = 'managers/kala_detail.html'
 
@@ -376,6 +377,106 @@ class KalaDelete(SuperuserAccessMixin, DeleteView):
     model = Kala
     template_name = 'managers/kala_delete.html'
     success_url = reverse_lazy('managers:kala_list')
+
+
+def create_kala_detail(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_detail_name = cd.get('kala_detail_name')
+        kala_detail_quantity = cd.get('kala_detail_quantity')
+        kala_detail_price = cd.get('kala_detail_price')
+        kala_detail_total = cd.get('kala_detail_total')
+
+        try:
+            # validate data and create KalaDetail
+            if kala_detail_name and kala_detail_quantity and \
+                    kala_detail_price and kala_detail_total:
+                kala_detail = KalaDetail(
+                    kala_id=kala_id,
+                    name=kala_detail_name,
+                    quantity=kala_detail_quantity,
+                    price=kala_detail_price,
+                    total=kala_detail_total
+                )
+                kala_detail.save()
+
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_details_content.html', context)
+            })
+        except Kala.DoesNotExist:
+            return HttpResponse(status=502)
+    else:
+        raise Http404
+
+
+def update_kala_detail(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_detail_id = cd.get('kala_detail_id')
+        kala_detail_name = cd.get('kala_detail_name')
+        kala_detail_quantity = cd.get('kala_detail_quantity')
+        kala_detail_price = cd.get('kala_detail_price')
+        kala_detail_total = cd.get('kala_detail_total')
+
+        try:
+            kala_detail = KalaDetail.objects.get(id=kala_detail_id)
+            # validate data and create KalaDetail
+            if kala_detail_name and kala_detail_quantity and \
+                    kala_detail_price and kala_detail_total:
+                kala_detail.name = kala_detail_name
+                kala_detail.quantity = kala_detail_quantity
+                kala_detail.price = kala_detail_price
+                kala_detail.total = kala_detail_total
+                kala_detail.save()
+
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_details_content.html', context)
+            })
+        except KalaDetail.DoesNotExist or Kala.DoesNotExist:
+            return HttpResponse(status=502)
+    else:
+        raise Http404
+
+
+def delete_kala_detail(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_detail_id = cd.get('kala_detail_id')
+
+        try:
+            kala_detail = KalaDetail.objects.get(id=kala_detail_id)
+            kala_detail.delete()
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_details_content.html', context)
+            })
+        except KalaDetail.DoesNotExist or Kala.DoesNotExist:
+            return HttpResponse(status=502)
+    else:
+        raise Http404
 
 
 class IPAddressList(SuperuserAccessMixin, ListView):

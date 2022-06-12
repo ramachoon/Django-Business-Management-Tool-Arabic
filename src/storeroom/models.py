@@ -70,6 +70,7 @@ class KalaDetail(models.Model):
     class Meta:
         verbose_name = 'جزئیات کالا'
         verbose_name_plural = 'جزئیات کالا ها'
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.name}"
