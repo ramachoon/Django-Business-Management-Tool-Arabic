@@ -88,6 +88,7 @@ class KalaHistory(models.Model):
     class Meta:
         verbose_name = 'سابقه کالا'
         verbose_name_plural = 'سابقه کالا ها'
+        ordering = ('-id',)
 
     def __str__(self):
         return f"{self.short_description}"
