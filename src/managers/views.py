@@ -14,7 +14,7 @@ from departments.forms import DepartmentForm
 from departments.models import Department
 from projects.forms import ProjectsForm, WorkDaysForm, InvoicesForm, InvoiceDetailsForm, FilterWorkDayForm
 from projects.models import Project, WorkDay, Invoice, InvoiceDetail
-from storeroom.models import Kala, KalaDetail
+from storeroom.models import Kala, KalaDetail, KalaHistory
 
 
 # Create your views here.
@@ -412,7 +412,7 @@ def create_kala_detail(request):
                 'template': render_to_string('managers/contents/kala_details_content.html', context)
             })
         except Kala.DoesNotExist:
-            return HttpResponse(status=502)
+            return HttpResponse(status=404)
     else:
         raise Http404
 
@@ -449,7 +449,7 @@ def update_kala_detail(request):
                 'template': render_to_string('managers/contents/kala_details_content.html', context)
             })
         except KalaDetail.DoesNotExist or Kala.DoesNotExist:
-            return HttpResponse(status=502)
+            return HttpResponse(status=404)
     else:
         raise Http404
 
@@ -474,7 +474,97 @@ def delete_kala_detail(request):
                 'template': render_to_string('managers/contents/kala_details_content.html', context)
             })
         except KalaDetail.DoesNotExist or Kala.DoesNotExist:
-            return HttpResponse(status=502)
+            return HttpResponse(status=404)
+    else:
+        raise Http404
+
+
+def create_kala_history(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_history_date = cd.get('kala_history_date')
+        kala_history_description = cd.get('kala_history_description')
+
+        try:
+            # validate data and create KalaHistory
+            if kala_history_date and kala_history_description:
+                kala_history = KalaHistory(
+                    kala_id=kala_id,
+                    date=kala_history_date,
+                    short_description=kala_history_description
+                )
+                kala_history.save()
+
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_histories_content.html', context)
+            })
+        except Kala.DoesNotExist:
+            return HttpResponse(status=404)
+    else:
+        raise Http404
+
+
+def update_kala_history(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_history_id = cd.get('kala_history_id')
+        kala_history_date = cd.get('kala_history_date')
+        kala_history_description = cd.get('kala_history_description')
+
+        try:
+            kala_history = KalaHistory.objects.get(id=kala_history_id)
+            # validate data and create KalaHistory
+            if kala_history_date and kala_history_description:
+                kala_history.date = kala_history_date
+                kala_history.short_description = kala_history_description
+                kala_history.save()
+
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_histories_content.html', context)
+            })
+        except KalaHistory.DoesNotExist or Kala.DoesNotExist:
+            return HttpResponse(status=404)
+    else:
+        raise Http404
+
+
+def delete_kala_history(request):
+    if request.method == 'POST':
+        # cleaned data
+        cd = request.POST
+        kala_id = cd.get('kala_id')
+        kala_history_id = cd.get('kala_history_id')
+
+        try:
+            kala_history = KalaHistory.objects.get(id=kala_history_id)
+            kala_history.delete()
+            kala = Kala.objects.get(id=kala_id)
+
+            context = {
+                'kala': kala
+            }
+            return JsonResponse({
+                'status': 'success',
+                'template': render_to_string('managers/contents/kala_histories_content.html', context)
+            })
+        except KalaDetail.DoesNotExist or Kala.DoesNotExist:
+            return HttpResponse(status=404)
     else:
         raise Http404
 

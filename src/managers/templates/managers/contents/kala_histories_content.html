@@ -1,0 +1,14 @@
+{% for kala_history in kala.kala_histories.all %}
+    <tr class="font-weight-boldest" data-kala-history-id="{{ kala_history.pk }}">
+        <td class="pl-0 pt-7 text-info kala-history-date">{{ kala_history.date }}</td>
+        <td class="pt-7 kala-history-description">{{ kala_history.short_description }}</td>
+        <td class="text-right">
+            <i class="fa fa-pen text-black-50 pointer mr-2" onclick="editKalaHistory(this)"></i>
+            <i class="fa fa-trash text-black-50 pointer" id="{{ kala_history.pk }}" onclick="deleteKalaHistory(this)"></i>
+        </td>
+    </tr>
+{% empty %}
+    <tr>
+        <td class="pl-0 pt-7 opacity-70 h5">تاریخچه ای یافت نشد!</td>
+    </tr>
+{% endfor %}

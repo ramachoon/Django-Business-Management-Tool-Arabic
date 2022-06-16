@@ -87,7 +87,7 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    <tbody id="kala-detail-table">
+                                    <tbody id="kalaDetailTable">
                                     {% include 'managers/contents/kala_details_content.html' %}
                                     </tbody>
                                 </table>
@@ -97,7 +97,8 @@
                             <div class="table-responsive">
                                 <h4 class="mb-5">
                                     تاریخچه کالا :
-                                    <i class="fa fa-plus-circle text-info font-size-h4 pointer"></i>
+                                    <i class="fa fa-plus-circle text-info font-size-h4 pointer"
+                                       id="createKalaHistory"></i>
                                 </h4>
                                 <table class="table">
                                     <thead>
@@ -107,23 +108,8 @@
                                         <th class="font-weight-bold text-right text-muted text-uppercase">مدیریت</th>
                                     </tr>
                                     </thead>
-                                    <tbody>
-
-                                    {% for kala_history in kala.kala_histories.all %}
-                                        <tr class="font-weight-boldest">
-                                            <td class="pl-0 pt-7 text-info">{{ kala_history.date }}</td>
-                                            <td class="pt-7">{{ kala_history.short_description }}</td>
-                                            <td class="text-right">
-                                                <i class="fa fa-pen text-warning pointer mr-2"></i>
-                                                <i class="fa fa-trash text-danger pointer"></i>
-                                            </td>
-                                        </tr>
-                                    {% empty %}
-                                        <tr>
-                                            <td class="pl-0 pt-7 opacity-70 h5">تاریخچه ای یافت نشد!</td>
-                                        </tr>
-                                    {% endfor %}
-
+                                    <tbody id="kalaHistoryTable">
+                                        {% include 'managers/contents/kala_histories_content.html' %}
                                     </tbody>
                                 </table>
                             </div>
@@ -187,7 +173,9 @@
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-kala-detail-btn">بستن</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="close-kala-detail-btn">
+                        بستن
+                    </button>
                     <button type="button" class="btn btn-light-info" id="send-kala-detail-btn">ارسال اطلاعات
                     </button>
                 </div>
@@ -196,11 +184,45 @@
     </div>
 
     <!-- KalaHistory modal -->
+    <div class="modal fade" id="kalaHistoryModal" tabindex="-1" role="dialog" aria-labelledby="kalaHistoryModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="kalaHistoryModalLabel">تاریخچه کالا</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="kalaDetailForm" autocomplete="off">
+                        <div class="row">
+                            <div class="col-md-12 mb-2">
+                                <input type="hidden" id="inputKalaHistoryId">
+                                <input type="text" id="inputKalaHistoryDate" required placeholder="تاریخ"
+                                       class="form-control">
+                            </div>
+                            <div class="col-md-12 mb-2">
+                                <input type="text" id="inputKalaHistoryDescription" required placeholder="توضیحات"
+                                       class="form-control">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal" id="closeKalaHistoryModal">
+                        بستن
+                    </button>
+                    <button type="button" class="btn btn-light-info" id="sendKalaHistoryBtn">ارسال اطلاعات
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 
 {% block new_js_code %}
     <script>
         const kala_id = '{{ kala.id }}'
-    </script>
-{#    <script src="{% static 'managers/js/storeroom/kalaDetailAndKalaHistory.js' %}"></script>#}
+    </script>.js' %}"></script>#}
 {% endblock %}

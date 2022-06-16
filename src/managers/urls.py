@@ -61,6 +61,11 @@ urlpatterns = [
     path('storeroom/kala-details/update', managers_views.update_kala_detail, name='kala_details_update'),
     path('storeroom/kala-details/delete', managers_views.delete_kala_detail, name='kala_details_delete'),
 
+    # KalaHistory
+    path('storeroom/kala-histories/create', managers_views.create_kala_history, name='kala_histories_create'),
+    path('storeroom/kala-histories/update', managers_views.update_kala_history, name='kala_histories_update'),
+    path('storeroom/kala-histories/delete', managers_views.delete_kala_history, name='kala_histories_delete'),
+
     # ip address
     path('activities/', managers_views.IPAddressList.as_view(), name='ip_address_list'),
 ]
