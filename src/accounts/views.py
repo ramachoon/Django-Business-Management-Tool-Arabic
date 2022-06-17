@@ -18,6 +18,19 @@ from core.decorators import authenticated_user
 
 @authenticated_user()
 def otp_login(request):
+    """
+    Display login form.
+
+    ** CONTEXT **
+        ``form``
+            login_form for send otp code.
+
+    ** TEMPLATE **
+        :template: `accounts/registration/login.html`
+
+    :param: `request`
+    """
+
     login_form = LoginForm(request.POST or None)
 
     if login_form.is_valid():
@@ -46,6 +59,22 @@ def otp_login(request):
 
 @authenticated_user()
 def verify_phone_otp(request):
+    """
+    Display verify otp form.
+
+    ** CONTEXT **
+        ``form``
+            verify_otp_form.
+        ``phone_number``
+            received from session.
+
+    ** TEMPLATE **
+        :template: `accounts/registration/verify_otp.html`
+
+    :param: `request`
+    """
+
+    # TODO: be fix.
     # raise http404, if http referer is not equal to login.
     # http_referer = request.META.get('HTTP_REFERER')
     # login_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:login')}"
@@ -83,6 +112,22 @@ def verify_phone_otp(request):
 
 @authenticated_user()
 def register(request):
+    """
+    Display register form.
+
+    ** CONTEXT **
+        ``form``
+            register_form
+        ``phone_number``
+            received from sessions
+
+    ** TEMPLATE **
+        :template: `accounts/registration/register.html`
+
+    :param: `request`
+    """
+
+    # TODO: be fix.
     http_referer = request.META.get('HTTP_REFERER')
     verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
     register_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:register')}"

@@ -31,6 +31,12 @@ DAYS_CHOICES = (
 
 
 class Project(models.Model):
+    """
+    The project main model,
+    ManyToOne relationship with :model: `departments.Department`,
+    ManyToMany relationship with :model: `accounts.User`
+    """
+
     name = models.CharField(max_length=150, verbose_name='نام پروژه')
     description = models.TextField(verbose_name='توضیحات پروژه')
     department = models.ForeignKey(
@@ -100,6 +106,11 @@ class Project(models.Model):
 
 
 class WorkDay(models.Model):
+    """
+    The work days main model,
+    ManyToMany relationship with :model: `accounts.User`.
+    """
+
     project = models.ForeignKey(
         Project, on_delete=models.CASCADE,
         verbose_name='پروژه',
@@ -143,6 +154,11 @@ class WorkDay(models.Model):
 
 
 class Invoice(models.Model):
+    """
+    The invoices main model,
+    ManyToOne relationship with :model: `projects.Project`.
+    """
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     short_description = models.CharField(max_length=100, verbose_name='توضیح کوتاه')
     date = jmodels.jDateField(verbose_name='تاریخ')
@@ -175,6 +191,11 @@ class Invoice(models.Model):
 
 
 class InvoiceDetail(models.Model):
+    """
+    The invoice details main model,
+    ManyToOne relationship with :model: `projects.Invoice`.
+    """
+
     invoice = models.ForeignKey(
         Invoice, related_name='invoice_details', on_delete=models.CASCADE, verbose_name='صورتحساب'
     )
