@@ -15,6 +15,10 @@ from extensions.utils import generate_kala_id
 
 
 class Kala(models.Model):
+    """
+    The kala main model.
+    """
+
     FILTER_CHOICES = (
         ('0', 'انبار مصرفی'),
         ('1', 'انبار ابزار'),
@@ -57,6 +61,11 @@ class Kala(models.Model):
 
 
 class KalaDetail(models.Model):
+    """
+    The kala details main model,
+    ManyToOne relationship with :model: `storeroom.Kala`
+    """
+
     kala = models.ForeignKey(
         Kala, related_name='kala_details', on_delete=models.CASCADE, verbose_name='کالا'
     )
@@ -77,6 +86,11 @@ class KalaDetail(models.Model):
 
 
 class KalaHistory(models.Model):
+    """
+    The kala histories main model,
+    ManyToOne relationship with :model: `storeroom.Kala`.
+    """
+
     kala = models.ForeignKey(
         Kala, related_name='kala_histories', on_delete=models.CASCADE, verbose_name='کالا'
     )

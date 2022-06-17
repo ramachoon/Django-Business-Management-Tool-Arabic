@@ -36,6 +36,10 @@ class User(AbstractUser):
 
 
 class PhoneOtp(models.Model):
+    """
+    The otp codes main model.
+    """
+
     phone = models.CharField(max_length=13)
     code = models.CharField(max_length=255)
     created = models.DateTimeField(auto_now_add=True)
@@ -53,6 +57,7 @@ class IPAddress(models.Model):
     """
     The main IP address model,
     save user information and save current url.
+    :model: `accounts.User`
     """
 
     ip = models.GenericIPAddressField(null=True, blank=True, verbose_name="آدرس آیپی")

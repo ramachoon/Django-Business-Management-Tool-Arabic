@@ -5,6 +5,12 @@ from accounts.models import User
 
 # Create your models here.
 class Department(models.Model):
+    """
+    The department main model,
+    ManyToMany relationship with :model: `accounts.User`,
+    ManyToOne relationship with :model: `accounts.User`.
+    """
+
     name = models.CharField(max_length=50, verbose_name='نام دپارتمان')
     staff_users = models.ManyToManyField(
         User, related_name='departments', blank=True, verbose_name='کاربران ارشد'
