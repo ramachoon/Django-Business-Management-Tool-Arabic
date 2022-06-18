@@ -8,7 +8,7 @@ from accounts.models import User
 from departments.models import Department
 from django_jalali.db import models as jmodels
 
-from .managers import WorkDayManager
+from .managers import WorkDayManager, ProjectManager
 from src.extensions.utils import jalali_converter
 
 # Create your models here.
@@ -57,6 +57,8 @@ class Project(models.Model):
         verbose_name = 'پروژه'
         verbose_name_plural = 'پروژه ها'
         ordering = ('-id',)
+
+    objects = ProjectManager()
 
     def __str__(self):
         return f"{self.name} -> {self.department.name}"
