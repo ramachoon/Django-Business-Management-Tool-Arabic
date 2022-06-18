@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from core.decorators import staffuser_access_decorator
@@ -91,3 +91,13 @@ class StaffProjectUpdate(StaffAccessMixin, PermissionRequiredMixin, UpdateView):
     form_class = ProjectsForm
     success_url = reverse_lazy('staff_module:project_list')
     permission_required = 'projects.change_project'
+
+
+class StaffProjectDelete(StaffAccessMixin, PermissionRequiredMixin, DeleteView):
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        return Project.objects.get_project_for_staff(pk, self.request.user)
+
+    template_name = 'staff/project_delete.html'
+    success_url = reverse_lazy('staff_module:project_list')
+    permission_required = 'projects.delete_project'
