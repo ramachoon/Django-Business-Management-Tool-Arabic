@@ -10,6 +10,12 @@ class WorkDayManager(models.Manager):
             accessibility=accessibility
         ).all()
 
+    def get_work_day_for_staff(self, pk, user):
+        qs = get_object_or_404(
+            self, pk=pk, project__department__staff_users__in=[user], project__department__is_active=True
+        )
+        return qs
+
 
 class ProjectManager(models.Manager):
     def get_project_for_staff(self, pk, user):

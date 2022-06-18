@@ -1,0 +1,71 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-custom">
+            <!--begin::Header-->
+            <div class="card-header h-auto py-4">
+                <div class="card-title">
+                    <h3 class="card-label">
+                        یک روز کاری
+                        {% if workday.project %}
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'managers:project_detail' object.project.pk %}"
+                                   class="d-block text-muted pt-2 font-size-sm">{{ object.project.name }}</a>
+                            {% elif request.user.is_staff %}
+                                <a href="{% url 'staff_module:project_detail' object.project.pk %}"
+                                   class="d-block text-muted pt-2 font-size-sm">{{ object.project.name }}</a>
+                            {% endif %}
+                        {% endif %}
+                    </h3>
+                </div>
+            </div>
+            <!--end::Header-->
+            <!--begin::Body-->
+            <div class="card-body py-4">
+                <div class="form-group row my-2">
+                    <label class="col-4 col-form-label">روز:</label>
+                    <div class="col-8">
+                        <span class="form-control-plaintext font-weight-bolder">{{ object.get_day_display }}</span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label class="col-4 col-form-label">ساعت شروع کار:</label>
+                    <div class="col-8">
+                        <span class="form-control-plaintext font-weight-bolder">{{ object.start_time }}</span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label class="col-4 col-form-label">ساعت پایان کار:</label>
+                    <div class="col-8">
+                        <span class="form-control-plaintext font-weight-bolder">{{ object.end_time }}</span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label class="col-4 col-form-label">دسترسی:</label>
+                    <div class="col-8">
+                        <span class="form-control-plaintext font-weight-bolder">{{ object.get_accessibility_display }}</span>
+                    </div>
+                </div>
+                <div class="form-group row my-2">
+                    <label class="col-4 col-form-label">کارمندان مشغول کار:</label>
+                    <div class="col-8">
+                                    <span class="form-control-plaintext font-weight-bolder">
+                                        {% for employee in object.employees.all %}
+                                            <span>{{ employee.get_full_name }}</span>
+                                            ،
+                                        {% endfor %}
+                                    </span>
+                    </div>
+                </div>
+            </div>
+            <!--end::Body-->
+            <!--begin::Footer-->
+            <div class="card-footer">
+                <a href="{% url 'managers:workday_update' object.pk %}"
+                   class="btn btn-light-warning font-weight-bold mr-2">ویرایش</a>
+                <a href="{% url 'managers:workday_delete' object.pk %}"
+                   class="btn btn-light-danger font-weight-bold">حذف</a>
+            </div>
+            <!--end::Footer-->
+        </div>
+    </div>
+</div>

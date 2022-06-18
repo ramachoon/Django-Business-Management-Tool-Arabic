@@ -7,7 +7,7 @@ from core.decorators import staffuser_access_decorator
 from core.mixins import StaffAccessMixin
 from departments.models import Department
 from projects.forms import ProjectsForm
-from projects.models import Project
+from projects.models import Project, WorkDay
 
 
 # Create your views here.
@@ -101,3 +101,13 @@ class StaffProjectDelete(StaffAccessMixin, PermissionRequiredMixin, DeleteView):
     template_name = 'staff/project_delete.html'
     success_url = reverse_lazy('staff_module:project_list')
     permission_required = 'projects.delete_project'
+
+
+class StaffWorkDayDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        return WorkDay.objects.get_work_day_for_staff(pk, self.request.user)
+
+    template_name = 'staff/workday_detail.html'
+    context_object_name = 'workday'
+    permission_required = 'projects.view_workday'
