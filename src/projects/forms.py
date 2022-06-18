@@ -61,6 +61,7 @@ class ProjectsForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['department'].required = False
+        self.fields['customers'].required = False
         self.fields['customers'].queryset = User.objects.filter(is_customer=True)
 
 
