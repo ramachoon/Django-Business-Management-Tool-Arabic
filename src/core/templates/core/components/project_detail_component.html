@@ -67,7 +67,7 @@
                             {% else %}
                                 <a href="{% url 'staff_module:project_update' project.pk %}"
                                    class="btn btn-sm btn-light-warning font-weight-bolder text-uppercase mr-3">ویرایش</a>
-                                <a href=""
+                                <a href="{% url 'staff_module:project_delete' project.pk %}"
                                    class="btn btn-sm btn-light-danger font-weight-bolder text-uppercase mr-3">حذف</a>
                             {% endif %}
                         {% endif %}

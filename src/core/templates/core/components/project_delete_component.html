@@ -1,0 +1,27 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card card-custom example example-compact">
+            <div class="card-header">
+                <h3 class="card-title">
+                    حذف پروژه
+                </h3>
+            </div>
+            <form class="form" method="post">
+                {% csrf_token %}
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h4>از حذف "{{ object.name }}" اطمینان دارید؟ پس از حذف
+                                ،پروژه
+                                قابل بازگردانی نخواهد بود و تمام داده های پروژه از بین خواهد رفت.</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <button type="submit" class="btn btn-light-danger font-weight-bold mr-2">تائید و حذف
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
