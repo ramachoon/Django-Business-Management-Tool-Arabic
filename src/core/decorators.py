@@ -29,3 +29,15 @@ def superuser_access_decorator():
         return inner
 
     return decorator
+
+
+def staffuser_access_decorator():
+    def decorator(view_func):
+        def inner(request, *args, **kwargs):
+            if request.user.is_authenticated and request.user.is_staff:
+                return view_func(request, *args, **kwargs)
+            raise Http404
+
+        return inner
+
+    return decorator
