@@ -41,7 +41,9 @@
                                                 فقط کارفرما
                                             {% endif %}
                                         </span>
-                            <a href="{% url 'managers:department_detail' object.department.pk %}"
+                            <a href="
+
+                                    {% if request.user.is_superuser %}{% url 'managers:department_detail' object.department.pk %}{% elif request.user.is_staff %}{% url 'staff_module:department_detail' object.department.pk %}{% endif %}"
                                class="text-muted text-hover-primary font-weight-bold">
                                 <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1"><!--begin::Svg Icon | path:assets/media/svg/icons/Map/مارچker2.svg--><svg
                                         xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -56,10 +58,19 @@
                         </div>
                     </div>
                     <div class="my-lg-0 my-1">
-                        <a href="{% url 'managers:project_update' project.pk %}"
-                           class="btn btn-sm btn-light-warning font-weight-bolder text-uppercase mr-3">ویرایش</a>
-                        <a href="{% url 'managers:project_delete' project.pk %}"
-                           class="btn btn-sm btn-light-danger font-weight-bolder text-uppercase mr-3">حذف</a>
+                        {% if request.user.is_superuser or request.user.is_staff %}
+                            {% if request.user.is_superuser %}
+                                <a href="{% url 'managers:project_update' project.pk %}"
+                                   class="btn btn-sm btn-light-warning font-weight-bolder text-uppercase mr-3">ویرایش</a>
+                                <a href="{% url 'managers:project_delete' project.pk %}"
+                                   class="btn btn-sm btn-light-danger font-weight-bolder text-uppercase mr-3">حذف</a>
+                            {% else %}
+                                <a href="{% url 'staff_module:project_update' project.pk %}"
+                                   class="btn btn-sm btn-light-warning font-weight-bolder text-uppercase mr-3">ویرایش</a>
+                                <a href=""
+                                   class="btn btn-sm btn-light-danger font-weight-bolder text-uppercase mr-3">حذف</a>
+                            {% endif %}
+                        {% endif %}
                     </div>
                 </div>
                 <!--end: Title-->
