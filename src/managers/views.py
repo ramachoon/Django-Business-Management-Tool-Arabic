@@ -380,6 +380,7 @@ class KalaDelete(SuperuserAccessMixin, DeleteView):
     success_url = reverse_lazy('managers:kala_list')
 
 
+@superuser_access_decorator()
 def create_kala_detail(request):
     if request.method == 'POST':
         # cleaned data
@@ -418,6 +419,7 @@ def create_kala_detail(request):
         raise Http404
 
 
+@superuser_access_decorator()
 def update_kala_detail(request):
     if request.method == 'POST':
         # cleaned data
@@ -455,6 +457,7 @@ def update_kala_detail(request):
         raise Http404
 
 
+@superuser_access_decorator()
 def delete_kala_detail(request):
     if request.method == 'POST':
         # cleaned data
@@ -480,6 +483,7 @@ def delete_kala_detail(request):
         raise Http404
 
 
+@superuser_access_decorator()
 def create_kala_history(request):
     if request.method == 'POST':
         # cleaned data
@@ -513,6 +517,7 @@ def create_kala_history(request):
         raise Http404
 
 
+@superuser_access_decorator()
 def update_kala_history(request):
     if request.method == 'POST':
         # cleaned data
@@ -545,6 +550,7 @@ def update_kala_history(request):
         raise Http404
 
 
+@superuser_access_decorator()
 def delete_kala_history(request):
     if request.method == 'POST':
         # cleaned data
