@@ -8,7 +8,7 @@ from accounts.models import User
 from departments.models import Department
 from django_jalali.db import models as jmodels
 
-from .managers import WorkDayManager, ProjectManager
+from .managers import WorkDayManager, ProjectManager, InvoiceManager
 from src.extensions.utils import jalali_converter
 
 # Create your models here.
@@ -180,6 +180,8 @@ class Invoice(models.Model):
         verbose_name = 'صورتحساب'
         verbose_name_plural = 'صورتحساب ها'
         ordering = ('-created',)
+
+    objects = InvoiceManager()
 
     def get_total_invoice_price(self):
         total = 0

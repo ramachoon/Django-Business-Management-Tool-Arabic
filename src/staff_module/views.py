@@ -7,7 +7,7 @@ from core.decorators import staffuser_access_decorator
 from core.mixins import StaffAccessMixin
 from departments.models import Department
 from projects.forms import ProjectsForm
-from projects.models import Project, WorkDay
+from projects.models import Project, WorkDay, Invoice
 
 
 # Create your views here.
@@ -111,3 +111,13 @@ class StaffWorkDayDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
     template_name = 'staff/workday_detail.html'
     context_object_name = 'workday'
     permission_required = 'projects.view_workday'
+
+
+class StaffInvoiceDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        return Invoice.objects.get_invoice_for_staff(pk, self.request.user)
+
+    template_name = 'staff/invoice_detail.html'
+    context_object_name = 'invoice'
+    permission_required = 'projects.view_invoice'

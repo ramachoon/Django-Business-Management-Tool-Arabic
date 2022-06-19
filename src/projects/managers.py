@@ -2,6 +2,14 @@ from django.db import models
 from django.shortcuts import get_object_or_404
 
 
+class ProjectManager(models.Manager):
+    def get_project_for_staff(self, pk, user):
+        qs = get_object_or_404(
+            self, pk=pk, department__staff_users__in=[user], department__is_active=True
+        )
+        return qs
+
+
 class WorkDayManager(models.Manager):
     def filter_workday(self, from_date, to_date, accessibility):
         return self.filter(
@@ -17,9 +25,9 @@ class WorkDayManager(models.Manager):
         return qs
 
 
-class ProjectManager(models.Manager):
-    def get_project_for_staff(self, pk, user):
+class InvoiceManager(models.Manager):
+    def get_invoice_for_staff(self, pk, user):
         qs = get_object_or_404(
-            self, pk=pk, department__staff_users__in=[user], department__is_active=True
+            self, pk=pk, project__department__staff_users__in=[user], project__department__is_active=True
         )
         return qs
