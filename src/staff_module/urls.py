@@ -18,4 +18,7 @@ urlpatterns = [
 
     # workdays
     path('workdays/detail/<int:pk>', staff_views.StaffWorkDayDetail.as_view(), name='workday_detail'),
+
+    # invoices
+    path('invoices/detail/<str:pk>', staff_views.StaffInvoiceDetail.as_view(), name='invoice_detail'),
 ]

@@ -1,4 +1,5 @@
 from django.contrib.auth.models import Group
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.forms import formset_factory, modelformset_factory
 from django.http import HttpResponse, Http404, JsonResponse
 from django.shortcuts import get_object_or_404, render, redirect
@@ -265,7 +266,7 @@ class InvoiceDetailView(SuperuserAccessMixin, DetailView):
     template_name = 'managers/invoice_detail.html'
 
 
-class InvoicePrintDetail(SuperuserAccessMixin, DetailView):
+class InvoicePrintDetail(LoginRequiredMixin, DetailView):
     model = Invoice
     template_name = 'managers/invoice_print_detail.html'
 
