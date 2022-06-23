@@ -17,3 +17,8 @@ a business management panel for handle customers, employees, invoices, projects,
  - Create and Manage a project's invoices.
  - Manage storeroom.
  - Generating a unique QRCode for each Kala.
+
+## Todo
+ - Using cache system
+ - Better performance
+ - ...
