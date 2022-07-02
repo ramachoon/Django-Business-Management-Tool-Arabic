@@ -2,11 +2,11 @@ import random
 from hashlib import sha256
 
 from django.contrib.auth import login
-from django.http import Http404, HttpResponse
+from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
-from django.utils import timezone
 from django.contrib import messages
+from django.core.cache import cache
 
 from src.extensions.sms_services import send_otp_sms
 from .forms import LoginForm, VerifyOtpForm, RegisterForm
@@ -38,6 +38,7 @@ def otp_login(request):
         _code = random.randint(1111, 9999)
         send_otp_sms(phone_number, _code)
         hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
+        cache.set(phone_number, hash_code, 500)
 
         request.session['phone_number'] = phone_number
 
@@ -76,34 +77,34 @@ def verify_phone_otp(request):
 
     try:
         phone_number = request.session['phone_number']
+
+        verify_otp_form = VerifyOtpForm(request.POST or None)
+
+        if verify_otp_form.is_valid():
+            _code = verify_otp_form.cleaned_data.get('code')
+            hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
+            cached_code = cache.get(phone_number)
+            phone_otp = PhoneOtp.objects.filter(phone=phone_number, code=cached_code)
+
+            if hash_code == cached_code and phone_otp:
+                # get user and authenticate
+                try:
+                    user = User.objects.get(username=phone_number)
+                    login(request, user=user)
+                    del request.session['phone_number']
+                    return redirect(reverse('core:main_view'))
+                except User.DoesNotExist:
+                    return redirect(reverse('account:register'))
+            else:
+                messages.error(request, 'کد تائید اشتباه وارد شده است.')
+
+        context = {
+            'form': verify_otp_form,
+            'phone_number': phone_number
+        }
+        return render(request, 'accounts/registration/verify_otp.html', context)
     except:
         raise Http404
-
-    verify_otp_form = VerifyOtpForm(request.POST or None)
-
-    if verify_otp_form.is_valid():
-        _code = verify_otp_form.cleaned_data.get('code')
-        hash_code = sha256(str(_code).encode('utf-8')).hexdigest()
-        phone_otp = PhoneOtp.objects.filter(phone=phone_number, code=hash_code)
-        # check phone_otp is exist and check the past moments.
-        if phone_otp.exists() and \
-                timezone.now().minute - phone_otp.first().updated.minute <= 5:
-            # get user and authenticate
-            try:
-                user = User.objects.get(username=phone_number)
-                login(request, user=user)
-                del request.session['phone_number']
-                return redirect(reverse('core:main_view'))
-            except User.DoesNotExist:
-                return redirect(reverse('account:register'))
-        else:
-            messages.error(request, 'کد تائید اشتباه وارد شده است.')
-
-    context = {
-        'form': verify_otp_form,
-        'phone_number': phone_number
-    }
-    return render(request, 'accounts/registration/verify_otp.html', context)
 
 
 @authenticated_user()
