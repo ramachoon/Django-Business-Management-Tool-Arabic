@@ -1,5 +1,6 @@
 import re
 from django import forms
+from django.contrib.auth.password_validation import validate_password
 from src.extensions.shared_forms import BaseCaptchaForm
 from accounts.models import User
 
@@ -53,6 +54,17 @@ class RegisterForm(BaseCaptchaForm):
         }),
         label='ایمیل'
     )
+    password = forms.CharField(
+        widget=forms.PasswordInput(attrs={
+            'class': 'form-control form-control-solid h-auto py-5 px-6', 'placeholder': 'رمزعبور'
+        }),
+        label='رمزعبور'
+    )
+
+    def clean_password(self):
+        password = self.cleaned_data.get('password')
+        validate_password(password)
+        return password
 
 
 class UsersForm(forms.ModelForm):
