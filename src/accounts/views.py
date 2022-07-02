@@ -126,29 +126,27 @@ def register(request):
 
     try:
         phone_number = request.session['phone_number']
+        register_form = RegisterForm(request.POST or None)
+
+        if register_form.is_valid():
+            cd = register_form.cleaned_data
+
+            try:
+                user = User.objects.get(username=phone_number)
+                return redirect(reverse('core:main_view'))
+            except User.DoesNotExist:
+                user = User.objects.create_user(
+                    username=phone_number, first_name=cd.get('first_name'), last_name=cd.get('last_name'),
+                    email=cd.get('email'), is_customer=True, password=cd.get('password')
+                )
+                login(request, user=user)
+                del request.session['phone_number']
+                return redirect(reverse('core:main_view'))
+
+        context = {
+            'form': register_form,
+            'phone_number': phone_number
+        }
+        return render(request, 'accounts/registration/register.html', context)
     except:
         raise Http404
-
-    register_form = RegisterForm(request.POST or None)
-
-    if register_form.is_valid():
-        cd = register_form.cleaned_data
-
-        try:
-            user = User.objects.get(username=phone_number)
-            return redirect(reverse('core:main_view'))
-        except User.DoesNotExist:
-            user = User(
-                username=phone_number, first_name=cd.get('first_name'), last_name=cd.get('last_name'),
-                email=cd.get('email'), is_customer=True
-            )
-            user.save()
-            login(request, user=user)
-            del request.session['phone_number']
-            return redirect(reverse('core:main_view'))
-
-    context = {
-        'form': register_form,
-        'phone_number': phone_number
-    }
-    return render(request, 'accounts/registration/register.html', context)

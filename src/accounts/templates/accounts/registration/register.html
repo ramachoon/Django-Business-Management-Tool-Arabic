@@ -52,6 +52,17 @@
                 {% endif %}
             </ul>
         </div>
+        <div class="form-group">
+            {{ form.password.label_tag }}
+            {{ form.password }}
+            <ul class="mt-2">
+                {% if form.password.errors %}
+                    {% for error in form.password.errors %}
+                        <li class="text-danger">{{ error }}</li>
+                    {% endfor %}
+                {% endif %}
+            </ul>
+        </div>
         <!--begin::اکشن-->
         <div class="form-group">
             <button type="submit"
