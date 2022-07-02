@@ -74,16 +74,12 @@ def verify_phone_otp(request):
     :param: `request`
     """
 
-    # TODO: be fix.
-    # raise http404, if http referer is not equal to login.
-    # http_referer = request.META.get('HTTP_REFERER')
-    # login_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:login')}"
-    # verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
-    # if not http_referer == login_full_url and not http_referer == verify_otp_full_url:
-    #     raise Http404
+    try:
+        phone_number = request.session['phone_number']
+    except:
+        raise Http404
 
     verify_otp_form = VerifyOtpForm(request.POST or None)
-    phone_number = request.session['phone_number']
 
     if verify_otp_form.is_valid():
         _code = verify_otp_form.cleaned_data.get('code')
@@ -127,15 +123,12 @@ def register(request):
     :param: `request`
     """
 
-    # TODO: be fix.
-    http_referer = request.META.get('HTTP_REFERER')
-    verify_otp_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:verify_otp')}"
-    register_full_url = f"{request.scheme}://{request.get_host()}{reverse('account:register')}"
-    if not http_referer == verify_otp_full_url and not http_referer == register_full_url:
+    try:
+        phone_number = request.session['phone_number']
+    except:
         raise Http404
 
     register_form = RegisterForm(request.POST or None)
-    phone_number = request.session['phone_number']
 
     if register_form.is_valid():
         cd = register_form.cleaned_data
