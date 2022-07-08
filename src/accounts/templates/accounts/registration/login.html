@@ -19,6 +19,9 @@
             {{ form.phone_number }}
             <ul class="mt-2">
                 <li class="text-dark-50">{{ form.phone_number.help_text }}</li>
+                <li class="mt-5">
+                    <a href="{% url 'account:password-login' %}">ورود با رمز عبور</a>
+                </li>
                 {% if form.phone_number.errors %}
                     {% for error in form.phone_number.errors %}
                         <li class="text-danger">{{ error }}</li>

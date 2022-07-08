@@ -124,7 +124,8 @@ AUTH_PASSWORD_VALIDATORS = [
 AUTH_USER_MODEL = 'accounts.User'
 
 LOGOUT_REDIRECT_URL = 'account:login'
-# LOGIN_URL = 'account:login'
+LOGIN_URL = 'account:login'
+LOGIN_REDIRECT_URL = 'core:main_view'
 
 # Internationalization
 # https://docs.djangoproject.com/en/3.2/topics/i18n/
