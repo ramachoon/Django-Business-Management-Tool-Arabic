@@ -15,7 +15,7 @@ from projects.models import Project, WorkDay, Invoice
 
 @staffuser_access_decorator()
 def staff_home_page(request):
-    return render(request, 'staff/staff_home_page.html')
+    return render(request, 'core/panel/pages/panel_home_page.html')
 
 
 class StaffDepartmentList(StaffAccessMixin, PermissionRequiredMixin, ListView):
@@ -23,7 +23,7 @@ class StaffDepartmentList(StaffAccessMixin, PermissionRequiredMixin, ListView):
         qs = Department.objects.filter(is_active=True, staff_users__in=[self.request.user])
         return qs
 
-    template_name = 'staff/department_list.html'
+    template_name = 'core/panel/pages/department_list.html'
     paginate_by = 12
     context_object_name = 'departments'
     permission_required = 'departments.view_department'
@@ -37,7 +37,7 @@ class StaffDepartmentDetail(StaffAccessMixin, PermissionRequiredMixin, DetailVie
         )
         return qs
 
-    template_name = 'staff/department_detail.html'
+    template_name = 'core/panel/pages/department_detail.html'
     context_object_name = 'department'
     permission_required = 'departments.view_department'
 
@@ -49,7 +49,7 @@ class StaffProjectList(StaffAccessMixin, PermissionRequiredMixin, ListView):
         )
         return qs
 
-    template_name = 'staff/project_list.html'
+    template_name = 'core/panel/pages/project_list.html'
     paginate_by = 6
     context_object_name = 'projects'
     permission_required = 'projects.view_project'
@@ -60,7 +60,7 @@ class StaffProjectDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
         pk = self.kwargs.get('pk')
         return Project.objects.get_project_for_staff(pk, self.request.user)
 
-    template_name = 'staff/project_detail.html'
+    template_name = 'core/panel/pages/project_detail.html'
     context_object_name = 'project'
     permission_required = 'projects.view_project'
 
@@ -76,7 +76,7 @@ class StaffProjectCreate(StaffAccessMixin, PermissionRequiredMixin, CreateView):
         return super(StaffProjectCreate, self).form_valid(form)
 
     model = Project
-    template_name = 'staff/project_create_update.html'
+    template_name = 'core/panel/pages/project_create_update.html'
     permission_required = 'projects.add_project'
     form_class = ProjectsForm
     success_url = reverse_lazy('staff_module:project_list')
@@ -87,7 +87,7 @@ class StaffProjectUpdate(StaffAccessMixin, PermissionRequiredMixin, UpdateView):
         pk = self.kwargs.get('pk')
         return Project.objects.get_project_for_staff(pk, self.request.user)
 
-    template_name = 'staff/project_create_update.html'
+    template_name = 'core/panel/pages/project_create_update.html'
     form_class = ProjectsForm
     success_url = reverse_lazy('staff_module:project_list')
     permission_required = 'projects.change_project'
@@ -98,7 +98,7 @@ class StaffProjectDelete(StaffAccessMixin, PermissionRequiredMixin, DeleteView):
         pk = self.kwargs.get('pk')
         return Project.objects.get_project_for_staff(pk, self.request.user)
 
-    template_name = 'staff/project_delete.html'
+    template_name = 'core/panel/pages/project_delete.html'
     success_url = reverse_lazy('staff_module:project_list')
     permission_required = 'projects.delete_project'
 
@@ -108,7 +108,7 @@ class StaffWorkDayDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
         pk = self.kwargs.get('pk')
         return WorkDay.objects.get_work_day_for_staff(pk, self.request.user)
 
-    template_name = 'staff/workday_detail.html'
+    template_name = 'core/panel/pages/workday_detail.html'
     context_object_name = 'workday'
     permission_required = 'projects.view_workday'
 
@@ -118,6 +118,6 @@ class StaffInvoiceDetail(StaffAccessMixin, PermissionRequiredMixin, DetailView):
         pk = self.kwargs.get('pk')
         return Invoice.objects.get_invoice_for_staff(pk, self.request.user)
 
-    template_name = 'staff/invoice_detail.html'
+    template_name = 'core/panel/pages/invoice_detail.html'
     context_object_name = 'invoice'
     permission_required = 'projects.view_invoice'
