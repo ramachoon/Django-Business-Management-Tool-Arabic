@@ -2,14 +2,16 @@ import random
 from hashlib import sha256
 
 from django.contrib.auth import login
+from django.contrib.auth.views import LoginView
 from django.http import Http404
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from django.contrib import messages
 from django.core.cache import cache
 
+from core.mixins import AuthenticatedUserMixin
 from src.extensions.sms_services import send_otp_sms
-from .forms import LoginForm, VerifyOtpForm, RegisterForm
+from .forms import LoginForm, VerifyOtpForm, RegisterForm, PasswordLoginForm
 from accounts.models import PhoneOtp, User
 from core.decorators import authenticated_user
 
@@ -150,3 +152,8 @@ def register(request):
         return render(request, 'accounts/registration/register.html', context)
     except:
         raise Http404
+
+
+class PasswordLogin(AuthenticatedUserMixin, LoginView):
+    template_name = 'accounts/registration/password_login.html'
+    form_class = PasswordLoginForm

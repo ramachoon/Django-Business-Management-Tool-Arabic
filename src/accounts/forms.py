@@ -1,5 +1,6 @@
 import re
 from django import forms
+from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
 from src.extensions.shared_forms import BaseCaptchaForm
 from accounts.models import User
@@ -105,3 +106,14 @@ class UsersForm(forms.ModelForm):
         self.fields['is_supporter'].required = False
         self.fields['first_name'].required = True
         self.fields['last_name'].required = True
+
+class PasswordLoginForm(AuthenticationForm):
+    def __init__(self, *args, **kwargs):
+        super(PasswordLoginForm, self).__init__(*args, **kwargs)
+        self.fields['username'].widget.attrs.update({
+            'class': 'form-control form-control-solid h-auto py-5 px-6',
+            'autocomplete': 'off',
+        })
+        self.fields['password'].widget.attrs.update({
+            'class': 'form-control form-control-solid h-auto py-5 px-6'
+        })
