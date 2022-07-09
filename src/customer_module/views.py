@@ -4,7 +4,7 @@ from django.views.generic import ListView, DetailView
 
 from core.decorators import customer_access_decorator
 from core.mixins import CustomerAccessMixin
-from projects.models import Project
+from projects.models import Project, WorkDay
 
 
 # Create your views here.
@@ -39,3 +39,14 @@ class CustomerProjectDetail(CustomerAccessMixin, PermissionRequiredMixin, Detail
     template_name = 'core/panel/pages/project_detail.html'
     context_object_name = 'project'
     permission_required = 'projects.view_project'
+
+
+class CustomerWorkDayDetail(CustomerProjectDetail, PermissionRequiredMixin, DetailView):
+    def get_object(self, queryset=None):
+        pk = self.kwargs.get('pk')
+        return WorkDay.objects.get_work_day_for_customer(pk, self.request.user)
+
+    template_name = 'core/panel/pages/workday_detail.html'
+    context_object_name = 'workday'
+    permission_required = 'projects.view_workday'
+

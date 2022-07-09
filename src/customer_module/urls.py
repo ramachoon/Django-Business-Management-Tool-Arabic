@@ -9,4 +9,7 @@ urlpatterns = [
     # projects
     path('projects/', customer_views.CustomerProjectList.as_view(), name='project_list'),
     path('projects/<int:pk>', customer_views.CustomerProjectDetail.as_view(), name='project_detail'),
+
+    # work days
+    path('workday/<int:pk>', customer_views.CustomerWorkDayDetail.as_view(), name='workday_detail'),
 ]
