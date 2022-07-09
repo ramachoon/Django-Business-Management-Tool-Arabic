@@ -1,5 +1,5 @@
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import redirect, render
 from django.urls import reverse
 
@@ -13,7 +13,7 @@ def main_view(request):
         return redirect(reverse('managers:home'))
     elif request.user.is_staff:
         return redirect((reverse('staff_module:home')))
-    return HttpResponse('خوش آمدید')
+    raise PermissionDenied
 
 
 def handler404(request, *args, **kwargs):

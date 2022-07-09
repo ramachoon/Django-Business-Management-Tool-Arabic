@@ -36,7 +36,7 @@ def staffuser_access_decorator():
         def inner(request, *args, **kwargs):
             if request.user.is_authenticated and request.user.is_staff:
                 return view_func(request, *args, **kwargs)
-            raise Http404
+            return redirect(reverse('account:login'))
 
         return inner
 
