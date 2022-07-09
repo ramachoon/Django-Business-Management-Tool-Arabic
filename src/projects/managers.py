@@ -44,3 +44,10 @@ class InvoiceManager(models.Manager):
             self, pk=pk, project__department__staff_users__in=[user], project__department__is_active=True
         )
         return qs
+
+    def get_invoice_for_customer(self, pk, user):
+        qs = get_object_or_404(
+            self, pk=pk, project__customers__in=[user], project__department__is_active=True,
+            project__accessibility='only_customer'
+        )
+        return qs
