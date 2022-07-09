@@ -1,0 +1,10 @@
+{% extends 'core/errors/_errors_base.html' %}
+
+{% block title %}
+    404 Page Not Found
+{% endblock %}
+
+{% block text %}
+    صفحه یافت نشد لطفا آدرس صفحه را به درستی وارد کن<br>
+    یا به <a href="{% url 'core:main_view' %}">داشبورد </a> برو.
+{% endblock %}
