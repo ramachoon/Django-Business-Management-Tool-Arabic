@@ -41,3 +41,15 @@ def staffuser_access_decorator():
         return inner
 
     return decorator
+
+
+def customer_access_decorator():
+    def decorator(view_func):
+        def inner(request, *args, **kwargs):
+            if request.user.is_authenticated and request.user.is_superuser or request.user.is_customer:
+                return view_func(request, *args, **kwargs)
+            return redirect(reverse('account:login'))
+
+        return inner
+
+    return decorator

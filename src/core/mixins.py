@@ -27,3 +27,10 @@ class StaffAccessMixin:
         if request.user.is_authenticated and request.user.is_staff:
             return super().dispatch(request, *args, **kwargs)
         return redirect(reverse('account:login'))
+
+
+class CustomerAccessMixin:
+    def dispatch(self, request, *args, **kwargs):
+        if request.user.is_authenticated and request.user.is_superuser or request.user.is_customer:
+            return super(CustomerAccessMixin, self).dispatch(request, *args, **kwargs)
+        return redirect(reverse('account:login'))

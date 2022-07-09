@@ -1,7 +1,11 @@
 from django.shortcuts import render
+from core.decorators import customer_access_decorator
 
 
 # Create your views here.
+
+
+@customer_access_decorator()
 def customer_home_page(request):
     context = {
         'text': 'داشبورد کارفرما'
