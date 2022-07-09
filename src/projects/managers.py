@@ -10,6 +10,13 @@ class ProjectManager(models.Manager):
         return qs
 
 
+    def get_project_for_customer(self, pk, user):
+        qs = get_object_or_404(
+            self, pk=pk, customers__in=[user], department__is_active=True, accessibility='only_customer'
+        )
+        return qs
+
+
 class WorkDayManager(models.Manager):
     def filter_workday(self, from_date, to_date, accessibility):
         return self.filter(
