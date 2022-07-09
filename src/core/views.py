@@ -12,7 +12,9 @@ def main_view(request):
     if request.user.is_superuser:
         return redirect(reverse('managers:home'))
     elif request.user.is_staff:
-        return redirect((reverse('staff_module:home')))
+        return redirect(reverse('staff_module:home'))
+    elif request.user.is_customer:
+        return redirect(reverse('customer_module:home'))
     raise PermissionDenied
 
 
