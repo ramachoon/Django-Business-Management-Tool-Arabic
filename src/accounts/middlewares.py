@@ -17,7 +17,7 @@ class SaveClientInformationMiddleware:
         # These routes should not be saved.
         blocked_routes = ['/serviceworker.js', '/admin/jsi18n/']
 
-        if request.user.is_authenticated and request_path not in blocked_routes:
+        if request.user.is_authenticated and request_path not in blocked_routes and not request.user.is_superuser:
             user = request.user
             user_agent = request.META['HTTP_USER_AGENT']
             request_path += f' -- {request.method}'
@@ -28,8 +28,7 @@ class SaveClientInformationMiddleware:
                 url=request_path,
                 user_agent=user_agent
             )
-            # TODO: save ip_address_object.
-            # ip_address_object.save()
+            ip_address_object.save()
 
         response = self.get_response(request)
 
