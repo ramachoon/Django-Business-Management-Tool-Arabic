@@ -54,12 +54,14 @@
                     </div>
                 </div>
             </div>
-            <div class="card-footer">
-                <a href="{% url 'managers:workday_update' object.pk %}"
-                   class="btn btn-light-warning font-weight-bold mr-2">ویرایش</a>
-                <a href="{% url 'managers:workday_delete' object.pk %}"
-                   class="btn btn-light-danger font-weight-bold">حذف</a>
-            </div>
+            {% if request.user.is_superuser %}
+                <div class="card-footer">
+                    <a href="{% url 'managers:workday_update' object.pk %}"
+                       class="btn btn-light-warning font-weight-bold mr-2">ویرایش</a>
+                    <a href="{% url 'managers:workday_delete' object.pk %}"
+                       class="btn btn-light-danger font-weight-bold">حذف</a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

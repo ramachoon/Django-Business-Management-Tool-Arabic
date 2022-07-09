@@ -52,6 +52,8 @@
 
 
 
+
+
                                     {% if request.user.is_superuser %}{% url 'managers:department_detail' object.department.pk %}{% elif request.user.is_staff %}{% url 'staff_module:department_detail' object.department.pk %}{% endif %}"
                                class="text-muted text-hover-primary font-weight-bold">
                                 <span class="svg-icon svg-icon-md svg-icon-gray-500 mr-1"><!--begin::Svg Icon | path:assets/media/svg/icons/Map/مارچker2.svg--><svg
@@ -271,14 +273,13 @@
                                                                 <div>
                                                                     <a href="
 
-
-
-
-
-
-
-
-                                                                            {% if request.user.is_superuser %}{% url 'managers:workday_detail' workday.pk %}{% elif request.user.is_staff %}{% url 'staff_module:workday_detail' workday.pk %}{% endif %}"
+                                                                            {% if request.user.is_superuser %}
+                                                                            {% url 'managers:workday_detail' workday.pk %}
+                                                                            {% elif request.user.is_staff %}
+                                                                            {% url 'staff_module:workday_detail' workday.pk %}
+                                                                            {% elif request.user.is_customer %}
+                                                                            {% url 'customer_module:workday_detail' workday.pk %}
+                                                                            {% endif %}"
                                                                        class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{ workday.date }}</a>
                                                                     <span class="text-muted font-weight-bold d-block">روز: {{ workday.get_day_display }}</span>
                                                                 </div>
@@ -511,6 +512,8 @@
 
                                                                 <div>
                                                                     <a href="
+
+
 
 
 
