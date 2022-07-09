@@ -25,6 +25,7 @@ urlpatterns = [
     path('account/', include('src.accounts.urls')),
     path('manager/', include('src.managers.urls')),
     path('staff/', include('src.staff_module.urls')),
+    path('customer/', include('src.customer_module.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -55,6 +55,7 @@ INSTALLED_APPS = [
     'departments',
     'projects',
     'staff_module',
+    'customer_module',
     'storeroom',
 ]
 

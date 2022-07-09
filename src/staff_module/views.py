@@ -15,7 +15,10 @@ from projects.models import Project, WorkDay, Invoice
 
 @staffuser_access_decorator()
 def staff_home_page(request):
-    return render(request, 'core/panel/pages/panel_home_page.html')
+    context = {
+        'text': 'داشبورد'
+    }
+    return render(request, 'core/panel/pages/panel_home_page.html', context)
 
 
 class StaffDepartmentList(StaffAccessMixin, PermissionRequiredMixin, ListView):
