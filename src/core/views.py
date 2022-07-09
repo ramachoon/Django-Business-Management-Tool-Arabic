@@ -1,7 +1,8 @@
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
-from django.shortcuts import redirect
+from django.shortcuts import redirect, render
 from django.urls import reverse
+
 
 # Create your views here.
 
@@ -13,3 +14,15 @@ def main_view(request):
     elif request.user.is_staff:
         return redirect((reverse('staff_module:home')))
     return HttpResponse('خوش آمدید')
+
+
+def handler404(request, *args, **kwargs):
+    return render(request, 'core/errors/404.html')
+
+
+def handler403(request, *args, **kwargs):
+    return render(request, 'core/errors/403.html')
+
+
+def handler500(request, *args, **kwargs):
+    return render(request, 'core/errors/500.html')

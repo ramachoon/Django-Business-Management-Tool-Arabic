@@ -1,0 +1,42 @@
+{% load static %}
+<!DOCTYPE html>
+<html direction="rtl" dir="rtl" style="direction: rtl">
+<head>
+    <base href="../../../">
+    <meta charset="utf-8"/>
+    <title>مشکلی پیش آمده | گروه فلزکاری برادران عبدی</title>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700"/>
+
+    {% include 'core/panel/_header_references.html' %}
+
+</head>
+<body id="kt_body"
+      class="header-fixed header-mobile-fixed subheader-enabled subheader-fixed aside-enabled aside-fixed aside-minimize-hoverable page-loading">
+
+<!--begin::Main-->
+<div class="d-flex flex-column flex-root">
+    <!--begin::Error-->
+    <div class="error error-6 d-flex flex-row-fluid bgi-size-cover bgi-position-center"
+         style="background-image: url({% static 'images/errors/bg6.jpg' %});">
+        <!--begin::Content-->
+        <div class="d-flex flex-column flex-row-fluid text-center">
+            <h1 class="error-title font-weight-boldest text-white mb-12" style="margin-top: 12rem;">
+                {% block title %}
+
+                {% endblock %}
+            </h1>
+            <p class="display-4 font-weight-bold text-white">
+                {% block text %}
+
+                {% endblock %}
+            </p>
+        </div>
+        <!--end::Content-->
+    </div>
+    <!--end::Error-->
+</div>
+</body>
+</html>

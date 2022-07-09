@@ -27,3 +27,6 @@ urlpatterns = [
     path('staff/', include('src.staff_module.urls')),
     path('admin/', admin.site.urls),
 ]
+
+handler404 = 'core.views.handler404'
+handler403 = 'core.views.handler403'
