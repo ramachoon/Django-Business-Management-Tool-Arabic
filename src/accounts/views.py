@@ -10,7 +10,7 @@ from django.contrib import messages
 from django.core.cache import cache
 
 from core.mixins import AuthenticatedUserMixin
-from src.extensions.sms_services import send_otp_sms
+from extensions.sms_services import send_otp_sms
 from .forms import LoginForm, VerifyOtpForm, RegisterForm, PasswordLoginForm
 from accounts.models import PhoneOtp, User
 from core.decorators import authenticated_user
