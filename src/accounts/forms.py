@@ -2,7 +2,7 @@ import re
 from django import forms
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.password_validation import validate_password
-from src.extensions.shared_forms import BaseCaptchaForm
+from extensions.shared_forms import BaseCaptchaForm
 from accounts.models import User
 
 

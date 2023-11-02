@@ -3,7 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from .validators import validate_avatar
 
-from src.extensions.upload_file_path import get_filename_ext
+from extensions.upload_file_path import get_filename_ext
 
 
 # Create your models here.
