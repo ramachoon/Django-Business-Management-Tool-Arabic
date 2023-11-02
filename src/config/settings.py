@@ -26,9 +26,9 @@ SECRET_KEY = config("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DEBUG")
 
-ALLOWED_HOSTS = config(
-    "ALLOWED_HOSTS", cast=lambda v: [s.strip() for s in v.split(",")]
-)
+ALLOWED_HOSTS = [
+    "localhost"
+]
 
 # Application definition
 
@@ -99,7 +99,7 @@ DATABASES = {
         "NAME": config("NAME"),
         "USER": config("USER"),
         "PASSWORD": config("PASSWORD"),
-        "HOST": "db",
+        "HOST": "localhost",
         "PORT": 5432,
     }
 }
@@ -195,6 +195,5 @@ PWA_APP_SPLASH_SCREEN = [
 ]
 PWA_APP_DIR = 'rtl'
 PWA_APP_LANG = 'fa-IR'
-
 # SESSION_EXPIRE_AT_BROWSER_CLOSE = False
 # SESSION_COOKIE_AGE = 5 * 60

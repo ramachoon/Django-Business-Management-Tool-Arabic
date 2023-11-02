@@ -1,0 +1,16 @@
+Django
+django-ckeditor
+django-crispy-forms
+django-filter
+django-recaptcha
+gunicorn
+Pillow
+psycopg2-binary
+PyPDF2
+python-decouple
+requests
+django-redis
+django-jalali
+django-jalali-date
+django-pwa
+qrcode

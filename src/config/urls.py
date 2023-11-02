@@ -19,13 +19,13 @@ from django.urls import path, include
 from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
-    path('', include('src.core.urls')),
+    path('', include('core.urls')),
     path('', include('pwa.urls')),
     path('account/logout', LogoutView.as_view(), name='logout'),
-    path('account/', include('src.accounts.urls')),
-    path('manager/', include('src.managers.urls')),
-    path('staff/', include('src.staff_module.urls')),
-    path('customer/', include('src.customer_module.urls')),
+    path('account/', include('accounts.urls')),
+    path('manager/', include('managers.urls')),
+    path('staff/', include('staff_module.urls')),
+    path('customer/', include('customer_module.urls')),
     path('admin/', admin.site.urls),
 ]
 

@@ -9,7 +9,7 @@ from departments.models import Department
 from django_jalali.db import models as jmodels
 
 from .managers import WorkDayManager, ProjectManager, InvoiceManager
-from src.extensions.utils import jalali_converter
+from extensions.utils import jalali_converter
 
 # Create your models here.
 
